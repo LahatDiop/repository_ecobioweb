@@ -1,0 +1,124 @@
+
+{
+  "market": [
+
+  {    
+    "id":"110",
+    "name":"Italia",
+    "description":"",
+    "code":"IT",
+   "dialCode":"+39",
+   "flagUri":"assets/images/flags/it.png",
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":false
+  },
+
+  {    
+    "id":"120",
+    "name": "France",
+    "description":"",
+    "code": "FR",
+   "dialCode":"+33",
+    "flagUri":"assets/images/flags/fr.png",
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":false
+  },
+
+  {    
+    "id":"130",
+    "name": "Germany",
+    "description":"Deutschland",
+    "code": "DE",
+   "dialCode":"+49",
+    "flagUri":"assets/images/flags/de.png",
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":true
+  },
+
+  {    
+    "id":"140",
+    "name": "España",
+    "description":"",
+    "code": "SP",
+   "dialCode":"+45",
+    "flagUri":"assets/images/flags/es.png",
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":false
+  },
+
+  {    
+    "id":"150",
+    "name": "Schweiz",
+    "description":"",
+    "code": "CH",
+   "dialCode":"+41",
+    "flagUri":"assets/images/flags/ch.png",
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":false
+  },
+  {    
+    "id":"160",
+    "name": "Sénégal",
+    "description":"",
+    "code": "SN",
+   "dialCode":"+221",
+    "flagUri":"assets/images/flags/sn.png",
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":true
+  },
+
+  {    
+    "id":"170",
+    "name": "Nigeria",
+    "description":"",
+    "code": "NG",
+   "dialCode":"+234",
+    "flagUri":"assets/images/flags/ng.png",
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":false
+  },
+  {    
+    "id":"180",
+    "name": "افغانستان",
+    "description":"",
+    "code": "AF",
+   "dialCode":"+93",
+    "flagUri":"",
+    "isShowMarket":"",
+    "isShowCategory":"",
+    "isVisibility":"",
+    "isEnabled":"",
+    "isIva":"",
+    "isFavorite":false
+  }
+
+]
+}

@@ -1,0 +1,316 @@
+name: ecobioweb
+description: Biologica
+# The following line prevents the package from being accidentally published to
+# pub.dev using `flutter pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+# In Windows, build-name is used as the major, minor, and patch parts
+# of the product and file versions while build-number is used as the build suffix.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.2 <3.0.0'
+
+# Dependencies specify other packages that your package needs in order to work.
+# To automatically upgrade your package dependencies to the latest versions
+# consider running `flutter pub upgrade --major-versions`. Alternatively,
+# dependencies can be manually updated by changing the version numbers below to
+# the latest version available on pub.dev. To see which dependencies have newer
+# versions available, run `flutter pub outdated`.
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
+  postgres: ^2.6.0
+  postgresql2: ^1.0.4
+  postgres_pool: ^2.1.6
+  dio: ^5.0.0
+  hash: ^1.0.4
+  shared_preferences: ^2.1.0
+  flutter_login: ^4.1.1
+  flutter_fadein: ^2.0.0
+  animated_text_kit: ^4.2.2
+  intl: ^0.18.0
+  flutter_session_manager: ^1.0.3
+  moor_generator: ^4.6.0+1
+  moor_flutter: ^4.1.0
+  path_provider: ^2.0.14
+  path: ^1.8.2
+  moor: ^4.6.1+1
+  sqlite3_flutter_libs: ^0.5.13
+  drift_sqflite: ^1.0.0
+  drift: ^1.7.1
+  logger: ^1.3.0
+  logging_manager: ^2.3.1
+  flutter_secure_storage: ^8.0.0
+  sqflite: ^2.2.8
+  http: ^0.13.6
+  clay_containers: ^0.3.2
+  animations: ^2.0.7
+  flutter_slidable: ^3.0.0
+  dotted_border: ^2.0.0+3
+  localstorage: ^4.0.1+2
+  url_launcher: ^6.1.10
+  convex_bottom_bar: ^3.2.0
+  font_awesome_flutter: ^10.4.0
+  email_validator: ^2.1.17
+  image_picker: ^0.8.7+4
+  string_validator: ^1.0.0
+  json_serializable: ^6.5.4
+  ffi: ^2.0.1
+  reflectable: ^3.0.10
+  source_gen: ^1.2.6
+  #font_awesome_flutter: ^9.0.0-nullsafety
+  #flutter_signin_button: ^2.0.0-nullsafety.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.0
+  build_runner: ^2.3.3
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+  assets:
+    - assets/images/ecorp.png
+    - assets/images/ic_add_cart.png
+    - assets/images/ic_discount.png
+    - assets/images/promotion_one.png
+    - assets/images/promotion_two.png
+    - assets/images/promotion__one.png
+    - assets/images/promotion_three.png
+    - assets/images/ic_app_icon.png
+    - assets/images/ic_category_image.png
+    - assets/images/empty_shopping_cart_image.png
+    - assets/images/empty_shopping_cart.png
+    - assets/images/empty_wish_list.png
+    - assets/images/home/img_0.jpg
+    - assets/images/home/img_1.jpg
+    - assets/images/home/img_2.jpg
+    - assets/images/home/img_3.jpg
+    - assets/images/home/img_4.jpg
+    - assets/images/home/img_5.jpg
+    - assets/images/home/img_6.jpg
+    - assets/images/home/img_7.jpg
+    - assets/images/admin/two.jpg
+    - assets/images/admin/three.jpg
+    - assets/images/admin/four.jpg
+    - assets/images/admin/five.jpg
+    - assets/images/admin/one.jpg
+    - assets/images/admin/two.jpg
+    - assets/images/admin/three.jpg
+    - assets/images/admin/four.jpg
+    - assets/images/admin/five.jpg
+    - assets/images/agriculture/agriculture_0.png
+    - assets/images/agriculture/agriculture_1.png
+    - assets/images/agriculture/agriculture_2.png
+    - assets/images/agriculture/agriculture_3.png
+    - assets/images/agriculture/agriculture_4.png
+    - assets/images/agriculture/agriculture_5.png
+    - assets/images/agriculture/agriculture_6.png
+    - assets/images/agriculture/agriculture_7.png
+    - assets/images/agriculture/agriculture_8.png
+    - assets/images/agriculture/agriculture_9.png
+    - assets/images/agriculture/agriculture_10.png
+    - assets/images/agriculture/agriculture_11.png
+    - assets/images/bioedilizia/bioedilizia_0.jpg
+    - assets/images/bioedilizia/bioedilizia_1.jpg
+    - assets/images/bioedilizia/bioedilizia_2.jpg
+    - assets/images/bioedilizia/bioedilizia_3.jpg
+    - assets/images/bioedilizia/bioedilizia_4.jpg
+    - assets/images/bioedilizia/bioedilizia_5.jpg
+    - assets/images/bioedilizia/bioedilizia_6.jpg
+    - assets/images/bioedilizia/bioedilizia_7.jpg
+    - assets/images/bioedilizia/bioedilizia_8.jpg
+    - assets/images/bioedilizia/bioedilizia_9.jpg
+    - assets/images/bioedilizia/bioedilizia_10.jpg
+    - assets/images/bioedilizia/bioedilizia_11.jpg
+    - assets/images/bioedilizia/bioedilizia_12.jpg
+    - assets/images/apiculture/apiculture_0.jpg
+    - assets/images/apiculture/apiculture_1.jpg
+    - assets/images/apiculture/apiculture_2.jpg
+    - assets/images/apiculture/apiculture_3.jpg
+    - assets/images/apiculture/apiculture_4.jpg
+    - assets/images/apiculture/apiculture_5.jpg
+    - assets/images/apiculture/apiculture_6.jpg
+    - assets/images/apiculture/apiculture_7.jpg
+    - assets/images/apiculture/apiculture_8.jpg
+    - assets/images/apiculture/apiculture_9.jpg
+    - assets/images/apiculture/apiculture_10.jpg
+    - assets/images/apiculture/apiculture_11.jpg
+    - assets/images/apiculture/apiculture_12.jpg
+    - assets/images/apiculture/apiculture_13.jpg
+    - assets/images/apiculture/apiculture_14.jpg
+    - assets/images/apiculture/apiculture_15.jpg
+    - assets/images/hotel/hotel_0.jpg
+    - assets/images/hotel/hotel_1.jpg
+    - assets/images/hotel/hotel_2.jpg
+    - assets/images/hotel/hotel_3.jpg
+    - assets/images/hotel/hotel_4.jpg
+    - assets/images/hotel/hotel_5.jpg
+    - assets/json/products.json
+    - assets/json/market.json
+    - assets/language/it.json
+    - assets/language/en.json
+    - assets/language/fr.json
+    - assets/language/es.json
+    - assets/language/de.json
+    - assets/language/ng.json
+    - assets/language/sn.json
+    - assets/images/verdure/aglio_1.png
+    - assets/images/verdure/aglio_2.png
+    - assets/images/verdure/aglio_3.png
+    - assets/images/verdure/avocado_1.png
+    - assets/images/verdure/avocado_2.png
+    - assets/images/verdure/brocolo_1.png
+    - assets/images/verdure/brocolo_2.png
+    - assets/images/verdure/brocolo_3.png
+    - assets/images/verdure/carote_1.png
+    - assets/images/verdure/carote_2.png
+    - assets/images/verdure/carote_3.png
+    - assets/images/verdure/carote_4.png
+    - assets/images/verdure/carote_5.png
+    - assets/images/verdure/carote_6.png
+    - assets/images/verdure/cassetto_frutto.png
+    - assets/images/verdure/cassetto_verdure_1.png
+    - assets/images/verdure/cassetto_verdure_2.png
+    - assets/images/verdure/cavolo_1.png
+    - assets/images/verdure/cavolo_2.png
+    - assets/images/verdure/cavolo_3.png
+    - assets/images/verdure/cavolo_4.png
+    - assets/images/verdure/cavolo_5.png
+    - assets/images/verdure/cavolo_6.png
+    - assets/images/verdure/cipolle_1.png
+    - assets/images/verdure/cipolle_2.png
+    - assets/images/verdure/cipolle_3.png
+    - assets/images/verdure/cipolle_4.png
+    - assets/images/verdure/cipolle_1.png
+    - assets/images/verdure/gombo_1.png
+    - assets/images/verdure/gombo_2.png
+    - assets/images/verdure/limoni_1.png
+    - assets/images/verdure/limoni_2.png
+    - assets/images/verdure/limoni_3.png
+    - assets/images/verdure/limoni_4.png
+    - assets/images/verdure/limoni_5.png
+    - assets/images/verdure/melanzane_1.png
+    - assets/images/verdure/melanzane_2.png
+    - assets/images/verdure/melanzane_3.png
+    - assets/images/verdure/olive_1.png
+    - assets/images/verdure/olive_2.png
+    - assets/images/verdure/olive_3.png
+    - assets/images/verdure/patate_1.png
+    - assets/images/verdure/patate_2.png
+    - assets/images/verdure/patate_3.png
+    - assets/images/verdure/patate_4.png
+    - assets/images/verdure/peperocino_1.png
+    - assets/images/verdure/peperoncino_2.png
+    - assets/images/verdure/peperoncino_3.png
+    - assets/images/verdure/peperone_1.png
+    - assets/images/verdure/peperone_2.png
+    - assets/images/verdure/peperone_3.png
+    - assets/images/verdure/peperone_4.png
+    - assets/images/verdure/peperone_5.png
+    - assets/images/verdure/pomodoro_1.png
+    - assets/images/verdure/pomodoro_2.png
+    - assets/images/verdure/pomodoro_3.png
+    - assets/images/verdure/zenzero_1.png
+    - assets/images/verdure/zenzero_2.png
+    - assets/images/verdure/zenzero_3.png
+    - assets/images/verdure/zucca_1.png
+    - assets/images/verdure/zucca_2.png
+    - assets/images/verdure/zucca_3.png
+    - assets/images/verdure/zucca_4.png
+    - assets/images/verdure/zucchine_1.png
+    - assets/images/verdure/zucchine_2.png
+    - assets/images/verdure/zucchine_3.png
+    - assets/images/frutto/arancia_1.png
+    - assets/images/frutto/arancia_2.png
+    - assets/images/frutto/arancia_3.png
+    - assets/images/frutto/arancia_4.png
+    - assets/images/frutto/banane_1.png
+    - assets/images/frutto/banane_2.png
+    - assets/images/frutto/banane_3.png
+    - assets/images/frutto/fragola_1.png
+    - assets/images/frutto/fragola_2.png
+    - assets/images/frutto/fragola_3.png
+    - assets/images/frutto/fragola_4.png
+    - assets/images/frutto/fragola_5.png
+    - assets/images/frutto/kiwi_1.png
+    - assets/images/frutto/kiwi_2.png
+    - assets/images/frutto/kiwi_3.png
+    - assets/images/frutto/mango_1.png
+    - assets/images/frutto/mango_2.png
+    - assets/images/frutto/mela_1.png
+    - assets/images/frutto/mela_2.png
+    - assets/images/frutto/mela_3.png
+    - assets/images/frutto/pesche_1.png
+    - assets/images/frutto/pesche_2.png
+    - assets/images/frutto/avocado.png
+    - assets/images/frutto/grapes.png
+    - assets/images/frutto/lemon.png
+    - assets/images/frutto/orange.png
+    - assets/images/frutto/greenapple.png
+    - assets/images/flags/it.png
+    - assets/images/flags/an.png
+    - assets/images/flags/fr.png
+    - assets/images/flags/es.png
+
+
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

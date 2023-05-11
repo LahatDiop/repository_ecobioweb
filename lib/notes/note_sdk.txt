@@ -1,0 +1,7 @@
+    • Android SDK at C:\Users\lahat\AppData\Local\Android\Sdk
+    • Platform android-TiramisuPrivacySandbox, build-tools 33.0.0
+    • ANDROID_HOME = C:\Users\lahat\AppData\Local\Android\Sdk
+    • ANDROID_SDK_ROOT = C:\Users\lahat\AppData\Local\Android\Sdk
+    • Java binary at: E:\Android\Android Studio\jre\bin\java
+    • Java version OpenJDK Runtime Environment (build 11.0.13+0-b1751.21-8125866)
+    • All Android licenses accepted.
