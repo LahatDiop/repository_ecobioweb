@@ -19,7 +19,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.2 <3.0.0'
+  sdk: '3.1.0-63.1.beta'
+  #sdk: '2.17.0-266.8.beta'
+  #sdk: '^3.1.0-63.1.beta'
+  #sdk: ">=3.11.0-0.1.pre <3.1.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -43,14 +46,10 @@ dependencies:
   shared_preferences: ^2.1.0
   flutter_login: ^4.1.1
   flutter_fadein: ^2.0.0
-  animated_text_kit: ^4.2.2
   intl: ^0.18.0
   flutter_session_manager: ^1.0.3
-  moor_generator: ^4.6.0+1
-  moor_flutter: ^4.1.0
   path_provider: ^2.0.14
-  path: ^1.8.2
-  moor: ^4.6.1+1
+  path: ^1.8.1
   sqlite3_flutter_libs: ^0.5.13
   drift_sqflite: ^1.0.0
   drift: ^1.7.1
@@ -58,10 +57,7 @@ dependencies:
   logging_manager: ^2.3.1
   flutter_secure_storage: ^8.0.0
   sqflite: ^2.2.8
-  http: ^0.13.6
   clay_containers: ^0.3.2
-  animations: ^2.0.7
-  flutter_slidable: ^3.0.0
   dotted_border: ^2.0.0+3
   localstorage: ^4.0.1+2
   url_launcher: ^6.1.10
@@ -70,11 +66,17 @@ dependencies:
   email_validator: ^2.1.17
   image_picker: ^0.8.7+4
   string_validator: ^1.0.0
-  json_serializable: ^6.5.4
   ffi: ^2.0.1
   reflectable: ^3.0.10
   source_gen: ^1.2.6
-  #font_awesome_flutter: ^9.0.0-nullsafety
+  quiver: ^3.2.1
+  http: ^0.13.6
+  flutter_slidable: ^3.0.0
+  animations: ^2.0.7
+  animated_text_kit: ^4.2.2
+  moor_generator: ^4.6.0+1
+  moor: ^4.6.1+1
+  moor_flutter: ^4.1.0
   #flutter_signin_button: ^2.0.0-nullsafety.0
 
 dev_dependencies:
@@ -86,8 +88,9 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
   build_runner: ^2.3.3
+  #json_serializable: ^6.5.4
+  flutter_lints: ^2.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

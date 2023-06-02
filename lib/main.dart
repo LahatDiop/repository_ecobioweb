@@ -6,7 +6,7 @@ import 'package:ecobioweb/test/dog_test/db_sqllite_services.dart';
 import 'package:ecobioweb/test/dog_test/dog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_session_manager/flutter_session_manager.dart';
-import 'package:moor_generator/moor_generator.dart';
+//import 'package:moor_generator/moor_generator.dart';
 
 import 'database/connection_postgreSql.dart';
 

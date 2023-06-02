@@ -228,8 +228,6 @@ cache\dart-sdk
 C:\Users\lahat\AppData\Local\Pub
 
 Error: No pubspec.yaml file found.
-
-
 *****************************CLEAN CACHE REPAIR*****************************
 To clear the global PUB_CACHE, run:
 
@@ -249,7 +247,9 @@ flutter pub cache repair
 ********************************************************
 ERRORE : Could not launch engine with configuration.
 
-error: import of dart:mirrors is not supported in the current Dart runtime
+error: import of dartddd:mirrorsd is not supported in the current Dart runtime
+
+https://stackoverflow.com/questions/73320160/e-flutter-24350-errorflutter-shell-common-shell-cc93-dart-error-error
 
 I had same problem when I was back to stable channel that used an old engine respect to master channel.
 
@@ -259,3 +259,24 @@ flutter channel master
 flutter upgrade
 
 ****************************************************
+
+# upgrade flutter in channel stable
+flutter channel stable
+flutter upgrade
+
+# upgrade flutter pub packages
+flutter pub outdated
+flutter pub upgrade
+----------------------------------
+
+Running "flutter pub get" in ecobioweb...
+Because every version of flutter_test from sdk depends on path 1.8.1 and ecobioweb depends on path ^1.8.2, flutter_test from sdk is forbidden.
+So, because ecobioweb depends on flutter_test from sdk, version solving failed.
+pub get failed (1; So, because ecobioweb depends on flutter_test from sdk, version solving failed.)
+
+I solved for me. Run this command:
+
+dart pub upgrade --null-safety
+This command upgrade all libraries to null-safety versions. After optimize your codes for null-safety. You can see only upgradable libraries when this command run:
+
+dart pub upgrade --null-safety --dry-run

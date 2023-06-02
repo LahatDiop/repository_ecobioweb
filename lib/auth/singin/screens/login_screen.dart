@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 
+import 'package:ecobioweb/shopping/screens/shopping_cart_screen.dart';
 import 'package:ecobioweb/users/models/user_settings.dart';
 import 'package:ecobioweb/users/models/users_data.dart';
 import 'package:flutter/material.dart';
@@ -238,7 +239,8 @@ class LoginScreen extends StatelessWidget {
       },
       onSubmitAnimationCompleted: () {
         Navigator.of(context).pushReplacement(FadePageRoute(
-          builder: (context) => const DashboardScreen(),
+          builder: (context) => const ShoppingCartScreen(),
+          //builder: (context) => const DashboardScreen(),
         ));
       },
       onRecoverPassword: (name) {

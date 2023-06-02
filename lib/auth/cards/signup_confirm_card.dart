@@ -9,7 +9,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_login/src/widget_helper.dart';
 import 'package:flutter_login/src/widgets/animated_text_form_field.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_login/src/utils/text_field_utils.dart';
 import 'package:flutter_login/src/widgets/animated_button.dart';
 
 import '../singin/models/login_data.dart';
