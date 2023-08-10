@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
-import '../../auth/singin/models/app_singin.dart';
 import '../../home/screens/wishListScreen.dart';
+import '../../settings/auth/singin/models/app_singin.dart';
 
 /*
 import 'package:flutter_ecommerce_app/main.dart';
@@ -12,6 +11,8 @@ import 'package:flutter_ecommerce_app/components/AppSignIn.dart';
 */
 
 class DrawerWidget extends StatefulWidget {
+  const DrawerWidget({super.key});
+
   @override
   _DrawerWidgetState createState() => _DrawerWidgetState();
 }

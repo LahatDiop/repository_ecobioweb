@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
-import '../../auth/singin/models/app_singin.dart';
+import '../../settings/auth/singin/models/app_singin.dart';
 
 Widget appBarWidget(context) {
   return AppBar(

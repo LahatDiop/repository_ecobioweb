@@ -12,9 +12,10 @@ import 'package:intl/intl.dart';
 
 // import '../../../animation/fade_animation.dart';
 // import '../../../payment/screens/payment.dart';
-import '../../payment/screens/payment.dart';
+
 import '../../products/components/product.dart';
 import '../../products/screen/product_view.dart';
+import '../../settings/payment/screens/payment.dart';
 
 /*
 import 'package:day34/animation/FadeAnimation.dart';
@@ -191,9 +192,9 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
        //   1.2,
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
+            child: const Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const <Widget>[
+              children: <Widget>[
                 //Shipping
                 Text('Trasporto', style: TextStyle(fontSize: 20)),
                 Text(' 5.99 €',

@@ -7,8 +7,8 @@ import 'package:sqflite/sqflite.dart';
 
 
 
-class conectionDbSqlLite{
-  var execut=conectionDbSqlLiteParam();
+class ConnectionSqlLite{
+  var execute=conectionDbSqlLiteParam();
 }
 
 
@@ -22,7 +22,8 @@ void conectionDbSqlLiteParam() async {
     // `path` package is best practice to ensure the path is correctly
     // constructed for each platform.
     // join(await getDatabasesPath(), 'doggie_database.db'),
-    join(await getDatabasesPath(), '../../assets/database/ecobio_data.db'),
+    // join(await getDatabasesPath(), '../../assets/database/ecobio_data.db'),
+    join(await getDatabasesPath(), '../../assets/database/ecobio.sqlite'),
     // When the database is first created, create a table to store dogs.
     onCreate: (db, version) {
       // Run the CREATE TABLE statement on the database.

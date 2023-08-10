@@ -1,13 +1,13 @@
 // import 'dart:io';
-import 'dart:io';
 
 import 'package:logging_manager/logging_manager.dart';
-import 'package:moor/moor.dart';
+import 'package:moor_flutter/moor_flutter.dart';
 // import 'package:moor_flutter/moor_flutter.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' as path;
-import 'package:drift/drift.dart';
-import 'package:drift/native.dart';
+
+
+
+import '../../settings/admin/components/items_setting.dart';
+
 import '../connection_postgreSql.dart';
 import 'orders.dart';
 import 'package:ecobioweb/database/moor/user_data.dart';
@@ -25,11 +25,14 @@ part 'app_database.g.dart';
  //   tables: TableList.tables,
  //   daos: DaoList.daos,
  // )
+// Table list to generate .dart
+// @DriftDatabase(
+//   tables: [Orders,UserFonction]
+// )
 
-@DriftDatabase(
-  tables: [Orders,UserFonction]
+@UseMoor(
+    tables: [Orders,UserFonction,ItemSetting]
 )
-
 
 /// connection PostgreSql
 // class AppDatabase extends _$AppDatabase {
@@ -40,16 +43,34 @@ part 'app_database.g.dart';
 // }
 
 /// connection SqlLIte
-class AppDatabase extends _$AppDatabase {
+class AppDatabase extends _$AppDatabase implements DatabaseConnectionUser {
 
   final loggingManager = LoggingManager(logger: Logger('AppDatabase'));
 
- //  AppDatabase() : super(FlutterQueryExecutor.inDatabaseFolder(path: "ecobio.sqlite", logStatements: true));
- //   AppDatabase() : super(_openConnection());
-  AppDatabase() : super(_openConnectionPostgreSQL());
+   AppDatabase() : super(FlutterQueryExecutor.inDatabaseFolder(path: "ecobio.sqlite", logStatements: true));
+  //  AppDatabase() : super(_openConnection());
+ // AppDatabase() : super(_openConnectionPostgreSQL());
   @override
   int get schemaVersion => 1;
 
+
+  Future<List<Order>> getAllOrder() => select(orders).get();
+  Stream<List<Order>> watchAllOrder() => select(orders).watch();
+  Future insertNewOrder(Order order) => into(orders).insert(order);
+  Future updateOrder(Order order) => update(orders).replace(order) ;
+  Future deleteOrder(Order order) => delete(orders).delete(order);
+
+  Future<Order> getorderById(int id){
+    return (select(orders)..where((tbl) => orders.id.equals(id))).getSingle();
+  }
+
+  Future < void > deleteOrderById(int id) {
+    return (delete(orders)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
+  // Future < void > updateOrderById(int id) {
+  //   return (update(orders)..where((tbl) =>tbl.id.equals(id))).replace(entity);
+  // }
 }
 
 LazyDatabase _openConnectionPostgreSQL() {
@@ -59,13 +80,13 @@ LazyDatabase _openConnectionPostgreSQL() {
     return connection.createState().initDatabaseConnection();
   });
 }
-  LazyDatabase _openConnection() {
-    return LazyDatabase(() async {
-      final dbFolder = await getApplicationDocumentsDirectory();
-      final file = File(path.join(dbFolder.path, 'ecobio.sqlite'));
-      return NativeDatabase(file);
-    });
-  }
+  // LazyDatabase _openConnection() {
+  //   return LazyDatabase(() async {
+  //     final dbFolder = await getApplicationDocumentsDirectory();
+  //     final file = File(path.join(dbFolder.path, 'ecobio.sqlite'));
+  //     return NativeDatabase(file);
+  //   });
+  // }
 
 
 

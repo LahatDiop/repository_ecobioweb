@@ -11,10 +11,10 @@ class BottomNavBarWidget extends StatefulWidget {
 class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
   @override
   Widget build(BuildContext context) {
-    int _selectedIndex = 0;
+    int selectedIndex = 0;
     void _onItemTapped(int index) {
       setState(() {
-        _selectedIndex = index;
+        selectedIndex = index;
         navigateToScreens(index);
       });
     }
@@ -60,7 +60,7 @@ class _BottomNavBarWidgetState extends State<BottomNavBarWidget> {
           */
         ),
       ],
-      currentIndex: _selectedIndex,
+      currentIndex: selectedIndex,
       selectedItemColor: const Color(0xFFAA292E),
       onTap: _onItemTapped,
     );

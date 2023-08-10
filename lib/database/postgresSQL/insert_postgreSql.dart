@@ -5,10 +5,11 @@ import 'dart:async';
 import 'package:clay_containers/constants.dart';
 import 'package:flutter/material.dart';
 
-import '../../auth/models/model_user.dart';
+
 import '../../commonWidgets/buttons.dart';
 import '../../commonWidgets/clay.dart';
 import '../../commonWidgets/form_text_field.dart';
+import '../../settings/auth/models/model_user.dart';
 
 // import '../../auth/models/model_user.dart';
 // import '../../auth/shared_widgets/buttons.dart';
@@ -197,15 +198,15 @@ class _InsertPostgreSqlState extends State<InsertPostgreSql>
   Widget build1(BuildContext context) {
     // ignore: unnecessary_new
     return new Scaffold(
-        appBar: new AppBar(
+        appBar: AppBar(
             title: const Text("Input Text"),
             backgroundColor: Colors.deepOrange),
-        body: new Container(
-            child: new Center(
-                child: new Column(
+        body: Container(
+            child: Center(
+                child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-              new TextField(
+              TextField(
                   decoration: const InputDecoration(hintText: "Email"),
                   //onChanged is called whenever we add or delete something on Text Field
                   onSubmitted: (String email) {
@@ -218,7 +219,7 @@ class _InsertPostgreSqlState extends State<InsertPostgreSql>
                   }),
 
               //displaying input text
-              new Text(result)
+              Text(result)
             ]))));
   }
 
@@ -325,7 +326,7 @@ class _InsertPostgreSqlState extends State<InsertPostgreSql>
             border: Border.all(
                 color: Colors.white, width: 1.0, style: BorderStyle.solid),
             borderRadius: const BorderRadius.all(
-              const Radius.circular(10.0),
+              Radius.circular(10.0),
             ),
             gradient: const LinearGradient(
               begin: Alignment.centerLeft,
@@ -516,7 +517,7 @@ class _InsertPostgreSqlState extends State<InsertPostgreSql>
                 ),
                 const Text(
                   "Open Shop",
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
                     fontSize: 23.0,
                     fontStyle: FontStyle.italic,
@@ -530,10 +531,10 @@ class _InsertPostgreSqlState extends State<InsertPostgreSql>
                 ),
                 StandardElevatedButton(
                   style: const ButtonStyle(),
+                  onPressed: showWidget,
                   child: const Text(
                     "Create",
                   ),
-                  onPressed: showWidget,
                 ),
                 Visibility(
                   maintainSize: true,
@@ -631,7 +632,7 @@ class _InsertPostgreSqlState extends State<InsertPostgreSql>
                             style: const ButtonStyle(),
                             child: const Text(
                               "Register",
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 19.0,
                                 fontStyle: FontStyle.italic,
                                 fontWeight: FontWeight.bold,
@@ -717,7 +718,7 @@ class _InsertPostgreSqlState extends State<InsertPostgreSql>
                 ),
                 content: const Text(
                   "Registration Failed",
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0,
                     fontStyle: FontStyle.italic,
@@ -883,7 +884,7 @@ class _InsertPostgreSqlState extends State<InsertPostgreSql>
                   color: Colors.green, width: 0.5, style: BorderStyle.solid),
               content: const Text(
                 "Register Successful",
-                style: const TextStyle(
+                style: TextStyle(
                   color: Colors.black,
                   fontSize: 18.0,
                   fontStyle: FontStyle.italic,
@@ -911,7 +912,7 @@ class _InsertPostgreSqlState extends State<InsertPostgreSql>
                     color: Colors.red, width: 0.5, style: BorderStyle.solid),
                 content: const Text(
                   "Register Failed",
-                  style: const TextStyle(
+                  style: TextStyle(
                     color: Colors.black,
                     fontSize: 18.0,
                     fontStyle: FontStyle.italic,

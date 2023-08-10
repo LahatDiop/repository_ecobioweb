@@ -35,7 +35,7 @@ class FormTextFieldStandard extends StatelessWidget {
   final Function()? onEditingComplete;
   final String? tooltip;
   final Function()? onPressed;
-  RegExp? regExp = new RegExp(r'^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$');
+  RegExp? regExp = RegExp(r'^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$');
   Iterable<RegExpMatch>? matches;
   final String? Function(String?)? validate;
 
@@ -57,7 +57,7 @@ class FormTextFieldStandard extends StatelessWidget {
       focusNode: FocusNode(),
       decoration: InputDecoration(
         labelText: formTextFieldLabel,
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
             color: Colors.black, fontSize: 19.0, fontStyle: FontStyle.italic),
         //hintText: 'Type Your Password',
         //hintStyle: TextStyle(color: Colors.black87,fontSize: 16.0),
@@ -73,7 +73,7 @@ class FormTextFieldStandard extends StatelessWidget {
             alignment: Alignment.centerRight,
             onPressed: onPressed,
           ),*/
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.green,
             width: 1.0,
@@ -82,15 +82,15 @@ class FormTextFieldStandard extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           gapPadding: 4.0,
         ),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
             color: Colors.orangeAccent,
             width: 1.0,
             style: BorderStyle.solid,
           ),
         ),
-        errorStyle: TextStyle(color: Colors.black),
-        errorBorder: OutlineInputBorder(
+        errorStyle: const TextStyle(color: Colors.black),
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(
               color: Colors.red, width: 1.0, style: BorderStyle.solid),
         ),
@@ -104,7 +104,7 @@ class FormTextFieldStandard extends StatelessWidget {
         color: fontColor,
         fontStyle: FontStyle.italic,
       ),
-      strutStyle: StrutStyle(),
+      strutStyle: const StrutStyle(),
       textAlign: TextAlign.start,
       textAlignVertical: TextAlignVertical.center,
       autocorrect: true,
@@ -114,7 +114,7 @@ class FormTextFieldStandard extends StatelessWidget {
       /*(val)=> !val.contains(pattern) ||  val.isEmpty? 'Invalid Charachters': null,*/
       //onSaved: (val)=> _text = val ,
       toolbarOptions:
-          ToolbarOptions(copy: true, cut: true, paste: true, selectAll: true),
+          const ToolbarOptions(copy: true, cut: true, paste: true, selectAll: true),
       autofocus: false,
       onChanged: onChanged,
       onEditingComplete: onEditingComplete,
@@ -159,7 +159,7 @@ class FormTextFieldStandardObsecured extends StatelessWidget {
   final Function()? onEditingComplete;
   final String? tooltip;
   final Function()? onPressed;
-  RegExp? regExp = new RegExp(r'^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$');
+  RegExp? regExp = RegExp(r'^[a-zA-Z0-9_]+( [a-zA-Z0-9_]+)*$');
   Iterable<RegExpMatch>? matches;
   final String? Function(String?)? validate;
 
@@ -181,7 +181,7 @@ class FormTextFieldStandardObsecured extends StatelessWidget {
       focusNode: FocusNode(),
       decoration: InputDecoration(
         labelText: formTextFieldLabel,
-        labelStyle: TextStyle(
+        labelStyle: const TextStyle(
             color: Colors.black, fontSize: 19.0, fontStyle: FontStyle.italic),
         //hintText: 'Type Your Password',
         //hintStyle: TextStyle(color: Colors.black87,fontSize: 16.0),
@@ -197,7 +197,7 @@ class FormTextFieldStandardObsecured extends StatelessWidget {
             alignment: Alignment.centerRight,
             onPressed: onPressed,
           ),*/
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderSide: BorderSide(
             color: Colors.green,
             width: 1.0,
@@ -206,15 +206,15 @@ class FormTextFieldStandardObsecured extends StatelessWidget {
           borderRadius: BorderRadius.all(Radius.circular(10.0)),
           gapPadding: 4.0,
         ),
-        focusedBorder: UnderlineInputBorder(
+        focusedBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
             color: Colors.orangeAccent,
             width: 1.0,
             style: BorderStyle.solid,
           ),
         ),
-        errorStyle: TextStyle(color: Colors.black),
-        errorBorder: OutlineInputBorder(
+        errorStyle: const TextStyle(color: Colors.black),
+        errorBorder: const OutlineInputBorder(
           borderSide: BorderSide(
               color: Colors.red, width: 1.0, style: BorderStyle.solid),
         ),
@@ -228,7 +228,7 @@ class FormTextFieldStandardObsecured extends StatelessWidget {
         color: fontColor,
         fontStyle: FontStyle.italic,
       ),
-      strutStyle: StrutStyle(),
+      strutStyle: const StrutStyle(),
       textAlign: TextAlign.start,
       textAlignVertical: TextAlignVertical.center,
       autocorrect: true,
@@ -238,7 +238,7 @@ class FormTextFieldStandardObsecured extends StatelessWidget {
       /*(val)=> !val.contains(pattern) ||  val.isEmpty? 'Invalid Charachters': null,*/
       //onSaved: (val)=> _text = val ,
       toolbarOptions:
-      ToolbarOptions(copy: true, cut: true, paste: true, selectAll: true),
+      const ToolbarOptions(copy: true, cut: true, paste: true, selectAll: true),
       autofocus: false,
       onChanged: onChanged,
       onEditingComplete: onEditingComplete,

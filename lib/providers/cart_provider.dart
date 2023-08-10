@@ -35,7 +35,7 @@ class CartItem {
 class Cart with ChangeNotifier {
    Map<String, CartItem> _cartItems = {};
 
-   final LocalStorage storage = new LocalStorage('localeStporage_app');
+   final LocalStorage storage = LocalStorage('localeStporage_app');
 
    // list index single quantiti in the cart
  // List<int> quantityProdList= <int>[];
@@ -295,16 +295,16 @@ class Cart with ChangeNotifier {
   }
 
   /// GET DATA FROM LOCAL STORAGE
-  void getItemsFromLocalstorage(String codeProduct, _cartItems){
+  void getItemsFromLocalstorage(String codeProduct, cartItems){
 
     final codeProd= storage.getItem(codeProduct);
-    final mapCartItems=  storage.getItem(_cartItems);
+    final mapCartItems=  storage.getItem(cartItems);
 
     //if(! json.decode(storage.getItem('info') ).isNull){
       Map<String,dynamic> info =json.decode(storage.getItem('info'));
 
-      final info_codeProd = info['codeProde'];
-      final info_cartItems = info['_cartItems'];
+      final infoCodeprod = info['codeProde'];
+      final infoCartitems = info['_cartItems'];
 
   }
 
@@ -317,8 +317,8 @@ class Cart with ChangeNotifier {
   //  if(! json.decode(storage.getItem('info') ).isNull){
       Map<String,dynamic> info =json.decode(storage.getItem('info'));
 
-      final info_codeProd = info['codeProduct'];
-      final info_cartItems = info[mapCartItems];
+      final infoCodeprod = info['codeProduct'];
+      final infoCartitems = info[mapCartItems];
    // }
 
 

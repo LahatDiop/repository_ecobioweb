@@ -38,8 +38,8 @@ class _HomeListViewAgriculureScreeState
 
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
-    final _height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
    // Axis.vertical;
     //4;
@@ -376,7 +376,7 @@ class _HomeListViewAgriculureScreeState
                   new SizedBox(
                       //   height: 300.0,
                       height: 280.0,
-                      width: _width,
+                      width: width,
                       child: headerListBioAgriculture),
 
                   new Expanded(
@@ -465,7 +465,7 @@ class _HomeListViewAgriculureScreeState
                   new SizedBox(
                       // height: 300.0,
                       height: 250.0,
-                      width: _width,
+                      width: width,
                       child: headerListApicoltura),
                   new Expanded(
                       child: ListView.builder(itemBuilder: (context, index) {
@@ -527,7 +527,7 @@ class _HomeListViewAgriculureScreeState
                   new SizedBox(
                       // height: 300.0,
                       height: 280.0,
-                      width: _width,
+                      width: width,
                       child: headerListBioEdilizia),
                   new Expanded(
                       child: ListView.builder(itemBuilder: (context, index) {
@@ -586,7 +586,7 @@ class _HomeListViewAgriculureScreeState
       child: new Stack(
         children: <Widget>[
           new CustomPaint(
-            size: new Size(_width, _height),
+            size: new Size(width, height),
             //painter: new Background(),
             painter: new Background(),
           ),

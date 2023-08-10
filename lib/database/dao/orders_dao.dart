@@ -3,33 +3,29 @@
 import '../moor/app_database.dart';
 
 
-
- @UseDao(tables: [Order])
+ //non @UseDao(tables: [Order])
 
 class OrdersDAO extends AppDatabase implements DatabaseConnectionUser{
+// class OrdersDAO extends AppDatabase {
   late Insertable<Order> entity;
 
-
-
-
-
-  Future<List<Order>> getAllOrder() => select(orders).get();
-  Stream<List<Order>> watchAllOrder() => select(orders).watch();
-  Future insertNewOrder(Order order) => into(orders).insert(order);
-  Future updateOrder(Order order) => update(orders).replace(order) ;
-  Future deleteOrder(Order order) => delete(orders).delete(order);
-
-  Future<Order> getorderById(int id){
-    return (select(orders)..where((tbl) => orders.id.equals(id))).getSingle();
-  }
-
-  Future < void > deleteOrderById(int id) {
-    return (delete(orders)..where((tbl) => tbl.id.equals(id))).go();
-  }
-
-  Future < void > updateOrderById(int id) {
-    return (update(orders)..where((tbl) =>tbl.id.equals(id))).replace(entity);
-  }
+  // Future<List<Order>> getAllOrder() => select(orders).get();
+  // Stream<List<Order>> watchAllOrder() => select(orders).watch();
+  // Future insertNewOrder(Order order) => into(orders).insert(order);
+  // Future updateOrder(Order order) => update(orders).replace(order) ;
+  // Future deleteOrder(Order order) => delete(orders).delete(order);
+  //
+  // Future<Order> getorderById(int id){
+  //   return (select(orders)..where((tbl) => orders.id.equals(id))).getSingle();
+  // }
+  //
+  // Future < void > deleteOrderById(int id) {
+  //   return (delete(orders)..where((tbl) => tbl.id.equals(id))).go();
+  // }
+  //
+  // Future < void > updateOrderById(int id) {
+  //   return (update(orders)..where((tbl) =>tbl.id.equals(id))).replace(entity);
+  // }
 
 
 }

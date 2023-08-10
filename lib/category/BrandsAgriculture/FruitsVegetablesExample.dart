@@ -133,7 +133,7 @@ class _FruitsVegetablesExampleState extends State<FruitsVegetablesExample>
           height: MediaQuery.of(context).size.height - 375.0,
           child: TabBarView(
             controller: tabController,
-            children: <Widget>[
+            children: const <Widget>[
               FruitsPage(),
               FruitsPage(),
               FruitsPage(),
@@ -221,7 +221,7 @@ class _FruitsVegetablesExampleState extends State<FruitsVegetablesExample>
                           bottomRight: Radius.circular(7.0),
                           bottomLeft: Radius.circular(7.0))),
                   child: Center(
-                      child: Text(discount + '%',
+                      child: Text('$discount%',
                           style: const TextStyle(
                               fontFamily: 'Quicksand',
                               fontSize: 9.0,

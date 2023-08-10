@@ -143,21 +143,21 @@ class _HomeListViewAgriculureScreeState
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Km 0"),
+                      child: Text("Km 0"),
                     ),
                     OutlinedButton(
                       onPressed: null,
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Integrato"),
+                      child: Text("Integrato"),
                     ),
                     OutlinedButton(
                       onPressed: null,
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Naturale"),
+                      child: Text("Naturale"),
                     ),
                     /* OutlineButton(onPressed: null, child: Text("Km 0")),
                     Padding(padding: EdgeInsets.all(5.00)),
@@ -188,21 +188,21 @@ class _HomeListViewAgriculureScreeState
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Miele"),
+                      child: Text("Miele"),
                     ),
                     OutlinedButton(
                       onPressed: null,
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Prodotti"),
+                      child: Text("Prodotti"),
                     ),
                     OutlinedButton(
                       onPressed: null,
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Materiali"),
+                      child: Text("Materiali"),
                     ),
 
                     /*  OutlineButton(onPressed: null, child: Text("Miele")),
@@ -234,21 +234,21 @@ class _HomeListViewAgriculureScreeState
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Materiali"),
+                      child: Text("Materiali"),
                     ),
                     OutlinedButton(
                       onPressed: null,
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Isolamento"),
+                      child: Text("Isolamento"),
                     ),
                     OutlinedButton(
                       onPressed: null,
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Materiali"),
+                      child: Text("Materiali"),
                     ),
                     /*  OutlineButton(onPressed: null, child: Text("Materiali")),
                     Padding(padding: EdgeInsets.all(5.00)),
@@ -279,21 +279,21 @@ class _HomeListViewAgriculureScreeState
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("Hotel"),
+                      child: Text("Hotel"),
                     ),
                     OutlinedButton(
                       onPressed: null,
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("R"),
+                      child: Text("R"),
                     ),
                     OutlinedButton(
                       onPressed: null,
                       style: ButtonStyle(
                           // shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
                           ),
-                      child: const Text("B&B"),
+                      child: Text("B&B"),
                     ),
                     /*  OutlineButton(onPressed: null, child: Text("Hotel")),
                     Padding(padding: EdgeInsets.all(5.00)),

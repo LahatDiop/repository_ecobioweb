@@ -34,7 +34,7 @@ class _ConnectionPostgresSqlState extends State<ConnectionPostgresSql> {
   //var connection = PostgreSQLConnection("localhost", 5432, "ecobio", username: "postgres", password: "root");
 
   AppDatabase() {
-    connection = (connection == null || connection.isClosed == true
+    connection = (connection.isClosed == true
         ? PostgreSQLConnection(
             // for external device like mobile phone use domain.com or
             // your computer machine IP address (i.e,192.168.0.1,etc)
@@ -65,7 +65,7 @@ class _ConnectionPostgresSqlState extends State<ConnectionPostgresSql> {
     String password = "";
     String fName = "";
     String lName = "";
-    return MaterialApp(
+    return const MaterialApp(
         //  initialRoute: '/login',
         // routes: {
         // '/login':(context)=> Login(),

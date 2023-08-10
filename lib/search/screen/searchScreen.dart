@@ -13,6 +13,9 @@ class _SearchScreenState extends State<SearchScreen> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Theme(
+          data: Theme.of(context).copyWith(
+            primaryColor: Colors.grey[600],
+          ),
           child: TextField(
             decoration: InputDecoration(
               border: const OutlineInputBorder(
@@ -29,9 +32,6 @@ class _SearchScreenState extends State<SearchScreen> {
               hintText: "What would your like to buy?",
             ),
             autofocus: false,
-          ),
-          data: Theme.of(context).copyWith(
-            primaryColor: Colors.grey[600],
           )),
     );
   }

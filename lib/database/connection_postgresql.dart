@@ -77,7 +77,7 @@ class ConnectionPostgresSqlState extends State<ConnectionPostgresSql> {
     String password = "";
     String fName = "";
     String lName = "";
-    return MaterialApp(
+    return const MaterialApp(
         //  initialRoute: '/login',
         // routes: {
         // '/login':(context)=> Login(),

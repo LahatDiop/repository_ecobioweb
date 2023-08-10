@@ -1,7 +1,8 @@
 
 
-import '../../auth/models/term_of_service.dart';
-import 'dart:convert';
+
+
+import '../../settings/auth/models/term_of_service.dart';
 
 class UserData {
   String? id;
@@ -97,16 +98,16 @@ class UserData {
 
 
   Map<String, dynamic> toJsonUserData() {
-    final Map<String, dynamic> userData = Map<String, dynamic>();
+    final Map<String, dynamic> userData = <String, dynamic>{};
 
     userData["id"] = id;
-    userData["name"] = this.name;
-    userData["password"] = this.password;
-    userData["about"] = this.aboutMeDescription;
-    userData["phone"] = this.phone;
-    userData["imagePath"] = this.image;
-    userData["termsOfService"] = this.termsOfService;
-    userData["additionalSignupData"] = this.additionalSignupData;
+    userData["name"] = name;
+    userData["password"] = password;
+    userData["about"] = aboutMeDescription;
+    userData["phone"] = phone;
+    userData["imagePath"] = image;
+    userData["termsOfService"] = termsOfService;
+    userData["additionalSignupData"] = additionalSignupData;
     return userData;
   }
 

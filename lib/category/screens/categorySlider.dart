@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import '../../commonUtils/urls.dart';
@@ -36,7 +35,7 @@ class _CategoryPageState extends State<CategoryPage> {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.waiting:
-            return CircularProgress();
+            return const CircularProgress();
           default:
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');

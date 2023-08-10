@@ -1,8 +1,12 @@
 
 import 'package:flutter/material.dart';
-import '../../auth/singin/models/app_singin.dart';
+
+import '../../settings/auth/singin/models/app_singin.dart';
+
 
 class AppSingUp extends StatelessWidget {
+
+
   const AppSingUp({Key? key}) : super(key: key);
 
   @override
@@ -190,6 +194,8 @@ class AppSingUp extends StatelessWidget {
                   ),
                   Container(
                     width: double.infinity,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
                     child: ElevatedButton(
                       // padding: const EdgeInsets.all(17.0),
                       onPressed: () {},
@@ -209,8 +215,6 @@ class AppSingUp extends StatelessWidget {
                               color: Color.fromARGB(255, 78, 233, 142))),
                               */
                     ),
-                    decoration: const BoxDecoration(
-                        shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
                   ),
                   const SizedBox(
                     height: 10,
@@ -258,6 +262,8 @@ class AppSingUp extends StatelessWidget {
                       */
                       child: Container(
                         width: double.infinity,
+                        decoration: const BoxDecoration(
+                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
                         //child: RaisedButton(
                         child: ElevatedButton(
                           // padding: const EdgeInsets.all(17.0),
@@ -278,8 +284,6 @@ class AppSingUp extends StatelessWidget {
                                   color: Color.fromARGB(255, 78, 233, 142))),
                                   */
                         ),
-                        decoration: const BoxDecoration(
-                            shape: BoxShape.circle, color: Color(0xFFF2F3F7)),
                       ),
                     ),
                   ],

@@ -8,6 +8,9 @@ class SearchWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Theme(
+          data: Theme.of(context).copyWith(
+            primaryColor: Colors.grey[600],
+          ),
           child: TextField(
             decoration: InputDecoration(
               border: const OutlineInputBorder(
@@ -24,9 +27,6 @@ class SearchWidget extends StatelessWidget {
               hintText: "What would your like to buy?",
             ),
             autofocus: false,
-          ),
-          data: Theme.of(context).copyWith(
-            primaryColor: Colors.grey[600],
           )),
     );
   }

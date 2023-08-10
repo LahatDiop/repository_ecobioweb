@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../localisation/translation/components/appLocalizations.dart';
+import '../../settings/localisation/translation/components/appLocalizations.dart';
+
+
 
 class FruitsPage extends StatefulWidget {
   const FruitsPage({super.key});

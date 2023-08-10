@@ -18,7 +18,7 @@ class StandardElevatedButton extends StatelessWidget {
           if (states.contains(MaterialState.hovered)) {
             return const TextStyle();
           }
-          return TextStyle();
+          return const TextStyle();
         }),
         foregroundColor: MaterialStateProperty.resolveWith<Color>((states) {
           if (states.contains(MaterialState.pressed)) {
@@ -39,7 +39,7 @@ class UserAccountImageButton extends StatelessWidget {
   final Widget? icon;
   //final IconData buttonIcon;
 
-  const UserAccountImageButton({this.icon,this.onPressed}) ;
+  const UserAccountImageButton({super.key, this.icon,this.onPressed}) ;
 
   @override
   Widget build(BuildContext context) {

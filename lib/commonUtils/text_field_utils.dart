@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
 
-import '../auth/models/login_user_type.dart';
+
+import '../settings/auth/models/login_user_type.dart';
 
 
 class TextFieldUtils {

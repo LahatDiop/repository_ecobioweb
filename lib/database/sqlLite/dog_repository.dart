@@ -17,7 +17,7 @@ class ArticleRepository {
     Database database = ConnectionSqLite().connectionParam;
 
     // Remove the Dog from the database.
-    await database?.delete(
+    await database.delete(
       'dogs',  // name table
       // Use a `where` clause to delete a specific dog.
       where: 'id = ?',

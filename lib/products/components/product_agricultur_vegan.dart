@@ -1,4 +1,3 @@
-import 'package:flutter_session_manager/flutter_session_manager.dart';
 
 class Product {
   int id;

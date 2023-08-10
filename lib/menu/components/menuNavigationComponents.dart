@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../category/widgets/homeListElementsMenu.dart';
 import '../../home/screens/wishListScreen.dart';
-import '../../profile/screens/profileSettingScreen.dart';
 import '../../search/screen/searchScreen.dart';
+import '../../settings/admin/screens/setting_screen.dart';
 import '../../shopping/screens/shopping_cart_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
@@ -66,7 +66,7 @@ class _HomePageAppSetting extends State<MenuNavigationComponents> {
     // const HomeScreen()
 
     //PROFILE 5
-    const ProfileSettingScreen(),
+     SettingScreen(),
 
     // ProfilePage(),
   ];
@@ -85,6 +85,21 @@ class _HomePageAppSetting extends State<MenuNavigationComponents> {
 
       initialIndex: 0, // home page initial = 0
       child: Scaffold(
+
+        // appBar: AppBar(
+        //  // title: Text(AppLocalizations.translate("back").toString()),
+        //   // leading: const BackButton(color: Colors.black),
+        // //  backgroundColor: const Color.fromARGB(255, 50, 172, 34),
+        //   leading: BackButton(
+        //     color: Colors.black,
+        //     onPressed: () {
+        //       //Navigator.push(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
+        //       //  Navigator.pop(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
+        //       Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const HomeCategoryViewScreen()),
+        //       );
+        //     },
+        //   ),
+        // ),
         /*  appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,

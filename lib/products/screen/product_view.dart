@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../localisation/translation/components/appLocalizations.dart';
+
+import '../../settings/localisation/translation/components/appLocalizations.dart';
 import '../components/product.dart';
 
 class ProductViewPage extends StatefulWidget {
@@ -27,8 +28,8 @@ class _ProductViewPageState extends State<ProductViewPage> {
     const Color(0xFFFFC1D9),
   ];
 
-  int _selectedColor = 0;
-  int _selectedSize = 1;
+  final int _selectedColor = 0;
+  final int _selectedSize = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +69,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: const Radius.circular(30),
+                      topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
                     ),
                   ),

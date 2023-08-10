@@ -280,3 +280,7 @@ dart pub upgrade --null-safety
 This command upgrade all libraries to null-safety versions. After optimize your codes for null-safety. You can see only upgradable libraries when this command run:
 
 dart pub upgrade --null-safety --dry-run
+
+---------------------------------
+- flutter pub add flutter_localizations --sdk=flutter
+  flutter pub add intl:any

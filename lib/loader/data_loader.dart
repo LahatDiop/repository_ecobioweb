@@ -33,7 +33,7 @@ class DataLoaderAppSetting extends State<DataLoader>  with TickerProviderStateMi
   List<int> cartItemCount = [0, 0, 0, 0, 0, 0, 0, 0];
 
   Map<String, Product> mapProductsAgriBio = <String, Product>{};
-  Map <String, Product> _productItems={};
+  final Map <String, Product> _productItems={};
 
   var indexTab;
 

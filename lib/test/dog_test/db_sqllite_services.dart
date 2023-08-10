@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:postgres/postgres.dart';
-import '../../main.dart';
 import 'dog.dart';
 
 

@@ -7,8 +7,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../localisation/translation/components/appLocalizations.dart';
 import '../main.dart';
+import '../settings/localisation/translation/components/appLocalizations.dart';
 
 //void main() => runApp(Utils());
 
@@ -57,9 +57,9 @@ class Utils extends StatefulWidget {
     // return Localizations.localeOf(context).toString();
   }
 
-  void main() {
-    runApp(MyApp());
-  }
+  // void main() {
+  //   runApp(MyApp());
+  // }
 
   static String? search(BuildContext context) {
     return AppLocalizations.translate('search').toString();

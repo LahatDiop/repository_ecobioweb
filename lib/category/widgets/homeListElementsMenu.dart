@@ -1,15 +1,15 @@
+import 'package:ecobioweb/category/detailCategory/agriculture_biologique.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../home/models/background.dart';
-import '../../localisation/translation/components/appLocalizations.dart';
+import '../../settings/localisation/translation/components/appLocalizations.dart';
 import '../components/customerCategory.dart';
-import '../detailCategory/agricultureBiologique copy.dart';
-import '../detailCategory/productHome.dart';
-import '../detailCategory/agricultureIntegration.dart';
-import '../detailCategory/agricultureKmZero.dart';
-import '../detailCategory/infoProducers.dart';
-import '../detailCategory/productsBiologique.dart';
+import '../detailCategory/product_home.dart';
+import '../detailCategory/agriculture_integration.dart';
+import '../detailCategory/agriculture_km_zero.dart';
+import '../detailCategory/info_producers.dart';
+import '../detailCategory/products_biologique.dart';
 
 //https://stackoverflow.com/questions/51910725/flutter-displaying-two-listviews-on-one-screen
 
@@ -19,7 +19,10 @@ class HomeCategoryViewScreen extends StatefulWidget {
   String get title => 'Benvenuti';
 
   @override
-  _HomeCategoryViewScreenState createState() => _HomeCategoryViewScreenState();
+  //_HomeCategoryViewScreenState createState() => _HomeCategoryViewScreenState();
+  _HomeCategoryViewScreenState createState() {
+    return _HomeCategoryViewScreenState();
+  }
 }
 
 class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
@@ -31,7 +34,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
     AppLocalizations.translate('agricultureBiodynamic').toString(),
     AppLocalizations.translate('agricultureIntegration').toString(),
     AppLocalizations.translate('agricultureKmZero').toString(),
-    AppLocalizations.translate('productsBio').toString(),
+    AppLocalizations.translate('productsBiologiques').toString(),
   ];
   //BEEKEEPING APICOLTURA :"Miel",  "Cera", "Propoli", "Prodotti","Meteriali Apicultura"
   List<String> itemsBioApicoltura = [
@@ -63,8 +66,8 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _width = MediaQuery.of(context).size.width;
-    final _height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+    final height = MediaQuery.of(context).size.height;
 
     Axis.vertical;
     // 4;
@@ -127,13 +130,16 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
     final headerListBioAgriculture =  ListView.builder(
       itemBuilder: (context, index) {
-        EdgeInsets padding = index == 0
-            ? const EdgeInsets.only(
-                left: 20.0, right: 10.0, top: 4.0, bottom: 30.0)
-            : const EdgeInsets.only(
+        EdgeInsets padding;
+        if (index == 0) {
+          padding = const EdgeInsets.only(
+                left: 20.0, right: 10.0, top: 4.0, bottom: 30.0);
+        } else {
+          padding = const EdgeInsets.only(
                 left: 10.0, right: 10.0, top: 4.0, bottom: 30.0);
+        }
 
-        var itemsaBioAgriculture2 = itemsaBioAgriculture;
+       // var itemsaBioAgriculture2 = itemsaBioAgriculture;
         return  Padding(
           padding: padding,
           child:  InkWell(
@@ -159,26 +165,26 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                   AppLocalizations.translate('agricultureBiodynamic')
                       .toString()) {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => AgricultureBiodymamique(),
+                  builder: (context) => const AgricultureBiodymamique(),
                 ));
               }
               if (items[index].description ==
                   AppLocalizations.translate('agricultureIntegration')
                       .toString()) {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => AgricultureIntegration(),
+                  builder: (context) => const AgricultureIntegration(),
                 ));
               }
               if (items[index].description ==
                   AppLocalizations.translate('agricultureKmZero').toString()) {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => AgricultureKmZero(),
+                  builder: (context) => const AgricultureKmZero(),
                 ));
               }
               if (items[index].description ==
-                  AppLocalizations.translate('productsBiologique').toString()) {
+                  AppLocalizations.translate('productsBiologiques').toString()) {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => ProductsBiologique(),
+                  builder: (context) => const ProductsBiologique(),
                 ));
               } //list des producteurs agriculture biologique
               if (items[index].description ==
@@ -192,30 +198,32 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
               //  print('Card selected');
               //  }
             },
-            child: new Container(
-              decoration: new BoxDecoration(
-                borderRadius: new BorderRadius.circular(10.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
                 color: Colors.lightGreen,
                 boxShadow: [
-                  new BoxShadow(
+                  BoxShadow(
                       color: Colors.black.withAlpha(70),
                       offset: const Offset(3.0, 10.0),
                       blurRadius: 15.0)
                 ],
-                image: new DecorationImage(
-                  image: new ExactAssetImage(
-                      //   'assets/images/agriculture/img_${index % itemsaBioAgriculture.length}.png'),
-                      'images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png'),
+                image: DecorationImage(
+                  image: ExactAssetImage(
+                       //  'assets/images/agriculture/img_${index % itemsaBioAgriculture.length}.png'),
+                      // ok all
+                       './assets/images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png'),
+                    //  '/images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png'),
                   fit: BoxFit.fitHeight,
                 ),
               ),
               //height: 200.0,
               width: 160.0,
-              child: new Stack(
+              child: Stack(
                 children: <Widget>[
-                  new Align(
+                  Align(
                     alignment: Alignment.bottomCenter,
-                    child: new Container(
+                    child: Container(
                         decoration: const BoxDecoration(
                             color: Color(0xFF273A48),
                             // ignore: unnecessary_const
@@ -223,12 +231,12 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                                 bottomLeft: Radius.circular(10.0),
                                 bottomRight: Radius.circular(10.0))),
                         height: 30.0,
-                        child: new Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            new Text(
+                            Text(
                               itemsaBioAgriculture[
-                                  index % itemsaBioAgriculture2.length],
+                                  index % itemsaBioAgriculture.length],
                               style: const TextStyle(color: Colors.white),
                             )
                           ],
@@ -246,7 +254,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
     //   ------------------------  END INITE HEADER AGRICULTURE ----------------------------------
     //   ------------------------   INITE HEADER APICOLTURA ----------------------------------
-    final headerListApicoltura = new ListView.builder(
+    final headerListApicoltura = ListView.builder(
       itemBuilder: (context, index) {
         EdgeInsets padding = index == 0
             ? const EdgeInsets.only(
@@ -254,28 +262,30 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
             : const EdgeInsets.only(
                 left: 10.0, right: 10.0, top: 4.0, bottom: 30.0);
 
-        return new Padding(
+        return Padding(
           padding: padding,
-          child: new InkWell(
+          child: InkWell(
             onTap: () {
               if (kDebugMode) {
                 print('Card selected');
               }
             },
-            child: new Container(
-              decoration: new BoxDecoration(
-                borderRadius: new BorderRadius.circular(10.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
                 color: Colors.lightGreen,
                 boxShadow: [
-                  new BoxShadow(
+                  BoxShadow(
                       color: Colors.black.withAlpha(70),
                       offset: const Offset(3.0, 10.0),
                       blurRadius: 15.0)
                 ],
-                image: new DecorationImage(
-                  image: new ExactAssetImage(
-                      //'assets/images/apiculture/img_${index % itemsBioApicoltura.length}.jpg'),
-                      'images/apiculture/apiculture_${index % itemsBioApicoltura.length}.jpg'),
+                image: DecorationImage(
+                  image: ExactAssetImage(
+                    //  'assets/images/apiculture/img_${index % itemsBioApicoltura.length}.jpg'),
+                    // ok all
+                      './assets/images/apiculture/apiculture_${index % itemsBioApicoltura.length}.jpg'),
+                    //  '/images/apiculture/apiculture_${index % itemsBioApicoltura.length}.jpg'),
                   fit: BoxFit.fitHeight,
                 ),
               ),
@@ -283,11 +293,11 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
               // height: 200.0,
               //width: 200.0,
               width: 160.0,
-              child: new Stack(
+              child: Stack(
                 children: <Widget>[
-                  new Align(
+                  Align(
                     alignment: Alignment.bottomCenter,
-                    child: new Container(
+                    child: Container(
                         decoration: const BoxDecoration(
                             color: Color(0xFF273A48),
                             // ignore: unnecessary_const
@@ -295,13 +305,12 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                                 bottomLeft: Radius.circular(10.0),
                                 bottomRight: Radius.circular(10.0))),
                         height: 30.0,
-                        child: new Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            new Text(
-                              itemsBioApicoltura[
-                                  index % itemsBioApicoltura.length],
-                              style: const TextStyle(color: Colors.white),
+                            Flexible(child: Text(
+                              itemsBioApicoltura[index % itemsBioApicoltura.length],
+                              style: const TextStyle(color: Colors.white)),
                             )
                           ],
                         )),
@@ -320,7 +329,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
     //   ------------------------ END  INITE HEADER BIOEDILIZIA ----------------------------------
 
-    final headerListBioEdilizia = new ListView.builder(
+    final headerListBioEdilizia = ListView.builder(
       itemBuilder: (context, index) {
         EdgeInsets padding = index == 0
             ? const EdgeInsets.only(
@@ -328,28 +337,30 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
             : const EdgeInsets.only(
                 left: 10.0, right: 10.0, top: 4.0, bottom: 30.0);
 
-        return new Padding(
+        return Padding(
           padding: padding,
-          child: new InkWell(
+          child: InkWell(
             onTap: () {
               if (kDebugMode) {
                 print('Card selected');
               }
             },
-            child: new Container(
-              decoration: new BoxDecoration(
-                borderRadius: new BorderRadius.circular(10.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
                 color: Colors.lightGreen,
                 boxShadow: [
-                  new BoxShadow(
+                  BoxShadow(
                       color: Colors.black.withAlpha(70),
                       offset: const Offset(3.0, 10.0),
                       blurRadius: 15.0)
                 ],
-                image: new DecorationImage(
-                  image: new ExactAssetImage(
-                      // 'assets/images/bioedilizia/img_${index % itemsBioEdilizia.length}.jpg'),
-                      'images/bioedilizia/bioedilizia_${index % itemsBioEdilizia.length}.jpg'),
+                image: DecorationImage(
+                
+                  image: ExactAssetImage(
+                  // 'assets/images/bioedilizia/img_${index% itemsBioEdilizia.length}.jpg'),
+                   './assets/images/bioedilizia/bioedilizia_${index % itemsBioEdilizia.length}.jpg'),
+                    //  'images/bioedilizia/bioedilizia_${index % itemsBioEdilizia.length}.jpg'),
                   fit: BoxFit.fitHeight,
                 ),
               ),
@@ -358,11 +369,11 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
               // height: 200.0,
               //width: 200.0,
               width: 160.0,
-              child: new Stack(
+              child: Stack(
                 children: <Widget>[
-                  new Align(
+                  Align(
                     alignment: Alignment.bottomCenter,
-                    child: new Container(
+                    child: Container(
                         decoration: const BoxDecoration(
                             color: Color(0xFF273A48),
                             // ignore: unnecessary_const
@@ -370,10 +381,10 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                                 bottomLeft: Radius.circular(10.0),
                                 bottomRight: Radius.circular(10.0))),
                         height: 30.0,
-                        child: new Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            new Text(
+                            Text(
                               itemsBioEdilizia[index % itemsBioEdilizia.length],
                               style: const TextStyle(color: Colors.white),
                             )
@@ -394,7 +405,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
     //   ------------------------ END  INITE HEADER BIOHOTEL ----------------------------------
 
-    final headerListBioHotel = new ListView.builder(
+    final headerListBioHotel = ListView.builder(
       itemBuilder: (context, index) {
         EdgeInsets padding = index == 0
             ? const EdgeInsets.only(
@@ -402,27 +413,27 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
             : const EdgeInsets.only(
                 left: 10.0, right: 10.0, top: 4.0, bottom: 30.0);
 
-        return new Padding(
+        return Padding(
           padding: padding,
-          child: new InkWell(
+          child: InkWell(
             onTap: () {
               if (kDebugMode) {
                 print('Card selected');
               }
             },
-            child: new Container(
-              decoration: new BoxDecoration(
-                borderRadius: new BorderRadius.circular(10.0),
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
                 color: Colors.lightGreen,
                 boxShadow: [
-                  new BoxShadow(
+                  BoxShadow(
                       color: Colors.black.withAlpha(70),
                       offset: const Offset(3.0, 10.0),
                       blurRadius: 15.0)
                 ],
-                image: new DecorationImage(
-                  image: new ExactAssetImage(
-                      'images/hotel/hotel_${index % itemsBioHotel.length}.jpg'),
+                image: DecorationImage(
+                  image: ExactAssetImage(
+                      './assets/images/hotel/hotel_${index % itemsBioHotel.length}.jpg'),
                   fit: BoxFit.fitHeight,
                 ),
               ),
@@ -430,11 +441,11 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
               // height: 200.0,
               //width: 200.0,
               width: 160.0,
-              child: new Stack(
+              child: Stack(
                 children: <Widget>[
-                  new Align(
+                  Align(
                     alignment: Alignment.bottomCenter,
-                    child: new Container(
+                    child: Container(
                         decoration: const BoxDecoration(
                             color: Color(0xFF273A48),
                             // ignore: unnecessary_const
@@ -442,10 +453,10 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                                 bottomLeft: Radius.circular(10.0),
                                 bottomRight: Radius.circular(10.0))),
                         height: 30.0,
-                        child: new Row(
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            new Text(
+                            Text(
                               itemsBioHotel[index % itemsBioHotel.length],
                               style: const TextStyle(color: Colors.white),
                             )
@@ -464,13 +475,13 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
     //   ------------------------ END  INITE HEADER BIOHOTEL ----------------------------------
 
-    final body = new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.title),
+    final body = Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         actions: <Widget>[
-          new IconButton(
+          IconButton(
               icon: const Icon(
                 Icons.shopping_cart,
                 color: Colors.white,
@@ -479,7 +490,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
         ],
       ),
       backgroundColor: Colors.transparent,
-      body: new Container(
+      body: Container(
         margin: const EdgeInsets.symmetric(vertical: 5.0),
         //  height: 850.0,
         // scrollDirection: Axis.vertical,
@@ -490,20 +501,20 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
         // child: Center(
         //child: OverflowBox(
-        child: new Stack(
+        child: Stack(
           // child: ListView(
           // overflow: Overflow.visible,
 
           children: <Widget>[
-            new Padding(
+            Padding(
               // padding: const EdgeInsets.only(top: 40.0),
               padding: const EdgeInsets.only(top: 0.0),
-              child: new Column(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                  new SizedBox(
+                  SizedBox(
                     child: Column(
                       children: <Widget>[
                         // SearchWidget(), // SEARCHE
@@ -521,19 +532,19 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                     ),
                   ),
 
-                  new Align(
+                  const Align(
                     alignment: Alignment.centerLeft,
-                    child: new Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: const Text(
+                    child: Padding(
+                        padding: EdgeInsets.only(left: 8.0),
+                        child: Text(
                           ' Agricoltura , Apicoltura, Bioedilizia, Hotel ',
                           // ignore: unnecessary_const
-                          style: const TextStyle(
+                          style: TextStyle(
                               color: Color.fromARGB(179, 36, 11, 145)),
                         )),
                   ),
                   Expanded(
-                      //flex: 10,
+                     // flex: 5,
                       // height: 300.0,
                       //width: _width,
                       child: ListView(
@@ -557,15 +568,25 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                         ),
                         */
                         Container(
-                          width: 160.0,
+                        //  width: 180.0,
                           margin: const EdgeInsets.only(
                               left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
-                          color: Color.fromARGB(255, 131, 224, 131),
-                          child: Text(
-                            "AGRICULTURA BIOlOGICA",
-                            textAlign: TextAlign.center,
-                          ),
+                          color: const Color.fromARGB(255, 131, 224, 131),
+                          // child: const Text(
+                          //   "AGRICULTURA BIOlOGICA",
+                          //   textAlign: TextAlign.center,
+                          // ),
+                        // child: Text(AppLocalizations.translate('agricolturaBio').toString().toUpperCase(),
+                        //     textAlign: TextAlign.center),
+                          
+                          child: Row(children:<Widget> [
+                            Flexible(
+                                flex: 5,
+                                child:  Text(AppLocalizations.translate('agricolturaBio').toString().toUpperCase(),
+                                   textAlign: TextAlign.center))
+                          ],),
                         ),
+
                         const SizedBox(
                           height: 15,
                         ),
@@ -578,14 +599,15 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                           width: 90.0,
                           margin: const EdgeInsets.only(
                               left: 5.0, right: 5.0, top: 5.0, bottom: 5.0),
-                          color: Color.fromARGB(255, 233, 219, 31),
-                          child: Text("APICOLTURA BIOLOGICA",
+                          color: const Color.fromARGB(255, 233, 219, 31),
+                          //child: const Text("APICOLTURA BIOLOGICA",  AppLocalizations.translate('pickCountry').toString()),
+                            child: Text(AppLocalizations.translate('beekeepingBio').toString().toUpperCase(),
                               textAlign: TextAlign.center),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
-                        new SizedBox(
+                        SizedBox(
                             height: 200.0,
                             width: 60,
                             // width: _width,
@@ -594,14 +616,16 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                           //  width: 90.0,
                           margin: const EdgeInsets.only(
                               left: 5.0, right: 5.0, top: 5.0, bottom: 8.0),
-                          color: Color.fromARGB(255, 182, 146, 79),
+                          color: const Color.fromARGB(255, 182, 146, 79),
                           child:
-                              Text("BIOEDILIZIA", textAlign: TextAlign.center),
-                        ),
+                             // const Text("BIOEDILIZIA", textAlign: TextAlign.center),
+                            Text(AppLocalizations.translate('greenBuilding').toString().toUpperCase(),
+                                textAlign: TextAlign.center),
+                            ),
                         const SizedBox(
                           height: 15,
                         ),
-                        new SizedBox(
+                        SizedBox(
                             height: 200.0,
                             width: 60,
                             // width: _width,
@@ -611,14 +635,18 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                           width: 90.0,
                           margin: const EdgeInsets.only(
                               left: 5.0, right: 5.0, top: 5.0, bottom: 8.0),
-                          color: Color.fromARGB(255, 163, 185, 245),
-                          child: Text("HOTEL BIOLOGICA",
+                          color: const Color.fromARGB(255, 163, 185, 245),
+                        //   child: const Text("HOTEL BIOLOGICA",
+                        //       textAlign: TextAlign.center),
+                        // ),
+                          child:
+                          Text(AppLocalizations.translate('hotelBio').toString().toUpperCase(),
                               textAlign: TextAlign.center),
                         ),
                         const SizedBox(
                           height: 15,
                         ),
-                        new SizedBox(
+                        SizedBox(
                             height: 200.0,
                             width: 60,
                             // width: _width,
@@ -627,26 +655,27 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                           height: 15,
                         ),
 
-                        new SizedBox(
+                        SizedBox(
                           height: 350.0,
                           // width: 150,
-                          width: _width,
-                          child: new Expanded(child:
+                          width: width,
+                          child: Expanded(
+                              child:
                               ListView.builder(itemBuilder: (context, index) {
-                            return new ListTile(
-                              title: new Column(
+                            return ListTile(
+                              title: Column(
                                 children: <Widget>[
-                                  new Row(
+                                  Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      new Container(
+                                      Container(
                                         height: 72.0,
                                         width: 72.0,
-                                        decoration: new BoxDecoration(
+                                        decoration: BoxDecoration(
                                             color: Colors.lightGreen,
                                             boxShadow: [
-                                              new BoxShadow(
+                                              BoxShadow(
                                                   color: Colors.black
                                                       .withAlpha(70),
                                                   offset:
@@ -657,9 +686,10 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                                                     .all(
                                                 // ignore: unnecessary_const
                                                 const Radius.circular(12.0)),
-                                            image: new DecorationImage(
-                                              image: new ExactAssetImage(
-                                                'images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png',
+                                            image: DecorationImage(
+                                              image: ExactAssetImage(
+                                                 './assets/images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png',
+                                               // 'images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png',
                                               ),
                                               fit: BoxFit.cover,
                                             )),
@@ -670,13 +700,13 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
                                       //-------------------------------------- INIT MY ITEM HEADER  -----------------------------------
 
-                                      new Expanded(
-                                          child: new Column(
+                                      const Expanded(
+                                          child: Column(
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
-                                        children: const <Widget>[
+                                        children: <Widget>[
                                           Text(
                                             'My item header',
                                             style: TextStyle(
@@ -716,7 +746,10 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                         )
 
                         //-------------------------------------- INIT MY ITEM HEADER  -----------------------------------
-                      ])),
+                      ]
+                      )
+                  ),
+
 
                   /*  new Expanded(child:
                           ListView.builder(itemBuilder: (context, index) {
@@ -807,16 +840,16 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
       ),
     );
 
-    return new Container(
+    return Container(
       decoration: const BoxDecoration(
         color: Color(0xFF273A48),
       ),
-      child: new Stack(
+      child: Stack(
         children: <Widget>[
-          new CustomPaint(
-            size: new Size(_width, _height),
+          CustomPaint(
+            size: Size(width, height),
             //painter: new Background(),
-            painter: new Background(),
+            painter: Background(),
           ),
           body,
         ],

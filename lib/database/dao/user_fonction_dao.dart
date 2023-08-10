@@ -1,6 +1,5 @@
 
 
-import 'package:ecobioweb/database/moor/user_data.dart';
 
 import '../moor/app_database.dart';
 

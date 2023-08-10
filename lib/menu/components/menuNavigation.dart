@@ -2,8 +2,8 @@
 import 'package:flutter/material.dart';
 import '../../category/widgets/homeListElementsMenu.dart';
 import '../../home/screens/wishListScreen.dart';
-import '../../profile/screens/profileSettingScreen copy 2.dart';
 import '../../search/screen/searchScreen.dart';
+import '../../settings/admin/screens/setting_screen.dart';
 import '../../shopping/screens/shopping_cart_screen.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
@@ -65,7 +65,7 @@ class _HomePageAppSetting extends State<MenuNavigation> {
     // const HomeScreen()
 
     //PROFILE 5
-    const ProfileSettingScreen(),
+     SettingScreen(),
 
     // ProfilePage(),
   ];

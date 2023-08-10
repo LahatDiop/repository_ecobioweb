@@ -61,19 +61,19 @@ class SubCategoryScreen extends StatelessWidget {
                     Container(
                       color: Colors.white24,
                       child: CategoryPage(
-                          slug: 'categories/?parent=' + slug, isSubList: true),
+                          slug: 'categories/?parent=$slug', isSubList: true),
                     ),
                     Container(
                       color: Colors.white24,
                       child: BrandHomePage(
-                        slug: 'brands/?limit=20&page=1&category=' + slug,
+                        slug: 'brands/?limit=20&page=1&category=$slug',
                         isSubList: true,
                       ),
                     ),
                     Container(
                       color: Colors.white24,
                       child: ShopHomePage(
-                        slug: 'category/shops/' + slug + '/?page=1&limit=15',
+                        slug: 'category/shops/$slug/?page=1&limit=15',
                         isSubList: true,
                       ),
                     ) // class name

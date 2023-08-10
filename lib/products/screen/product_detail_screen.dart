@@ -1,7 +1,8 @@
 
 // import 'package:ecobio/widgets/common_widget/CircularProgress.dart';
 import 'package:flutter/material.dart';
-import '../../localisation/translation/components/appLocalizations.dart';
+
+import '../../settings/localisation/translation/components/appLocalizations.dart';
 import '../models/product_details.dart';
 import '../widgets/CircularProgress.dart';
 
@@ -45,7 +46,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
             case ConnectionState.waiting:
-              return CircularProgress();
+              return const CircularProgress();
             default:
               if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
@@ -55,7 +56,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           }
         },
       ),
-      bottomNavigationBar: BottomNavBar(),
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 
@@ -63,6 +64,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
 }
 
 class BottomNavBar extends StatelessWidget {
+  const BottomNavBar({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(

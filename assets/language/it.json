@@ -1,6 +1,7 @@
 {
     "beekeepingMeterials": "Materiali Apicoltura",
     "beekeeping": "Apicoltura",
+    "beekeepingBio": "APICOLTURA BIO",
     "country": "Paese",  
     "countryLocation": "Italia" ,  
     "regio": "Region",
@@ -41,7 +42,7 @@
     "airBnbBio":"Air R&B Bio",
     "airBnb":"Air R&B",
     "bnb":"B&B ",
-    "greenBuilderProdocts":"Prodotti Bioedilizia",
+    "greenBuilderProducts":"Prodotti Bioedilizia",
     "hanf": "Canapa",
     "isolation":"Isolamento",
     "info":"info",
@@ -50,22 +51,23 @@
     "infoService":"Info Servizi",
     "honey":"Miele",
     "cara":"cera",
-    "propolis":"Propoli",
+    "propolis":"Propolis",
     "products":"Prodotti",
     "productsBiologiques":"Prodotti Biologiche",
     "materialsBeekeeping":"Materiali Apicoltura",
+    "message":"Messaggio",
     "greenBuilding":"Bioedilizia",
     "first_string": "Ciao Mondo!" ,
    "second_string": "Lingua Italiano.", 
    "add":"Aggiungere",
    "cancel":"Cancelare",
-   "close":"Close",
+   "close":"Chiuso",
    "back":"Back",
    "go":"Go",
    "delete":"Eliminare",
    "send":"Invio",
    "search":"Cerca",
-   "search_point":"search..."
+   "search_point":"Cerca..."
 
 
 }

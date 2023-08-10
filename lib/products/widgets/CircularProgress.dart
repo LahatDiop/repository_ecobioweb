@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class CircularProgress extends StatefulWidget {
+  const CircularProgress({super.key});
+
   @override
   _CircularProgressState createState() => _CircularProgressState();
 }

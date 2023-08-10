@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 // import '../../../animation/fade_animation.dart';
-import '../../../payment/screens/payment.dart';
+
 import '../../../providers/cart_provider.dart';
 import '../../cart/cart.dart';
 import '../../products/components/product.dart';
 import '../../products/screen/product_view.dart';
+import '../../settings/payment/screens/payment.dart';
 
 
 class ShoppingCartScreen extends StatefulWidget {
@@ -158,9 +159,9 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
             //   1.2,
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: Row(
+                child: const Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const <Widget>[
+                  children: <Widget>[
                     Text('Shipping', style: TextStyle(fontSize: 20)),
                     //  Text('\$5.99',
                     //  Text('\$${totalPrice + 8.99}',

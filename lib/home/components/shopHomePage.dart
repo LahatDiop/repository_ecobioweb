@@ -28,7 +28,7 @@ class _ShopHomePageState extends State<ShopHomePage> {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
           case ConnectionState.waiting:
-            return CircularProgress();
+            return const CircularProgress();
           default:
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');

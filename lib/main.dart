@@ -1,168 +1,347 @@
-import 'package:drift/src/runtime/executor/executor.dart';
-import 'package:ecobioweb/auth/singin/screens/login_screen.dart';
-import 'package:ecobioweb/auth/singup/widgets/app_singup.dart';
-import 'package:ecobioweb/database/moor/app_database.dart';
-import 'package:ecobioweb/test/dog_test/db_sqllite_services.dart';
-import 'package:ecobioweb/test/dog_test/dog.dart';
+
+
+import 'dart:io';
+
+import 'package:bot_toast/bot_toast.dart';
+import 'package:ecobioweb/settings/localisation/translation/components/appLocalizations.dart';
+import 'package:ecobioweb/storages/locale/shared_preferences_locale.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_session_manager/flutter_session_manager.dart';
-//import 'package:moor_generator/moor_generator.dart';
-
-import 'database/connection_postgreSql.dart';
-
-
-
-void main() {
-
- // ConnectionPostgresSql connection = const ConnectionPostgresSql();
- //  connection.createState().initDatabaseConnection();
-
- // connectionDB();
-  SessionManager sessionManager = SessionManager();
-
-  AppDatabase appDatabase= AppDatabase();
-
-  Future database = sessionManager.get("databaseConnection");
-
-  // var schemaversion = appDatabase.schemaVersion;
-  // var userFonction = appDatabase.userFonction;
-  // var allTables = appDatabase.allTables;
-  // var allSchemaEntities =appDatabase.allSchemaEntities;
-  // var connection = appDatabase.connection;
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:theme_provider/theme_provider.dart';
 
 
+import 'package:ecobioweb/shared/root/root.dart' as router;
 
+//import 'objectbox.g.dart';
+//import 'objectbox.g.dart' if (dart.library.html) 'objectbox.g.dart';
+
+//import 'myapp/sources-that-use-objectbox.dart' if (dart.library.html) 'myapp/sources-that-dont-use-objectbox.dart';
+
+//C:\Lahat\Projet App\EcoBio\ecobio\ecobio\.dart_tool\flutter_gen\gen_l10n\app_localizations.dart
+
+//-----------------------------INITE SQLLITE------------------------------------
+
+// conectionDbSqlLite();
+//-----------------------------END SQLLITEL------------------------------------
+
+// ------------------------- INIT OBJECTBOX DATABASE------------------------------
+// Using ObjectBox Database
+/// Provides access to the ObjectBox Store throughout the app.
+/* late ObjectBox objectbox;
+
+Future<void> main() async {
+  // This is required so ObjectBox can get the application directory
+  // to store the database in.
+  WidgetsFlutterBinding.ensureInitialized();
+
+  objectbox = await ObjectBox.create();
+
+  runApp(const MyApp());
+}*/
+// ----------------------------END OBJECTBOX DATABASE---------------------------
+
+//-----------------------------INITE POSTGRESQL------------------------------------
+
+//-----------------------------END POSTGRESQL------------------------------------
+
+Future<void> main() async {
+
+  // await DBHelper().initDatabase();
+  // DatabaseHelper();
+
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Implementation param save small data
+    SharedPreferences.getInstance().then((instance) async{
+    SharedPreferences pref =await SharedPreferences.getInstance();
+
+
+    // Get the initial locale values
+    final String defaultSystemLocale = Platform.localeName;
+    final List<Locale> systemLocales = WidgetsBinding.instance.window.locales;
+
+   // save language Locale into SharedPreference
+
+    // Locale locale = const Locale(defaultSystemLocale,'IT');
+    Locale locale = Locale(defaultSystemLocale,"+39");
+
+
+    SharedPreferencesLocale saveLanguageLocale = SharedPreferencesLocale();
+           saveLanguageLocale.setLocale(pref, context, locale,defaultSystemLocale);
+
+
+    WidgetsFlutterBinding.ensureInitialized();
+
+
+
+    // if(!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)){
+    //   // setWindowTitle('Pokédex by Alan Santos');
+    //   // setWindowMinSize(const Size(1366, 768));
+    //
+    // }
+         runApp(MyApp(pref));
+     });
+
+}
+
+
+
+
+
+
+
+  //ConnectionPostgresSql pgr = const ConnectionPostgresSql();
+
+  //const ConnectionPostgresSql();
+
+  /*var databaseConnection = PostgreSQLConnection("localhost", 5432, "ecobio",
+      username: "postgres",
+      password: "root",
+      queryTimeoutInSeconds: 3600,
+      timeoutInSeconds: 3600);
+
+  initDatabaseConnection() async {
+    databaseConnection.open().then((value) {
+      debugPrint("Database Connected!");
+    });
+  }
+*/
+
+  // conectionDbSqlLite();
+
+//    ConnectionSqlLite();
+
+  // database = await openDatabase(
+  //   //  by default path for database on the device is /data/data/<your app id>/databases/<your database file.db>
+  //     join(await getDatabasesPath(), 'ofs_sms_database.db'),
+  //     version: 1, onCreate: (Database ddatabase, int version) async {
+  //   await database?.execute(
+  //       "CREATE TABLE smslogs(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, employeeID TEXT, department TEXT, module TEXT, message TEXT, safeUnsafeStatus TEXT, contactNo Text, dateTime INTEGER)");
+  // });
+
+  // Database? database;
+
+  /* var databasesPath = await getDatabasesPath();
+ String path = join(databasesPath, '../../assets/database/ecobio_data.db');
+// databaseExists(path);
+
+  ///
+  /// Check if a database exists at a given path.
+  ///
+  Future<bool> databaseExists(String path) => databaseFactory.databaseExists(path);
+
+
+
+  // Check if the database exists
+  var exists = await databaseExists(path);
+
+  if (!exists) {
+    // Should happen only the first time you launch your application
+    print("Creating new copy from asset");
+
+    // Make sure the parent directory exists
+    try {
+      await Directory(dirname(path)).create(recursive: true);
+    } catch (_) {}
+
+    // Copy from asset
+    ByteData data = await rootBundle.load(join("assets", "database.db"));
+    List<int> bytes =
+    data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+
+    // Write and flush the bytes written
+   // await File(path).writeAsBytes(bytes, flush: true);
+
+  } else {
+    print("Opening existing database");
+  }
+// open the database
+  database = await openDatabase(path, readOnly: true);
+
+  */
+//}
+
+// ----------------------------INIT DATABASE ---------------------------
+
+//---------------- APP NORMALE----------------------
+/*void main() {
   runApp(const MyApp());
 }
 
-// Future<QueryExecutor> connectionDB() async {
-//   AppDatabase appDatabase= AppDatabase();
-// //  appDatabase.connection.executor;
-//
-// return appDatabase.connection.executor;
-// }
-
+*/
+//--------------------------------------------
+// ----------------------------END DATABASE---------------------------
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  //MyApp({Key? key}) : super(key: key);
+  final SharedPreferences prefs;
+
+  // final Locale _locale = const Locale('it', 'it');
+  const MyApp(this.prefs, {super.key});
+
+
+
+//DataLoader dataLoader =  const DataLoader();
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-      ),
-     // home: const MyHomePage(title: 'Flutter Demo Home Page'),
-     // home: const AppSingUp(),
-     home: LoginScreen(),
+    //  DataLoader(),
+    //ok dataLoader.createState().initState();
+   // GetItRegister.register();
+    final botToastBuilder = BotToastInit();
+    return ThemeProvider(
+   //   initTheme:this.prefs.getBool("greenTheme") ?? false ? greenTheme : greenTheme,
+        saveThemesOnChange: false, // per adesso non serve salvarlo
+        loadThemeOnInit: false,
 
+        onInitCallback: (controller, previouslySavedThemeFuture) async {
+          final view = View.of(context);
+          String? savedTheme = await previouslySavedThemeFuture;
+          if (savedTheme != null) {
+            controller.setTheme(savedTheme);
+          } else {
+            Brightness platformBrightness =
+            // ignore: use_build_context_synchronously
+            view.platformDispatcher.platformBrightness;
+            if (platformBrightness == Brightness.dark) {
+              controller.setTheme('dark');
+            } else {
+              controller.setTheme('light');
+            }
+            controller.forgetSavedTheme();
+          }
+        },
+
+    child: MaterialApp(
+      title: 'ecobio',
+      builder: (context, child) {
+        child = botToastBuilder(context, child);
+
+        return child;
+      },
+
+     // theme: lightTheme,
+      navigatorObservers: [BotToastNavigatorObserver()],
+      debugShowCheckedModeBanner: false,
+      routes: router.Router.getRoutes(context),
+      initialRoute: "/",
+
+
+      //Localization language
+      // List all of the app's supported locales here
+      supportedLocales: const [
+        // Locale('it'), // Italien
+        // Locale('en'), // English
+        // Locale('fr'), // Franch
+        // Locale('es'), // Spanish
+        // Locale('de'), // Germany
+
+        Locale('it', 'IT'),
+        Locale('fr', 'FR'),
+        Locale('en', 'US'),
+        Locale('es', 'ES'),
+        Locale('de', 'DE'),
+
+      ],
+
+      // These delegates make sure that the localization data for the proper language is loaded
+      localizationsDelegates: const [
+        // THIS CLASS WILL BE ADDED LATER
+        // A class which loads the translations from JSON files
+        AppLocalizations.delegate,
+        // Built-in localization of basic text for Material widgets
+        GlobalMaterialLocalizations.delegate,
+
+        GlobalCupertinoLocalizations.delegate,
+        // Built-in localization for text direction LTR/RTL
+        GlobalWidgetsLocalizations.delegate,
+      ],
+
+      // supportedLocales: AppLocalizations.supportedLocales,
+      // Returns a locale which will be used by the app
+      localeResolutionCallback: (locale, supportedLocales) {
+        // Check if the current device locale is supported
+        for (var supportedLocale in supportedLocales) {
+          if (supportedLocale.languageCode == locale!.languageCode &&
+              supportedLocale.countryCode == locale.countryCode) {
+            return supportedLocale;
+          }
+        }
+        // If the locale of the device is not supported, use the first one
+        // from the list (English, in this case).
+        return supportedLocales.first;
+      },
+
+
+      // DataLoader,
+
+      //  DataLoader(),
+      // dataLoader.createState().initState();
+
+     // home: const MenuNavigationComponents(),
+      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+    )
     );
   }
 
-  static of(BuildContext context) {}
+  static of(BuildContext context) {
+
+
+
+  }
+
+  /*
+  To Change Locale of App
+   */
+  void setLocale(BuildContext context,Locale newLocale) async {
+    // _MainAppState? state =context.findAncestorStateOfType<_MainAppState>();
+
+   // _MainAppState? state =context.findAncestorStateOfType<_MainAppState>();
+
+    var prefs =await SharedPreferences.getInstance();
+    prefs.setString('languageCode', newLocale.languageCode);
+    prefs.setString('countruCode', "");
+
+    // state?.setState((){
+    //   state._locale=newLocale;
+    // });
+  }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
+/*abstract class AppLocalizations {
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
+AppLocalizations(String locale) : localeName = intl){
 
-  final String title;
+    final String localeName; 
+    Static AppLocalizations? of(BuildContext()){
+      return Localizations.of<AppLocalizations>(context);
+    }
 
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
+    static const LocalizationsDelegate(<AppLocalizations>)
+  }
 }
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  // Create a Dog and add it to the dogs table
- /* var dataDog = const Dog(
-    id: 1,
-    name: 'Dog Fido',
-    age: 5,
-  );
 */
-  void _incrementCounter() {
-    setState(() {
-
-      insertDog();
-     // connection.createState().initDatabaseConnection();
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+/*
+class LocalizationSystemPage extends StatefulWidget {
+  const LocalizationSystemPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
-    return Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
-      ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
-    );
-  }
+  _LocalizationSystemPage createState() => _LocalizationSystemPage();
 }
+
+class _LocalizationSystemPage {
+
+
+}*/
+//************************************
+
+
+
+int currentIndex = 0;
+void navigateToScreens(int index) {
+  currentIndex = index;
+}
+

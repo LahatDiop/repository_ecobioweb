@@ -30,7 +30,7 @@ class GridTilesProducts extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => ProductsScreen(
-                      slug: "products/?page=1&limit=12&category=" + slug,
+                      slug: "products/?page=1&limit=12&category=$slug",
                       name: name,
                       key: formKey,
                     )),
@@ -48,7 +48,7 @@ class GridTilesProducts extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => ProductDetailScreen(
-                    slug: "products/" + slug + "/",
+                    slug: "products/$slug/",
                   )),
         );
       },

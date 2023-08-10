@@ -1,7 +1,6 @@
-/***
- *
- * PARAMS DATA CART
- */
+/// *
+///
+/// PARAMS DATA CART
 
 class CartItem {
   int id;
@@ -58,4 +57,6 @@ class CartItem {
       dateRemovedCart:json["dateRemovedCart"],
     );
   }
+
+
 }

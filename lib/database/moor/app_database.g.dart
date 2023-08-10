@@ -11,7 +11,14 @@ class Order extends DataClass implements Insertable<Order> {
   final int id;
   final String price;
   final String productName;
-  Order({required this.id, required this.price, required this.productName});
+  final DateTime? dueDate;
+  final bool completed;
+  Order(
+      {required this.id,
+      required this.price,
+      required this.productName,
+      this.dueDate,
+      required this.completed});
   factory Order.fromData(Map<String, dynamic> data, GeneratedDatabase db,
       {String? prefix}) {
     final effectivePrefix = prefix ?? '';
@@ -22,6 +29,10 @@ class Order extends DataClass implements Insertable<Order> {
           .mapFromDatabaseResponse(data['${effectivePrefix}price'])!,
       productName: const StringType()
           .mapFromDatabaseResponse(data['${effectivePrefix}product_name'])!,
+      dueDate: const DateTimeType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}due_date']),
+      completed: const BoolType()
+          .mapFromDatabaseResponse(data['${effectivePrefix}completed'])!,
     );
   }
   @override
@@ -30,6 +41,10 @@ class Order extends DataClass implements Insertable<Order> {
     map['id'] = Variable<int>(id);
     map['price'] = Variable<String>(price);
     map['product_name'] = Variable<String>(productName);
+    if (!nullToAbsent || dueDate != null) {
+      map['due_date'] = Variable<DateTime?>(dueDate);
+    }
+    map['completed'] = Variable<bool>(completed);
     return map;
   }
 
@@ -38,6 +53,10 @@ class Order extends DataClass implements Insertable<Order> {
       id: Value(id),
       price: Value(price),
       productName: Value(productName),
+      dueDate: dueDate == null && nullToAbsent
+          ? const Value.absent()
+          : Value(dueDate),
+      completed: Value(completed),
     );
   }
 
@@ -48,6 +67,8 @@ class Order extends DataClass implements Insertable<Order> {
       id: serializer.fromJson<int>(json['id']),
       price: serializer.fromJson<String>(json['price']),
       productName: serializer.fromJson<String>(json['productName']),
+      dueDate: serializer.fromJson<DateTime?>(json['dueDate']),
+      completed: serializer.fromJson<bool>(json['completed']),
     );
   }
   @override
@@ -57,68 +78,98 @@ class Order extends DataClass implements Insertable<Order> {
       'id': serializer.toJson<int>(id),
       'price': serializer.toJson<String>(price),
       'productName': serializer.toJson<String>(productName),
+      'dueDate': serializer.toJson<DateTime?>(dueDate),
+      'completed': serializer.toJson<bool>(completed),
     };
   }
 
-  Order copyWith({int? id, String? price, String? productName}) => Order(
+  Order copyWith(
+          {int? id,
+          String? price,
+          String? productName,
+          DateTime? dueDate,
+          bool? completed}) =>
+      Order(
         id: id ?? this.id,
         price: price ?? this.price,
         productName: productName ?? this.productName,
+        dueDate: dueDate ?? this.dueDate,
+        completed: completed ?? this.completed,
       );
   @override
   String toString() {
     return (StringBuffer('Order(')
           ..write('id: $id, ')
           ..write('price: $price, ')
-          ..write('productName: $productName')
+          ..write('productName: $productName, ')
+          ..write('dueDate: $dueDate, ')
+          ..write('completed: $completed')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, price, productName);
+  int get hashCode => Object.hash(id, price, productName, dueDate, completed);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is Order &&
           other.id == this.id &&
           other.price == this.price &&
-          other.productName == this.productName);
+          other.productName == this.productName &&
+          other.dueDate == this.dueDate &&
+          other.completed == this.completed);
 }
 
 class OrdersCompanion extends UpdateCompanion<Order> {
   final Value<int> id;
   final Value<String> price;
   final Value<String> productName;
+  final Value<DateTime?> dueDate;
+  final Value<bool> completed;
   const OrdersCompanion({
     this.id = const Value.absent(),
     this.price = const Value.absent(),
     this.productName = const Value.absent(),
+    this.dueDate = const Value.absent(),
+    this.completed = const Value.absent(),
   });
   OrdersCompanion.insert({
     this.id = const Value.absent(),
     required String price,
     required String productName,
+    this.dueDate = const Value.absent(),
+    this.completed = const Value.absent(),
   })  : price = Value(price),
         productName = Value(productName);
   static Insertable<Order> custom({
     Expression<int>? id,
     Expression<String>? price,
     Expression<String>? productName,
+    Expression<DateTime?>? dueDate,
+    Expression<bool>? completed,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (price != null) 'price': price,
       if (productName != null) 'product_name': productName,
+      if (dueDate != null) 'due_date': dueDate,
+      if (completed != null) 'completed': completed,
     });
   }
 
   OrdersCompanion copyWith(
-      {Value<int>? id, Value<String>? price, Value<String>? productName}) {
+      {Value<int>? id,
+      Value<String>? price,
+      Value<String>? productName,
+      Value<DateTime?>? dueDate,
+      Value<bool>? completed}) {
     return OrdersCompanion(
       id: id ?? this.id,
       price: price ?? this.price,
       productName: productName ?? this.productName,
+      dueDate: dueDate ?? this.dueDate,
+      completed: completed ?? this.completed,
     );
   }
 
@@ -134,6 +185,12 @@ class OrdersCompanion extends UpdateCompanion<Order> {
     if (productName.present) {
       map['product_name'] = Variable<String>(productName.value);
     }
+    if (dueDate.present) {
+      map['due_date'] = Variable<DateTime?>(dueDate.value);
+    }
+    if (completed.present) {
+      map['completed'] = Variable<bool>(completed.value);
+    }
     return map;
   }
 
@@ -142,7 +199,9 @@ class OrdersCompanion extends UpdateCompanion<Order> {
     return (StringBuffer('OrdersCompanion(')
           ..write('id: $id, ')
           ..write('price: $price, ')
-          ..write('productName: $productName')
+          ..write('productName: $productName, ')
+          ..write('dueDate: $dueDate, ')
+          ..write('completed: $completed')
           ..write(')'))
         .toString();
   }
@@ -171,8 +230,22 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
   late final GeneratedColumn<String?> productName = GeneratedColumn<String?>(
       'product_name', aliasedName, false,
       type: const StringType(), requiredDuringInsert: true);
+  final VerificationMeta _dueDateMeta = const VerificationMeta('dueDate');
   @override
-  List<GeneratedColumn> get $columns => [id, price, productName];
+  late final GeneratedColumn<DateTime?> dueDate = GeneratedColumn<DateTime?>(
+      'due_date', aliasedName, true,
+      type: const IntType(), requiredDuringInsert: false);
+  final VerificationMeta _completedMeta = const VerificationMeta('completed');
+  @override
+  late final GeneratedColumn<bool?> completed = GeneratedColumn<bool?>(
+      'completed', aliasedName, false,
+      type: const BoolType(),
+      requiredDuringInsert: false,
+      defaultConstraints: 'CHECK (completed IN (0, 1))',
+      defaultValue: Constant(false));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, price, productName, dueDate, completed];
   @override
   String get aliasedName => _alias ?? 'orders';
   @override
@@ -198,6 +271,14 @@ class $OrdersTable extends Orders with TableInfo<$OrdersTable, Order> {
               data['product_name']!, _productNameMeta));
     } else if (isInserting) {
       context.missing(_productNameMeta);
+    }
+    if (data.containsKey('due_date')) {
+      context.handle(_dueDateMeta,
+          dueDate.isAcceptableOrUnknown(data['due_date']!, _dueDateMeta));
+    }
+    if (data.containsKey('completed')) {
+      context.handle(_completedMeta,
+          completed.isAcceptableOrUnknown(data['completed']!, _completedMeta));
     }
     return context;
   }

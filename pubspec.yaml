@@ -19,7 +19,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '3.1.0-63.1.beta'
+  sdk: '3.1.0-262.2.beta'
+  #sdk: '3.1.0-63.1.beta'
   #sdk: '2.17.0-266.8.beta'
   #sdk: '^3.1.0-63.1.beta'
   #sdk: ">=3.11.0-0.1.pre <3.1.0"
@@ -46,7 +47,7 @@ dependencies:
   shared_preferences: ^2.1.0
   flutter_login: ^4.1.1
   flutter_fadein: ^2.0.0
-  intl: ^0.18.0
+  intl: any
   flutter_session_manager: ^1.0.3
   path_provider: ^2.0.14
   path: ^1.8.1
@@ -74,12 +75,22 @@ dependencies:
   flutter_slidable: ^3.0.0
   animations: ^2.0.7
   animated_text_kit: ^4.2.2
-  moor_generator: ^4.6.0+1
   moor: ^4.6.1+1
   moor_flutter: ^4.1.0
+  provider: ^6.0.5
+  flutter_localizations:
+    sdk: flutter
+  pubspec_parse: ^1.2.3
+  cached_network_image: ^3.2.3
+  lottie: ^2.4.0
+  theme_provider: ^0.6.0
+  bot_toast: ^4.0.4
+  #json_annotation: ^4.8.1
   #flutter_signin_button: ^2.0.0-nullsafety.0
 
 dev_dependencies:
+  moor_generator: ^4.6.0+1
+  analyzer: ^4.7.0
   flutter_test:
     sdk: flutter
 
@@ -102,6 +113,7 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
   assets:
     - assets/images/ecorp.png
     - assets/images/ic_add_cart.png
@@ -184,6 +196,7 @@ flutter:
     - assets/language/it.json
     - assets/language/en.json
     - assets/language/fr.json
+    - assets/language/gb.json
     - assets/language/es.json
     - assets/language/de.json
     - assets/language/ng.json
@@ -215,7 +228,6 @@ flutter:
     - assets/images/verdure/cipolle_2.png
     - assets/images/verdure/cipolle_3.png
     - assets/images/verdure/cipolle_4.png
-    - assets/images/verdure/cipolle_1.png
     - assets/images/verdure/gombo_1.png
     - assets/images/verdure/gombo_2.png
     - assets/images/verdure/limoni_1.png
@@ -282,9 +294,12 @@ flutter:
     - assets/images/frutto/orange.png
     - assets/images/frutto/greenapple.png
     - assets/images/flags/it.png
-    - assets/images/flags/an.png
+    - assets/images/flags/gb.png
     - assets/images/flags/fr.png
     - assets/images/flags/es.png
+    - assets/images/flags/sn.png
+    - assets/images/flags/de.png
+    - assets/images/flags/ng.png
 
 
   # To add assets to your application, add an assets section, like this:

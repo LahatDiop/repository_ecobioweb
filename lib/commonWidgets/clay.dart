@@ -16,7 +16,7 @@ class ClayContainerDesign extends StatelessWidget {
   Color? clayTextColorText;
 
   ClayContainerDesign(
-      {this.containerColor,
+      {super.key, this.containerColor,
         this.borderRadius,
         this.customBorderRadius,
         this.curveType,
@@ -35,13 +35,13 @@ class ClayContainerDesign extends StatelessWidget {
       curveType: curveType,
       height: height,
       child: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: ClayText(
           textDetails ?? '',
           emboss: true,
           size: clayTextSize,
           depth: 60,
-          style: TextStyle(
+          style: const TextStyle(
             fontStyle: FontStyle.italic,
             letterSpacing: 1.0,
           ),
