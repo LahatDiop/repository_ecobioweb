@@ -58,7 +58,8 @@ class _AgricultureKmZeroState extends State<AgricultureKmZero> {
                     borderRadius: BorderRadius.circular(20),
                     image: const DecorationImage(
                         image: AssetImage('../assets/images/admin/one.jpg'),
-                        fit: BoxFit.cover)),
+                        fit: BoxFit.cover)
+                ),
                 child: Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),

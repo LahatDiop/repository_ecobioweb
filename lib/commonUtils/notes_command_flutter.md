@@ -284,3 +284,15 @@ dart pub upgrade --null-safety --dry-run
 ---------------------------------
 - flutter pub add flutter_localizations --sdk=flutter
   flutter pub add intl:any
+----------------------------
+
+The current Dart SDK version
+
+  1 -- Commit
+
+Then if you are on stable channel (or beta),
+
+flutter channel stable
+# or flutter channel beta
+flutter upgrade
+flutter pub get

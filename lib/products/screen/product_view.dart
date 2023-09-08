@@ -5,7 +5,8 @@ import '../components/product.dart';
 
 class ProductViewPage extends StatefulWidget {
   final Product product;
-  const ProductViewPage({Key? key, required this.product}) : super(key: key);
+  final int? quatity;
+  const ProductViewPage({Key? key, required this.product, quantity, this.quatity}) : super(key: key);
 
   @override
   _ProductViewPageState createState() => _ProductViewPageState();
@@ -48,16 +49,11 @@ class _ProductViewPageState extends State<ProductViewPage> {
               stretchModes: const [
                 StretchMode.zoomBackground,
               ],
-              background: Image.network(
+              // background: Image.network(
+              background: Image.asset(
                 widget.product.imageURL,
                 fit: BoxFit.cover,
               )
-
-              /* background: Image.asset(
-                    "../assets/images/verdure/avocado_1.png",
-                    fit: BoxFit.cover,
-                  )
-                  */
 
               ),
           bottom: PreferredSize(

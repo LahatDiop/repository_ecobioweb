@@ -38,9 +38,9 @@ class Cart with ChangeNotifier {
    final LocalStorage storage = LocalStorage('localeStporage_app');
 
    // list index single quantiti in the cart
- // List<int> quantityProdList= <int>[];
+ List<int> quantityProdList= <int>[];
 
-   List<int> quantityProdList = [0, 0, 0, 0, 0, 0, 0, 0];
+  /// List<int> quantityProdList = [0, 0, 0, 0, 0, 0, 0, 0];
 
     //List<int>? quantityProdList;
 
@@ -54,9 +54,9 @@ class Cart with ChangeNotifier {
 
    /// ==============================  INIT ADD DATA PRODUCT FROM CART MAP CART   =============================================
 //  aggiunge prodotti nel carello
-  void addItem(Product product,int index, List<int> cartItemCount ) {
+  void addItemCart(Product product,int index, List<int> cartItemCount ) {
 
-    if (_cartItems.containsKey( product.codeProd)) {
+    if (_cartItems.containsKey(product.codeProd)) {
          quantity;
          totalPrice;
          totalPriceTransport;
@@ -79,7 +79,7 @@ class Cart with ChangeNotifier {
                   // id: DateTime.now().toString(),
               )
       );
-            quantityProdList.add(quantity);
+            quantityProdList.add(cartItemCount[index]);
             // flagItemEnabled =false;
     }
     //  cartItemCount[index]++;
@@ -134,12 +134,10 @@ class Cart with ChangeNotifier {
   }
 
 
-  // getItem
-
+  /// getItem into the cart
  Iterable<CartItem> getItemsCart(){
     return _cartItems.values;
  }
-
 
   int getQuantityXArticles(int index, String codeProd, List listQty){
     // if (_cartItems.containsKey(codeProd) && _cartItems.values.toList().contains(index)) {
@@ -272,6 +270,7 @@ class Cart with ChangeNotifier {
     notifyListerner();
   }
 
+  /// Clear cart
   void clearCart() {
     _cartItems = {};
     notifyListeners();

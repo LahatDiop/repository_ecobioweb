@@ -190,10 +190,13 @@ class MyApp extends StatelessWidget {
     //  DataLoader(),
     //ok dataLoader.createState().initState();
    // GetItRegister.register();
+
+    final currentWidth=MediaQuery.of(context).size.width;
     final botToastBuilder = BotToastInit();
     return ThemeProvider(
    //   initTheme:this.prefs.getBool("greenTheme") ?? false ? greenTheme : greenTheme,
-        saveThemesOnChange: false, // per adesso non serve salvarlo
+   //      saveThemesOnChange: false, // per adesso non serve salvarlo
+        saveThemesOnChange: true,
         loadThemeOnInit: false,
 
         onInitCallback: (controller, previouslySavedThemeFuture) async {
@@ -206,9 +209,9 @@ class MyApp extends StatelessWidget {
             // ignore: use_build_context_synchronously
             view.platformDispatcher.platformBrightness;
             if (platformBrightness == Brightness.dark) {
-              controller.setTheme('dark');
+              controller.setTheme('default_light_theme');
             } else {
-              controller.setTheme('light');
+              controller.setTheme('default_light_theme');
             }
             controller.forgetSavedTheme();
           }
@@ -218,7 +221,6 @@ class MyApp extends StatelessWidget {
       title: 'ecobio',
       builder: (context, child) {
         child = botToastBuilder(context, child);
-
         return child;
       },
 
@@ -287,9 +289,6 @@ class MyApp extends StatelessWidget {
   }
 
   static of(BuildContext context) {
-
-
-
   }
 
   /*
@@ -297,7 +296,6 @@ class MyApp extends StatelessWidget {
    */
   void setLocale(BuildContext context,Locale newLocale) async {
     // _MainAppState? state =context.findAncestorStateOfType<_MainAppState>();
-
    // _MainAppState? state =context.findAncestorStateOfType<_MainAppState>();
 
     var prefs =await SharedPreferences.getInstance();

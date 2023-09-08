@@ -66,10 +66,10 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    final _width = MediaQuery.of(context).size.width;
+    final _height = MediaQuery.of(context).size.height;
 
-    Axis.vertical;
+    Axis.horizontal;
     // 4;
 
     //   ------------------------   INITE HEADER AGRICULTURE ----------------------------------
@@ -128,20 +128,34 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
       ),
     ];
 
+
+    //   ------------------------  INITE HEADER AGRICULTURE ----------------------------------
+
     final headerListBioAgriculture =  ListView.builder(
+
+      scrollDirection: Axis.horizontal,
+      shrinkWrap: true,
+      itemCount: itemsaBioAgriculture.length,
+
       itemBuilder: (context, index) {
-        EdgeInsets padding;
+        final _width = MediaQuery.of(context).size.width;
+        final _heigth=MediaQuery.of(context).size.height;
+
+            EdgeInsets padding;
+            EdgeInsets scroll =const EdgeInsets.symmetric(horizontal: 15);
         if (index == 0) {
           padding = const EdgeInsets.only(
-                left: 20.0, right: 10.0, top: 4.0, bottom: 30.0);
+                left: 15.0, right: 15.0, top: 4.0, bottom: 10.0);
         } else {
           padding = const EdgeInsets.only(
-                left: 10.0, right: 10.0, top: 4.0, bottom: 30.0);
+                left: 15.0, right: 15.0, top: 4.0, bottom: 10.0);
         }
 
        // var itemsaBioAgriculture2 = itemsaBioAgriculture;
-        return  Padding(
+       //  return  Padding(
+        return  Container(
           padding: padding,
+
           child:  InkWell(
             onTap: () {
               /*    if (items[index].description == "agricultureBiologique") {
@@ -198,10 +212,26 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
               //  print('Card selected');
               //  }
             },
+              // child: Container(
+              //     height: 200,
+              //     width:_width,
+              //     child: const SingleChildScrollView(
+              //         scrollDirection:Axis.horizontal,
+              //         child: Text(
+              //             "Long text here which is longer than the container height")))
+            // child: Row(children:<Widget> [
+            //   Flexible(
+            //       flex: 5,
+            //       child:  Text(AppLocalizations.translate('agricolturaBio').toString().toUpperCase(),
+            //           textAlign: TextAlign.center
+            //       )
+            //   )
+            // ],),
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
                 color: Colors.lightGreen,
+
                 boxShadow: [
                   BoxShadow(
                       color: Colors.black.withAlpha(70),
@@ -217,8 +247,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                   fit: BoxFit.fitHeight,
                 ),
               ),
-              //height: 200.0,
-              width: 160.0,
+              height: 200.0,
+              width: 165.0,
+              // width: 160.0,
               child: Stack(
                 children: <Widget>[
                   Align(
@@ -226,18 +257,16 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                     child: Container(
                         decoration: const BoxDecoration(
                             color: Color(0xFF273A48),
-                            // ignore: unnecessary_const
-                            borderRadius: const BorderRadius.only(
+                            borderRadius: BorderRadius.only(
                                 bottomLeft: Radius.circular(10.0),
                                 bottomRight: Radius.circular(10.0))),
                         height: 30.0,
+                        //width: _width,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            Text(
-                              itemsaBioAgriculture[
-                                  index % itemsaBioAgriculture.length],
-                              style: const TextStyle(color: Colors.white),
+                            Text( itemsaBioAgriculture[index % itemsaBioAgriculture.length],
+                              style: const TextStyle(color: Colors.white,fontSize: 12),
                             )
                           ],
                         )),
@@ -248,19 +277,22 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
           ),
         );
       },
-      scrollDirection: Axis.horizontal,
-      itemCount: itemsaBioAgriculture.length,
+      // scrollDirection: Axis.horizontal,
+      // shrinkWrap: true,
+      // itemCount: itemsaBioAgriculture.length,
     );
 
-    //   ------------------------  END INITE HEADER AGRICULTURE ----------------------------------
+    //   ------------------------  END  HEADER AGRICULTURE ----------------------------------
     //   ------------------------   INITE HEADER APICOLTURA ----------------------------------
     final headerListApicoltura = ListView.builder(
       itemBuilder: (context, index) {
+
+      //  EdgeInsets padding= EdgeInsets.all(MediaQuery.of(context).size.width);
         EdgeInsets padding = index == 0
             ? const EdgeInsets.only(
-                left: 20.0, right: 10.0, top: 4.0, bottom: 30.0)
+                left: 15.0, right: 15.0, top: 4.0, bottom: 4.0)
             : const EdgeInsets.only(
-                left: 10.0, right: 10.0, top: 4.0, bottom: 30.0);
+                left: 10.0, right: 10.0, top: 4.0, bottom: 4.0);
 
         return Padding(
           padding: padding,
@@ -290,9 +322,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                 ),
               ),
 
-              // height: 200.0,
+              height: 200.0,
               //width: 200.0,
-              width: 160.0,
+              width: 165.0,
               child: Stack(
                 children: <Widget>[
                   Align(
@@ -310,7 +342,8 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                           children: <Widget>[
                             Flexible(child: Text(
                               itemsBioApicoltura[index % itemsBioApicoltura.length],
-                              style: const TextStyle(color: Colors.white)),
+                              style: const TextStyle(color: Colors.white,fontSize: 12),
+                              ),
                             )
                           ],
                         )),
@@ -333,9 +366,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
       itemBuilder: (context, index) {
         EdgeInsets padding = index == 0
             ? const EdgeInsets.only(
-                left: 20.0, right: 10.0, top: 4.0, bottom: 30.0)
+                left: 20.0, right: 10.0, top: 4.0, bottom: 4.0)
             : const EdgeInsets.only(
-                left: 10.0, right: 10.0, top: 4.0, bottom: 30.0);
+            left: 10.0, right: 10.0, top: 4.0, bottom: 4.0);
 
         return Padding(
           padding: padding,
@@ -365,10 +398,10 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                 ),
               ),
 
-              //                                    height: 200.0,
+               height: 200.0,
               // height: 200.0,
               //width: 200.0,
-              width: 160.0,
+              width: 165.0,
               child: Stack(
                 children: <Widget>[
                   Align(
@@ -386,7 +419,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                           children: <Widget>[
                             Text(
                               itemsBioEdilizia[index % itemsBioEdilizia.length],
-                              style: const TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white,fontSize: 12),
                             )
                           ],
                         )),
@@ -409,9 +442,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
       itemBuilder: (context, index) {
         EdgeInsets padding = index == 0
             ? const EdgeInsets.only(
-                left: 20.0, right: 10.0, top: 4.0, bottom: 30.0)
+                left: 20.0, right: 10.0, top: 4.0, bottom: 4.0)
             : const EdgeInsets.only(
-                left: 10.0, right: 10.0, top: 4.0, bottom: 30.0);
+                left: 10.0, right: 10.0, top: 4.0, bottom: 4.0);
 
         return Padding(
           padding: padding,
@@ -438,9 +471,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                 ),
               ),
 
-              // height: 200.0,
+               height: 200.0,
               //width: 200.0,
-              width: 160.0,
+              width: 165.0,
               child: Stack(
                 children: <Widget>[
                   Align(
@@ -458,7 +491,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                           children: <Widget>[
                             Text(
                               itemsBioHotel[index % itemsBioHotel.length],
-                              style: const TextStyle(color: Colors.white),
+                              style: const TextStyle(color: Colors.white,fontSize: 12),
                             )
                           ],
                         )),
@@ -544,9 +577,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                         )),
                   ),
                   Expanded(
-                     // flex: 5,
+                      flex: 5,
                       // height: 300.0,
-                      //width: _width,
+                     // width: _width,
                       child: ListView(
                           // This next line does the trick.
                           scrollDirection: Axis.vertical,
@@ -590,11 +623,25 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                         const SizedBox(
                           height: 15,
                         ),
+
                         SizedBox(
                             height: 200.0,
-                            width: 60,
-                            // width: _width,
+                             width: 60,
+                             // height: _height,
+                           //  width: _width,
                             child: headerListBioAgriculture),
+                        //     SizedBox(
+                        //       height: 200.0,
+                        //         width: 60,
+                        //       // height: _height,
+                        //       //  width: _width,
+                        //       // child: headerListBioAgriculture
+                        //       child: SingleChildScrollView(
+                        //         //scrollDirection: Axis.horizontal,
+                        //         child: headerListBioAgriculture,
+                        //       ),
+                        //     ),
+
                         Container(
                           width: 90.0,
                           margin: const EdgeInsets.only(
@@ -658,7 +705,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                         SizedBox(
                           height: 350.0,
                           // width: 150,
-                          width: width,
+                          width: _width,
                           child: Expanded(
                               child:
                               ListView.builder(itemBuilder: (context, index) {
@@ -840,6 +887,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
       ),
     );
 
+    /// backgroud black and with home app
     return Container(
       decoration: const BoxDecoration(
         color: Color(0xFF273A48),
@@ -847,7 +895,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
       child: Stack(
         children: <Widget>[
           CustomPaint(
-            size: Size(width, height),
+            size: Size(_width, _height),
             //painter: new Background(),
             painter: Background(),
           ),
@@ -856,19 +904,19 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
       ),
     );
 
-    /*  return new LayoutBuilder(
+ /* return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints viewportConstraints) {
         return SingleChildScrollView(
-          scrollDirection: Axis.vertical,
+          scrollDirection: Axis.horizontal,
           child: ConstrainedBox(
             constraints:
                 BoxConstraints(minHeight: viewportConstraints.maxHeight),
-            child: new Stack(
+            child: Stack(
               children: <Widget>[
-                new CustomPaint(
-                  size: new Size(_width, _height),
+                CustomPaint(
+                  size: Size(_width, _height),
                   //painter: new Background(),
-                  painter: new Background(),
+                  painter: Background(),
                 ),
                 body,
               ],

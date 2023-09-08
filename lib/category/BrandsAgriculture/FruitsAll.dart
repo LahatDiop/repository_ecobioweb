@@ -41,7 +41,7 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
   // List<int> cartItemCount = List<int>.generate(10, (index) => index + 1);
   //List<int> cartItemCount = List<int>.generate(cartItems.length, (index) => index + 1);
 
-  int totalPrice = 0;
+  double totalPrice = 0;
 
   Future<void> fetchItems() async {
     final String response =
@@ -278,7 +278,7 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 // imageURL of link String
-                child: Image.network(
+                child: Image.asset(
                   product.imageURL,
                   fit: BoxFit.cover,
                   height: 100,

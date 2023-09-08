@@ -250,7 +250,7 @@ class LoginScreen extends StatelessWidget {
           },
           onSubmitAnimationCompleted: () {
             Navigator.of(context).pushReplacement(FadePageRoute(
-              builder: (context) => const ShoppingCartScreen(),
+              builder: (context) => ShoppingCartScreen(),
               //builder: (context) => const DashboardScreen(),
             ));
           },

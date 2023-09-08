@@ -1,20 +1,51 @@
+import 'dart:collection';
 import 'dart:convert';
 
 import 'package:dotted_border/dotted_border.dart';
+import 'package:ecobioweb/cart/widgets/item_counter_widget.dart';
+import 'package:ecobioweb/category/detailCategory/agriculture_biologique.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import '../../../animation/fade_animation.dart';
 
 import '../../../providers/cart_provider.dart';
 import '../../cart/cart.dart';
+import '../../cart/checkout_bottom_sheet.dart';
+import '../../cart/widgets/chart_item_widget.dart';
+import '../../commonWidgets/app_button.dart';
+import '../../helpers/column_with_seprator.dart';
 import '../../products/components/product.dart';
 import '../../products/screen/product_view.dart';
 import '../../settings/payment/screens/payment.dart';
 
 
 class ShoppingCartScreen extends StatefulWidget {
-  const ShoppingCartScreen({Key? key}) : super(key: key);
+
+ ///final int amount;
+  // Cart cart = Cart();
+  // Map<String, CartItem> cartItemsddd =cart.cartItems;
+   // Product? product;
+   // final int? quantity;
+  // List<dynamic>? cartItems = [];
+
+  // Map<String, CartItem> get cartItems {
+  //   return {..._cartItems};
+  // }
+  //
+  // final Map<String, CartItem> _cartItems = {};
+
+     /// no get item fom provider
+   ///List<dynamic>? cartItems =AgricultureBiologique.cartItemsProducts;
+ /// Map<String, CartItem> cartItems =  Cart().cartItems;
+
+   // Iterable<CartItem> cartItemsProduct =Cart().getItemsCart();
+
+
+    const ShoppingCartScreen({Key? key,Map<int, Product>? amountProductMap}) : super(key: key);
+
+
 
   @override
   _ShoppingCartScreenState createState() => _ShoppingCartScreenState();
@@ -24,67 +55,33 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
     with TickerProviderStateMixin {
 //  class car che gestisce il carello
 
+  Map<String, CartItem> cartItemsddd =Cart().cartItems;
+
   final Map<String, CartItem> _cartItemsProd = {};
-  late List<dynamic> cartItems = [];
-  // List<int> cartItemCount = [1, 1, 1, 1, 1, 1, 1, 1];
-  List<int> cartItemCount = [];
-  //List<int> cartItemCount = []..length;
-  //List<int> cartItemCount = [0, 0, 0, 0, 0, 0, 0, 0];
-  //List<int> quantity = []..length;
-  //List<int> quantity = ;
+
+  // List<dynamic> cartItems = Cart().cartItems.values.toList();
+
+  /// get list from class loder   /// get list from class loder
+
+   List<Product> cartItems = AgricultureBiologique.cartItemsProducts;
+  //List<String> cartItems = AgricultureBiologique.cartItemsProducts;
+   List<int> cartItemCount =AgricultureBiologique.cartItemCount;
+  List<int> amounts = AgricultureBiologique.amounts;
+   Map<int, Product> amountProductMap= AgricultureBiologique.amountProductMap;
+
+
+  late List<dynamic> cartItems2 = [];
+
   int quantityPro = 0;
-  //List<int> cartItemCount = [1, 1, 1, 1, 1, 1, 1, 1];
-  int totalPrice = 0;
 
-  //Cart cart = Cart();
-  //final cart = Provider.of<Cart>(context);
-  //Map<String, CartItem> cartList = cart.cartItems;
-  //Cart? cart;
+  double totalPrice = 0;
 
-  //final cart = Provide.of<Cart>(context);
-  // late Cart myCart;
-  // Map<String, CartItem> cartList = Cart.item;
-  //List<dynamic> cartList = [];
+  ItemCounterWidget itemCounterWidget =  const ItemCounterWidget();
 
-  int quantity = 0;
-
-  Cart? cart;
-
-  Future<void> fetchItems() async {
-    final String response =
-        await rootBundle.loadString('../../assets/json/products.json');
-
-    final data = await json.decode(response);
-    cartItems = data['products'].map((data) => Product.fromJson(data)).toList();
-    check();
-
-    //  sumTotal();
-  }
-
-  check() {
-    for (var value in cartItems) {
-      // cartItemCount.add(cartItems.length);
-      cartItemCount.add(cartItems.length);
-    }
-  }
-
-  sumTotal() {
-    //cartItems.forEach((item) {totalPrice = item.price + totalPrice;
-    for (var item in cartItems) {
-      totalPrice = item.price + totalPrice;
-    }
-  }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
 
-    fetchItems().whenComplete(() => setState(() {}));
-    super.initState();
-  }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -148,7 +145,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                               ],
                               child: cartItem(
                                  // cartItems[index], cart!, index, animation),
-                                  cartItems[index], index, animation),
+                                 // cartItems[index] as Product, index, animation),
+                                  cartItems[index] , index, animation),
                             );
                           })
                    // )
@@ -263,7 +261,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
               margin: const EdgeInsets.only(right: 10),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
-                child: Image.network(
+                child: Image.asset(
                   // product.imageURL,
                   product.image,
                   fit: BoxFit.cover,
@@ -336,22 +334,43 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                 ),
 
                 // QUANTITY
+                // Container(
+                //   child: Center(
+                //     child: Text(
+                //         ///cartItemCount[index].toString()
+                //         cartItemCount[index].toString(),
+                //       // map  _cartItemsProd[index].toString(),
+                //       //quantityPro.toString(),
+                //       // cartItems[index].cart.quantity.toString(),
+                //
+                //       //   cart.quantity.toString(),
+                //
+                //     //  cartQuantity.toString(),
+                //     //  ShoppingCartScreen().quantity.toString(),
+                //       //quantity.toString(),
+                //      ///"5555",
+                //       style:
+                //           TextStyle(fontSize: 20, color: Colors.grey.shade800),
+                //     ),
+                //   ),
+                // ),
+
+                /// QUNTITY PRODUCT
                 Container(
-                  child: Center(
-                    child: Text(
-                      //  cartItemCount[index].toString(),
-                      // map  _cartItemsProd[index].toString(),
-                      //quantityPro.toString(),
-                      // cartItems[index].cart.quantity.toString(),
+                    child: itemCounterWidget.createState().getText(
+                        text: amounts[index].toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
+                      // text: productsItemCount[index].toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
+                    )
 
-                      //   cart.quantity.toString(),
 
-                    //  cartQuantity.toString(),
-                      "5555",
-                      style:
-                          TextStyle(fontSize: 20, color: Colors.grey.shade800),
-                    ),
-                  ),
+                  // child: Center(
+                  //   child: Text(
+                  //       productsItemCount[index].toString(),
+                  //     style:
+                  //     TextStyle(fontSize: 20, color: Colors.grey.shade800),
+                  //     //  quantity_cart!.quantity.toString(),
+                  //   ),
+                  // ),
                 ),
                 //>>>>>> ADD PRODOCT IN TO THE CART <<<<<<<<<<<
                 MaterialButton(
@@ -400,5 +419,282 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
         ),
       ),
     );
+  }
+  Widget buildGrocer(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        //leading: const Icon(Icons.close),
+        title: const Text('Back',
+            style: TextStyle(color: Color.fromARGB(255, 101, 243, 101))),
+        leading: const BackButton(
+          color: Colors.black,
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 25,
+              ),
+              const Text(
+                "My Cart",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Column(
+                children: <Widget> [
+                  SizedBox(
+                    height: 10,
+                    child: Container(
+                      color: const Color(0xFFf5f6f7),
+                    ),
+                  ),
+
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    height: MediaQuery.of(context).size.height * 0.56,
+
+                    /// child: cartItems.isNotEmpty?
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: cartItems.length,
+                      itemBuilder: (context, index) {
+
+                        return  Column(
+                          children: getChildrenWithSeperator(
+                            addToLastChild: false,
+                            /// widgets: demoItems.map((e) {
+                            // widgets: cartItems.asMap().entries.map((e){
+                            //   int index =e.key;
+                            //   var indexNew=cartItems.indexOf(e.value);
+                            //   var index2=e.key;
+                            //   var value =e.value;
+                            //   //Product product=e.value;
+                            //
+                            //   return Container(
+                            //     padding:  const EdgeInsets.symmetric(
+                            //       horizontal: 25,
+                            //     ),
+                            //     width: double.maxFinite,
+                            //     child: ChartItemWidget(
+                            //       item:e.value,
+                            //      // index: [e.key],
+                            //       /// amount: const [],
+                            //     ),
+                            //   );
+                            // }).toList(),
+
+                            // widgets: cartItems.asMap().entries.map<Widget>((e){
+                            //   int index =e.key;
+                            //   Product product=e.value;
+                            //   return Container(
+                            //     padding:  const EdgeInsets.symmetric(
+                            //       horizontal: 25,
+                            //     ),
+                            //     width: double.maxFinite,
+                            //     child: ChartItemWidget(
+                            //       item:e.value,
+                            //       index: const [],
+                            //       amount: const [],
+                            //     ),
+                            //   );
+                            // }).toList(),
+
+                            widgets: cartItems.map((e) {
+                              /// var indexNew=cartItems.indexOf(e);
+                              // var index2=e.key;
+                              // var value =e.value;
+                              return Container(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 25,
+                                ),
+                                width: double.maxFinite,
+                                child: ChartItemWidget(
+                                  item: e,
+                                  index: index,
+                                  /// index: cartItemCount,
+                                  /// amount: amount,
+                                  /// amount:amount ,
+                                ),
+                              );
+                            }).toList(),
+
+                            seperator: const Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 25,
+                              ),
+                              child: Divider(
+                                thickness: 1,
+                              ),
+                              // getCheckoutButton(context)
+                            ),
+                          ),
+                        );
+
+                      },),
+                  ),
+
+                ],
+              ),
+
+              // Column(
+              //   children: getChildrenWithSeperator(
+              //     addToLastChild: false,
+              //     /// widgets: demoItems.map((e) {
+              //     widgets: cartItems.asMap().entries.map((e){
+              //       int index =e.key;
+              //         var indexNew=cartItems.indexOf(e.value);
+              //         var index2=e.key;
+              //         var value =e.value;
+              //       //Product product=e.value;
+              //
+              //       return Container(
+              //         padding:  const EdgeInsets.symmetric(
+              //           horizontal: 25,
+              //         ),
+              //         width: double.maxFinite,
+              //         child: ChartItemWidget(
+              //           item:e.value,
+              //          index: [e.key],
+              //          /// amount: const [],
+              //         ),
+              //       );
+              //     }).toList(),
+              //     // widgets: cartItems.asMap().entries.map<Widget>((e){
+              //     //   int index =e.key;
+              //     //   Product product=e.value;
+              //     //   return Container(
+              //     //     padding:  const EdgeInsets.symmetric(
+              //     //       horizontal: 25,
+              //     //     ),
+              //     //     width: double.maxFinite,
+              //     //     child: ChartItemWidget(
+              //     //       item:e.value,
+              //     //       index: const [],
+              //     //       amount: const [],
+              //     //     ),
+              //     //   );
+              //     // }).toList(),
+              //
+              //     // widgets: cartItems.map((e) {
+              //     //   var indexNew=cartItems.indexOf(e);
+              //     //   var index2=e.key;
+              //     //   var value =e.value;
+              //     //   return Container(
+              //     //     padding: const EdgeInsets.symmetric(
+              //     //       horizontal: 25,
+              //     //     ),
+              //     //     width: double.maxFinite,
+              //     //     child: ChartItemWidget(
+              //     //       item: e,
+              //     //      index: cartItemCount,
+              //     //     /// amount: amount,
+              //     //      /// amount:amount ,
+              //     //     ),
+              //     //   );
+              //     // }).toList(),
+              //
+              //     seperator: const Padding(
+              //       padding: EdgeInsets.symmetric(
+              //         horizontal: 25,
+              //       ),
+              //       child: Divider(
+              //         thickness: 1,
+              //       ),
+              //     ),
+              //   ),
+              // ),
+              // const Divider(
+              //   thickness: 1,
+              // ),
+              // getCheckoutButton(context)
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+
+  check() {
+    for (var value in cartItems) {
+      // cartItemCount.add(cartItems.length);
+      cartItemCount.add(cartItems.length);
+    }
+  }
+
+  sumTotal() {
+    //cartItems.forEach((item) {totalPrice = item.price + totalPrice;
+    for (var item in cartItems) {
+      totalPrice = (item.price + totalPrice);
+    }
+  }
+  Future<List> getListProdBuy() async {
+
+    final Map<String, String> item = Map<String, String>();
+    SharedPreferences prefs = await  SharedPreferences.getInstance();
+
+    cartItems;
+
+    //cartItems = prefs.getStringList('cartItemsListDynamic')??[];
+
+    check();
+    cartItems2 =prefs.getStringList('cartItemsList')!;
+
+    List<String>? cart =prefs.getStringList('cartItemsList');
+
+
+   // print('cartItemsList'+cartItems.toString());
+
+    // ADD THE LIST OF PRODUCTS INTO THE MAP PRODUCT LIST
+    // for (var product in cartItemsList) {
+    //   addListProductItems(product);
+    // }
+
+    return cartItems;
+  }
+
+  Widget getCheckoutButton(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+      child: AppButton(
+        label: "Go To Check Out",
+        fontWeight: FontWeight.w600,
+        padding: const EdgeInsets.symmetric(vertical: 30),
+        trailingWidget: getButtonPriceWidget(),
+        onPressed: () {
+          showBottomSheet(context);
+        },
+      ),
+    );
+  }
+
+  Widget getButtonPriceWidget() {
+    return Container(
+      padding: const EdgeInsets.all(2),
+      decoration: BoxDecoration(
+        color: const Color(0xff489E67),
+        borderRadius: BorderRadius.circular(4),
+      ),
+      child: const Text(
+        "\$12.96",
+        style: TextStyle(fontWeight: FontWeight.w600),
+      ),
+    );
+  }
+
+  void showBottomSheet(context) {
+    showModalBottomSheet(
+        context: context,
+        isScrollControlled: true,
+        backgroundColor: Colors.transparent,
+        builder: (BuildContext bc) {
+          return CheckoutBottomSheet();
+        });
   }
 }

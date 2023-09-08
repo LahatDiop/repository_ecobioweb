@@ -50,7 +50,7 @@ class _FruitsVegetablesState extends State<FruitsVegetables>
 
   //int? indexTabSelected = indexTab;
 
-  int totalPrice = 0;
+  double totalPrice = 0;
 
   late String category;
 
@@ -313,7 +313,7 @@ class _FruitsVegetablesState extends State<FruitsVegetables>
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 // imageURL of link String
-                child: Image.network(
+                child: Image.asset(
                   product.imageURL,
                   fit: BoxFit.cover,
                   height: 100,

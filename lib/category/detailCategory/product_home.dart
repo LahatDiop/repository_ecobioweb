@@ -356,7 +356,7 @@ class _AgricultureBiodymamiqueState extends State<AgricultureBiodymamique>
                           child: ClipRRect(
                               borderRadius: BorderRadius.circular(15),
                               //  child: Image.network(product.imageURL,
-                              child: Image.network(product.image,
+                              child: Image.asset(product.image,
                                   fit: BoxFit.cover)),
 
                           /* child: ClipRRect(

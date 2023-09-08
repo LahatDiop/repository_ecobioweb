@@ -9,6 +9,14 @@ import 'light/app_colors_light.dart';
 abstract class AppColors {
   const AppColors();
 
+  static AppColors? _instance;
+ /// factory AppColors() => _instance ??= AppColors._();
+
+  AppColors._();
+
+  static const primaryColor = Color(0xff53B175);
+  static const darkGrey = Color(0xff7C7C7C);
+
   Color get panelBackground;
   Color get pokeballLogoBlack;
   Color get pokeballLogoGray;

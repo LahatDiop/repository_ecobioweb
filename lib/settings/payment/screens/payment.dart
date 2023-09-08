@@ -7,7 +7,7 @@ import '../models/payment_success.dart';
 
 //https://pub.dev/packages/flutter_credit_card
 class PaymentPage extends StatefulWidget {
-  final int totalPrice;
+  final double totalPrice;
   const PaymentPage({Key? key, required this.totalPrice}) : super(key: key);
 
   @override
@@ -20,7 +20,7 @@ class _PaymentPageState extends State<PaymentPage> {
   // ignore: unused_field
   late Timer _timer;
 
-  int totalPriceBuy = 0;
+  double totalPriceBuy = 0;
 
   @override
   void initState() {

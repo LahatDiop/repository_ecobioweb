@@ -58,7 +58,7 @@ class _HomePageAppSetting extends State<MenuNavigationComponents> {
     //  ),
 
     //BY SHOPPING 3
-    const ShoppingCartScreen(),
+    ShoppingCartScreen(),
 
     //ADD NEW PUBLICATION
     // const PublicationScreen(),

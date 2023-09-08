@@ -41,7 +41,8 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
   List<dynamic> cartItemsVegetables = [];
   List<dynamic> cartItemsFruitsVegetable = [];
   //List<int> cartItemCount =[];
-  List<int> cartItemCount = [0, 0, 0, 0, 0, 0, 0, 0];
+  ///List<int> cartItemCount = [0, 0, 0, 0, 0, 0, 0, 0];
+  List<int> cartItemCount = [];
 
   late String category;
   //generate list number elements
@@ -52,11 +53,11 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
   // List<int> cartItemCount = List<int>.generate(10, (index) => index + 1);
   //List<int> cartItemCount = List<int>.generate(cartItems.length, (index) => index + 1);
 
-  int totalPrice = 0;
+  double totalPrice = 0;
 
   Future<void> fetchItems() async {
     final String response =
-        await rootBundle.loadString('../../assets/json/products.json');
+        await rootBundle.loadString('/assets/json/products.json');
     final data = await json.decode(response);
 
     cartItemsList =
@@ -302,17 +303,23 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 // imageURL of link String
-                child: Image.network(
-                  product.imageURL,
+                // child: Image.network(
+                //   product.image,
+                //   fit: BoxFit.cover,
+                //   height: 100,
+                //   width: 100,
+                // ),
+                child: Image.asset(
+                  product.image,
                   fit: BoxFit.cover,
                   height: 100,
                   width: 100,
                 ),
 
-                /* child: Image.asset("../../assets/images/verdure/avocado_1.png",
-                    height: 100, width: 100),
-                    */
-              ),
+              //   child: Image.asset("assets/images/verdure/avocado_1.png",
+              //       height: 100, width: 100),
+              //
+               ),
             ),
             //BRAND
             Expanded(
@@ -378,7 +385,7 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
                     child: Text(
                       cartItemCount[index].toString(),
                       style:
-                          TextStyle(fontSize: 20, color: Colors.grey.shade800),
+                      TextStyle(fontSize: 20, color: Colors.grey.shade800),
                     ),
                   ),
                 ),

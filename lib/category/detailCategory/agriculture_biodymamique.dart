@@ -48,7 +48,7 @@ class _AgricultureBiodymamiqueState extends State<AgricultureBiodymamique> {
               stretchModes: const [
                 StretchMode.zoomBackground,
               ],
-              background: Image.network(
+              background: Image.asset(
                 widget.product.imageURL,
                 fit: BoxFit.cover,
               )

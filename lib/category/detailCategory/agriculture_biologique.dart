@@ -1,35 +1,50 @@
-//ok page diversi tabView
-
-// ignore_for_file: unrelated_type_equality_checks
-
+import 'dart:collection';
 import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:ecobioweb/cart/widgets/item_counter_widget.dart';
+import 'package:ecobioweb/products/screen/products_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:intl/intl.dart';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../cart/cart.dart';
-import '../../home/screens/wishListScreen.dart';
-
-import '../../menu/components/menuNavigationComponents.dart';
+import '../../cart/widgets/chart_item_widget.dart';
+import '../../helpers/column_with_seprator.dart';
 import '../../products/components/product.dart';
 import '../../products/screen/product_view.dart';
 import '../../providers/cart_provider.dart';
-import '../../search/screen/searchScreen.dart';
-
-import '../../settings/admin/screens/setting_screen.dart';
 import '../../settings/localisation/translation/components/appLocalizations.dart';
 import '../../settings/payment/screens/payment.dart';
 import '../../shopping/screens/shopping_cart_screen.dart';
-import '../widgets/homeListElementsMenu.dart';
+import '../../utils/theme/app_theme.dart';
+
 
 
 class AgricultureBiologique extends StatefulWidget {
-  AgricultureBiologique({Key? key}) : super(key: key);
+ static List<Product> cartItemsProducts = [];
+  ///static List<String> cartItemsProducts = [];
+ static List<int> cartItemCount = [];
+  static List<int> amounts = [];
+  static List<int> indexList = [];
+ ///static Map<int, Product> amountProductMap = HashMap();
+ static Map<int, Product> amountProductMap = <int, Product>{};
 
-  late List<Widget> tabs;
-  ValueChanged<int>? onTap;
+ static  HashMap <int, Product> amountProductHashMap =HashMap<int, Product>();
+
+ final Function? onAmountChanged;
+
+ // static int amount=0;
+
+// static List? cartItems = ShoppingCartScreen().cartItems;
+
+  const AgricultureBiologique({Key? key, this.onAmountChanged}) : super(key: key);
+
+
+
+  //late List<Widget> tabs;
+  //ValueChanged<int>? onTap;
+
+
 
   @override
   _AgricultureBiologiqueState createState() => _AgricultureBiologiqueState();
@@ -38,15 +53,36 @@ class AgricultureBiologique extends StatefulWidget {
 class _AgricultureBiologiqueState extends State<AgricultureBiologique>
     with TickerProviderStateMixin {
   //map lista product from json
-  final Map <String, Product> _productItems={};
+  final Map <int, Product> _productItems={};
 
-  /// get list from class loder
+
+
+  /// get list products into the cart
+//  List<dynamic> cartItems = [];
+
+ // List<dynamic>? cartItems =ShoppingCartScreen().cartItems;
+ //  Product? productCart=ShoppingCartScreen().product;
+ //  int? quantityCart = ShoppingCartScreen().quantity;
+  List<Product> listProductItemsCart= AgricultureBiologique.cartItemsProducts;
+  List<int> cartItemCount= AgricultureBiologique.cartItemCount;
+  List<int> amounts=   AgricultureBiologique.amounts;
+  List<int> indexList=   AgricultureBiologique.indexList;
+  Map<int, Product> amountProductMap=AgricultureBiologique.amountProductMap;
+
+  HashMap <int, Product> amountProductHashMap=AgricultureBiologique.amountProductHashMap;
+
+  /// list product agriculture bio
+  List<dynamic> productItems = [];
   List<dynamic> cartItems = [];
+
+
 
   List<dynamic> cartItemsList = [];
   List<dynamic> cartItemsListPrice = [];
   List<dynamic> cartItemsListQuantity = [0];
+  int elementList=0;
   int quantity = 0;
+  int _counter=0;
   CartItem? quantity_cart;
   List<dynamic> cartItemsFruits = [];
   List<dynamic> cartItemsVegetables = [];
@@ -58,1228 +94,533 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
   Map<int, String> codeProdQuantity = <int, String>{};
 
   Map<String, Product> mapProductsAgriBio = <String, Product>{};
-  //List<int> cartItemCount = <int>[];
-  List<int> cartItemCount = [0, 0, 0, 0, 0, 0, 0, 0];
-  //List<int> quantityProdCart = [0, 0, 0, 0, 0, 0, 0, 0];
-  //List<int> cartItemCount = []..length;
-  //List<int> cartItemCount= <int>[] ;
+
+
+     ///List<int> cartItemCount = [];
+     List<int>  productsItemCount = [];
+
+
+final Future<SharedPreferences> _prefs=SharedPreferences.getInstance();
+
+
+  // List<Map<String, dynamic>> mapsCartItemCount =  <Map<String, dynamic>>[];
+
+
   bool isLoadedlistProduct= true;
 
   List numberOfItems = <int>[];
-  // List<int> numberOfItems = [];
-  //List numberOfItems = [];
 
-  late List<CartItem> products;
-  //List<Map<String, dynamic>> cart = [];
-  //Cart? cart;
+  // late List<CartItem> products;
+  //  List<CartItem> products=[];
+  List<Product> productssss=[];
 
   // FILTRE THE LIST MARKET ENABLED
   List countryEnabled = [];
 
-  // List<int> cartItemCount = [];
-
-  //int cartItemCount = 0;
   int singleProdItemCount = 0;
-  //int totalPrice = 0;
   bool flagItemEnabled = true;
 
-  TabController? _controller;
+  // TabController? _controller;
+  late TabController? _controller;
   int _selectedIndex = 0;
-  late String category;
+  // late String category;
 
   String? tabName = "";
-
-
-
-  List<Widget> listTab = [
-    //  Tab(icon: Icon(Icons.card_travel)),
-    // Tab(icon: Icon(Icons.add_shopping_cart)),
-    Tab(
-      child: Text(
-        AppLocalizations.translate('fruitsVegetable').toString(),
-        style: const TextStyle(
-            fontSize: 15.0,
-            fontFamily: 'Quicksand',
-            fontWeight: FontWeight.bold),
-      ),
-    ),
-    Tab(
-      child: Text(
-        AppLocalizations.translate('fruits').toString(),
-        style: const TextStyle(
-            fontSize: 15.0,
-            fontFamily: 'Quicksand',
-            fontWeight: FontWeight.bold),
-      ),
-    ),
-    Tab(
-      child: Text(
-        AppLocalizations.translate('vegetables').toString(),
-        style: const TextStyle(
-            fontSize: 15.0,
-            fontFamily: 'Quicksand',
-            fontWeight: FontWeight.bold),
-      ),
-    ),
-  ];
 
   // The key of the list
   final GlobalKey<AnimatedListState> _key = GlobalKey();
 
-  int totalPrice = 0;
+  double totalPrice = 0;
 
-  int _counter = 0;
-
-   //late Cart cart;
-   Cart cart = Cart();
+  //List<Map<String, dynamic>> cart = [];
+  Cart cart = Cart();
 
   ///ConnectionSqlLite connectionSqlLite = ConnectionSqlLite();
-
   ///DbConnectionServices dbconnectSqLite=DbConnectionServices();
 
+  /// Map cart quantity product
+  final Map<String, CartItem> _cartItemsProd = {};
 
-  final Map<String, CartItem> _cartItems = {};
+  // int? amount = AgricultureBiologique.amount;
+// int amount=0;
 
-  //late List<int> listQty;
+  ItemCounterWidget itemCounterWidget =  const ItemCounterWidget();
 
-  late List<int>  getQuantityXArticles ;
-  var quantityXArticles=0;
+  var product;
 
-  //  List<int>?  quantityXArticlesAdd = <int>[];
-  List<int> quantityXArticlesAdd = [0, 0, 0, 0, 0, 0, 0, 0];
-  //int _selectedIndex = 0;
-  static const TextStyle optionStyle =
-  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  int index =0;
 
-  static const _kPages = <String, IconData>{
-    'Home': Icons.home,
-    'Search': Icons.search,
-    'Categorty': Icons.category,
-    'Buy': Icons.shopping_cart,
-    'Setting': Icons.settings_applications,
-    // 'Add': Icons.add,
-    // 'Search': Icons.search,
-
-    // 'people': Icons.people,
-    // 'map': Icons.map,
-  };
-
-  static const List<Widget> _widgetOptions33 = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
-      style: optionStyle,
-    ),
-  ];
-
-
-  final List<Widget> _widgetOptions = [
-    // HOME 1
-    const Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-
-  ///  const HomeCategoryViewScreen(),
-    //const HomeScreen(),
-
-   // const MenuNavigationComponents(),
-
-    // SEARCHE 2
-
-    // const Text(
-    //   'Index 1: Business',
-    //   style: optionStyle,
-    // ),
-    //SearchWidget(),
-    const SearchScreen(),
-
-    // LOCALIZATION
-    // const Text(
-    //   'Index 2: School',
-    //   style: optionStyle,
-    // ),
-    //const GestionLocalization(),
-    const WishListScreen(),
-
-    // CATEGORY 3
-
-    // list agri
-
-    // SubCategoryScreen(
-    //    slug: '',
-    //  ),
-
-    //BY SHOPPING 3
-    // const Text(
-    //   'Index 2: School',
-    //   style: optionStyle,
-    // ),
-    const ShoppingCartScreen(),
-
-    //ADD NEW PUBLICATION
-    // const PublicationScreen(),
-
-    // const HomeScreen()
-
-    //PROFILE 5
-    // const Text(
-    //   'Index 2: School',
-    //   style: optionStyle,
-    // ),
-    SettingScreen(),
-
-    // ProfilePage(),
-  ];
-
- // final TabStyle _tabStyle = TabStyle.fixed;
-
-  final List<Widget> pagesContainer = [
-    // HOME 1
-    const HomeCategoryViewScreen(),
-    //const HomeScreen(),
-
-    // SEARCHE 2
-    //SearchWidget(),
-    const SearchScreen(),
-
-    // LOCALIZATION
-    //const GestionLocalization(),
-    const WishListScreen(),
-
-    // CATEGORY 3
-
-    // list agri
-
-    // SubCategoryScreen(
-    //    slug: '',
-    //  ),
-
-    //BY SHOPPING 3
-    const ShoppingCartScreen(),
-
-    //ADD NEW PUBLICATION
-    // const PublicationScreen(),
-
-    // const HomeScreen()
-
-    //PROFILE 5
-    SettingScreen(),
-
-    // ProfilePage(),
-  ];
-
-       // var getQuantityXArticlesAdd=0;
+  int amount=0;
 
 
 
   Map<String, CartItem> get cartItemsProvider {
-    return {..._cartItems};
+    return {..._cartItemsProd};
   }
 
- // List listQty= _cartItems.values.toList();
-  //cart_provider=cart.addItem(productId, price, title, imgUrl);
+  // checkTest() {
+  //   for (var value in productItems) {
+  //     // cartItemCount.add(productItems.length);
+  //    // cartItemCount.add(productItems.length);
+  //
+  //     _cartItemsProd.forEach((key, productItems) {
+  //       _cartItemsProd.values.map((e) => productItems);
+  //     });
+  //
+  //     cart!.productItems.addAll(_cartItemsProd);
+  //     _incrementCounter();
+  //   }
+  // }
+
+  late List<int>  getQuantityXArticles ;
+  int quantityProduct =0;
+
+  //  List<int>?  quantityXArticlesAdd = <int>[];
+ // List<int> quantityXArticlesAdd = [0, 0, 0, 0, 0, 0, 0, 0];
+  //int _selectedIndex = 0;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+
 
 
   @override
   void initState() {
     // TODO: implement initState
-    // super.initState();
+    //super.initState();
     // Create TabController for getting the index of current tab
-    // _controller = TabController(length: listTab.length, vsync: this);
+    ///Implement the list tab of controller
+    _controller = TabController(length: tabs.length, vsync: this);
 
-    // IDENTIFICATION TAB
-    //  int indexTab = _controller!.index;
-    int indexTab = 0;
-    switch (indexTab) {
-      case 0:
-        tabName = AppLocalizations.translate('fruitsVegetables').toString();
-        break;
-      case 1:
-        tabName = AppLocalizations.translate('fruits').toString();
-        break;
-      case 2:
-        tabName = AppLocalizations.translate('vegetables').toString();
-        break;
-      default:
-    }
-
-  ///  DataLoader dataLoader= const DataLoader();
- /// Stop  List cartItems= dataLoader.createState().cartItems;
-
-      fetchItems(indexTab, flagItemEnabled).whenComplete(() => setState(() {}));
+    ///  DataLoader dataLoader= const DataLoader();
+    // fetchItems(indexTab, flagItemEnabled).whenComplete(() => setState(() {}));
+    fetchItems(flagItemEnabled).whenComplete(() => setState(() {}));
     super.initState();
   }
 
 
-  Future<void> fetchItems(int indexTab,bool flagItemEnabled) async {
+  Future<void> fetchItems(bool flagItemEnabled) async {
 
-    // DataLoader dataLoader= const DataLoader();
-    //
-    // List cartItems= dataLoader.createState().cartItems;
-    //
 
-    _controller = TabController(length: listTab.length, vsync: this);
-    cartItems.length;
-    mapProductsAgriBio= _productItems;
-/*
-   if(mapProductsAgriBio.isEmpty){
-      isLoadedlistProduct=true;
-   }
-   */
-    if (flagItemEnabled && isLoadedlistProduct) {
+    // Disabled flagItemEnabled per evitare di caticare la lista json per ogni click
+    // flagItemEnabled = false;
+
+   // if(cartItemsList.isEmpty){
       final String response =
-          await rootBundle.loadString('../../assets/json/products.json');
+      await rootBundle.loadString('assets/json/products.json');
       final data = await json.decode(response);
-      //var indexTab = 0;
+
       cartItemsList = data['products'].map((data) => Product.fromJson(data)).toList();
 
-      cartItemCount.add(cartItemsList.length);
+
+          // productsItemCount.add(cartItemsList.length);
+      for(var i in cartItemsList){
+        /// ok productsItemCount.add(i.quantity);
+           productsItemCount.add(quantityProduct);
+           /// ADD 0 EVIRY ELEMENT TO THE LIST PRODUCT
+           cartItemCount.add(0);
+           amounts.add(0);
+          ///indexList.add(index++);
+           ///indexProd.add(0);
+          ///productsItemCount.add(i);
+      }
+
+       /// Map products
+      // _productItems;
 
 
-
-
-     // quantityXArticlesAdd.clear();
-
+       int amountProduct= 0;
       // ADD THE LIST OF PRODUCTS INTO THE MAP PRODUCT LIST
       for (var product in cartItemsList) {
-        addListProductItems(product);
-
-        //SessionManager().set(product.toString(), value)
-
-     /*   var sessionManager = SessionManager();
-        await sessionManager.set("id", "18");
-        await sessionManager.set("codeProd", 1005);
-        await sessionManager.set("name", "dees");
-        await sessionManager.set("description", "Mla");
-
-        */
-       // await sessionManager.set("product", new Product(id, codeProd, name, description, price, quantityStock, category, brand, brandModel, codeEan, codeQr, country, city, currency, kilometer, imageURL, image, datePublication, dateUpdate, isFavorite, isEnabled) ;
-
-      //  quantityXArticlesAdd.add(cartItemsList.length);
+        addListProductItems(amountProduct, product);
       }
-         cartItemCount.add(cartItemsList.length);
 
+      /// inizializza counter quantity equals 0 on init
+      //saveIcrementCounter(cartItemsList,_productItems);
 
+      /// !!!   productsItemCount.add(cartItemsList.length);
+      // check();
+   // }
 
+  ///  calculateElementTab(_controller!.index);
 
+     recalculateElementTab(_controller!.index);
 
-     // cart.getItemsFromLocalstorage('1003', cartItemsList);
-  //    cart.getItemsFromLocalstorages('1003');
-
-      //addListProductItems(product, index, cartItemCount);
-    // addListProductItems(pro);
-
-
-       // listQty= _cartItems.values.cast<int>().toList();
-       // getQuantityXArticles  =  cart.getQuantityXArticles(codeProd, listQty);
-
-       //quantityProdCart.add(cartItemsList.length);
-
-         // add the list product into the cartItems
-     // _cartItems.addEntries(data['products'].map((data) => Product.fromJson(data)).toList());
-
-    //  Map<String, CartItem> _cartItems = {};
-
-      ///cart.addItem(cartItemsList);
-      //_cartItems
-
-      //  cart!.cartItems.addAll(cartItemsList);
-
-      check();
-
-      //   cartItemCount = [cartItemsList.length];
-
-      // Disabled flagItemEnabled per evitare di caticare la lista json per ogni click
-      flagItemEnabled = false;
-    }
-
-    // Arrivo dalla home Tab default = 0 Fruits and Vegetable
-    // TAB_0 --> FRUITS  AND VEGETABLE
-    if (indexTab == 0) {
-      cartItems.clear();
-      for (var i in cartItemsList) {
-        cartItems.add(i);
-        //--listCodeProd.add(i.codeProd);
-        //--cartItemsListQuantity.add(0);
-
-        // codeProd = i.codeProd;
-        //--generateCodeProd();
-        category = AppLocalizations.translate('fruitsVegetable')
-            .toString()
-            .toLowerCase();
-      }
-      //flagItemEnabled = false;
-    } else
-    // TAB_1 --> FRUITS
-    if (indexTab == 1) {
-      cartItems.clear();
-      for (var i in cartItemsList) {
-        if (i.category.toString().toLowerCase() ==
-            AppLocalizations.translate('fruits').toString().toLowerCase()) {
-          cartItems.add(i);
-          category = i.category.toString().toLowerCase();
-        }
-      }
-    } else {
-      // TAB_0 --> VEGETABLE
-      //if (indexTab == 2) {
-      cartItems.clear();
-      for (var i in cartItemsList) {
-        if (i.category.toString().toLowerCase() ==
-            AppLocalizations.translate('vegetables').toString().toLowerCase()) {
-          cartItems.add(i);
-          category = i.category;
-        }
-      }
-    }
+    // // // Arrivo dalla home Tab default = 0 Fruits and Vegetable
 
     // generateCodeProd();
     // CALCULATED TOTAL PRICE
     // sumTotal();
   }
 
-  check() {
-    for (var value in cartItems) {
-      // cartItemCount.add(cartItems.length);
-      cartItemCount.add(cartItems.length);
-    }
-  }
-
-  //void addListProductItems(Product product,int index, List<int> cartItemCount ) {
-
-  void addListProductItems(Product product) {
-
-    if (_productItems.containsKey( product.codeProd)) {
-
-    } else {
-      _productItems.putIfAbsent(
-          product.codeProd,
-              () => Product(
-              product.id,
-              product.codeProd,
-              product.name,
-              product.description,
-              product.price,
-              product.quantityStock,
-              product.quantity,
-              product.category,
-              product.brand,
-              product.brandModel,
-              product.codeEan,
-              product.codeQr,
-              product.country,
-              product.city,
-              product.currency,
-              product.kilometer,
-              product.imageURL,
-              product.image,
-              product.datePublication,
-              product.dateUpdate,
-              product.isFavorite,
-              product.isEnabled));
-    }
-
-  }
-
-  /* Map<String, CartItem> _cartItemsProd = {};
-  checkTest() {
-    for (var value in cartItems) {
-      // cartItemCount.add(cartItems.length);
-      cartItemCount.add(cartItems.length);
-
-      _cartItemsProd.forEach((key, cartItems) {
-        _cartItemsProd.values.map((e) => cartItems);
-      });
-
-      cart!.cartItems.addAll(_cartItemsProd);
-      _incrementCounter();
-    }
-  }
-*/
-  sumTotal() {
-    //cartItems.forEach((item) {totalPrice = item.price + totalPrice;
-    for (var item in cartItems) {
-      totalPrice = item.price + totalPrice;
-    }
-  }
-
-  generateCodeProd() {
-    for (var item in cartItems) {
-      codeProd = item.codeProd;
-    }
-  }
-
-  getQuantityProd() {
-    quantyProdToAdd++;
-    quantyToAdd.add(quantyProdToAdd);
-
-    // cartItemCount++;
-    //  singleProdItemCount++;
-    // cartItemCount.length++;
-  }
-
-  getQuantityProd22() {
-    for (var item in cartItems) {
-      if (item.codeProd.isNotEmpty && item.codeProd == codeProd) {
-        quantyProdToAdd = quantyProdToAdd++;
-        quantyToAdd.add(quantyProdToAdd);
-
-        // cartItemCount++;
-        singleProdItemCount++;
-        // cartItemCount.length++;
-
-        // } else {
-        //   singleProdItemCount--;
-      }
-    }
-  }
-
-  quantityProd() {
-    for (var item in cartItemsListQuantity) {
-      // if (item.codeProd.isNotEmpty && item.codeProd == codeProd) {
-      quantity++;
-      //}
-    }
-  }
-  @override
-  Widget build222(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Bio Marcket Place'),
-      ),
-      body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.category),
-            label: 'Category',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Buy',
-          ),
-
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings_applications),
-            label: 'Setting',
-          ),
-
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
-    );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
   @override
   Widget build(BuildContext context) {
-
     return DefaultTabController(
-    //final formatCurrency = NumberFormat.currency(locale: 'eu').format(12);
-    length: _kPages.length,
-    initialIndex: 0, // home page initial = 0
-    child: Scaffold(
-    // return MaterialApp(
-    // home: Scaffold(
-   // return Scaffold(
-  appBar: AppBar(
+      length: tabs.length,
+      // The Builder widget is used to have a different BuildContext to access
+      // closest DefaultTabController.
+      child: Builder(builder: (BuildContext context) {
+         TabController tabController = DefaultTabController.of(context);
+        tabController.addListener(() {
+          if (!tabController.indexIsChanging) {
+            print('The Tab has changed :)');
 
-        bottom: TabBar(
-          onTap: (index) {
-            // Should not used it as it only called when tab options are clicked,
-            // not when user swapped
-            ///  fetchItems(index);
-         //   flagItemEnabled=false;
-            if (index == 1 || index == 2) {
-             fetchItems(index,flagItemEnabled);
-
-              _controller!.index = index;
-            }else if (index==0){
-             // flagItemEnabled=false;
-              fetchItems(index,flagItemEnabled);
-            }
-            _handleTap(index, listTab);
-
-            // buildController(index);
-            // buildTabController(index);
-          },
-          controller: _controller,
-          tabs: listTab,
-        ),
-
-
-
-     //title: const Text('AGRO BIO', style: TextStyle(color: Color.fromARGB(255, 101, 243, 101))),
-   //leading: const BackButton( color: Colors.black,  ),
-        //title: const Text('AGRO BIO'),
-      ),
-
-
-   /*   appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        //leading: const Icon(Icons.close),
-        title: const Text('My Cart',
-            style: TextStyle(color: Color.fromARGB(255, 101, 243, 101))),
-        leading: const BackButton(
-          color: Colors.black,
-        ),
-      ),
-*/
-
-
-            /// ==================================INIT BODY==================================================
-    //  body: TabBarView(
-      body: TabBarView(
-        controller: _controller,
-        children: <Widget>[
-
-     // _widgetOptions.elementAt(_selectedIndex),
-          //   if (_selectedIndex == 0) const FruitsVegetables(),
-
-          // if (_selectedIndex == 1) const Fruits(),
-
-          // if (_selectedIndex == 2) Vegetables(_selectedIndex),
-          // const FruitsVegetables(),
-          // Fruits(),
-          /// const AgricultureBiologique(),
-          // AgricultureBiologique(),
-
-          //11111111111111111111111111111111
-        Flexible(
-        flex: 5,
-         // flex:cartItems.length,
-        child: Column(
-            //  crossAxisAlignment: CrossAxisAlignment.start,
-
-              children: <Widget>[
-                //SearchWidget(),
-                SizedBox(
-                  height: 10,
-                  child: Container(
-                    color: const Color(0xFFf5f6f7),
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  height: MediaQuery.of(context).size.height * 0.50,
-                  child: cartItems.isNotEmpty?
-                      // FadeAnimation(
-                      //     1.4,
-                          AnimatedList(
-                              scrollDirection: Axis.vertical,
-                              initialItemCount: cartItems.length,
-                              itemBuilder: (context, index, animation) {
-                                return Slidable(
-                                  // actionPane: const SlidableDrawerActionPane(),
-                                  //secondaryActions: [
-                                  groupTag: <Widget>[
-                                    MaterialButton(
-                                      color: Colors.red.withOpacity(0.15),
-                                      elevation: 2,
-                                      height: 35,
-                                      minWidth: 60,
-                                      shape: const CircleBorder(),
-                                      child: const Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                        size: 30,
-                                      ),
-                                      onPressed: () {
-                                        setState(() {
-                                          //totalPrice = totalPrice - (int.parse(cartItems[index].price.toString()) * cartItemCount[index]);
-                                          //   totalPrice = totalPrice - (int.parse(singleProdItemCount[index].price.toString()) * singleProdItemCount[index]);
-                                          totalPrice = totalPrice -
-                                              (int.parse(cartItems[index]
-                                                      .price
-                                                      .toString()) *
-                                                  cartItemCount[index]);
-                                          // quantyProdToAdd++;
-                                          AnimatedList.of(context).removeItem(
-                                              index, (context, animation) {
-                                            return cartItem(
-                                                cartItems[index],
-                                               // cart!,
-                                                index,
-                                                cartItems[index].codeProd,
-                                                _counter,
-                                                animation);
-                                          });
-                                          //  singleProdItemCount.removeAt(index);
-
-                                          cartItems.removeAt(index);
-                                          cartItemCount.removeAt(index);
-                                        });
-                                      },
+           recalculateElementTab(tabController.index);
+            // Your code goes here.
+            // To get index of current tab use tabController.index
+          }
+        });
+        return Scaffold(
+          appBar: AppBar(
+            bottom:  TabBar(
+              tabs: tabs,
+            ),
+          ),
+          body: TabBarView(
+            children: tabs.map((Tab tab) {
+              return Center(
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            Column(
+                              //  crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  //SearchWidget(),
+                                  SizedBox(
+                                    height: 10,
+                                    child: Container(
+                                      color: const Color(0xFFf5f6f7),
                                     ),
-                                  ],
-                                  child: cartItem(
-                                      cartItems[index],
-                                      //cart!,
-                                      index,
-                                      cartItems[index].codeProd,
-                                      _counter,
-                                      animation),
-                                );
-                              })
-                        //)
-                      : Container(),
-                ),
-                const SizedBox(height: 8),
-                // FadeAnimation(
-                //   1.2,
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        //Shipping
-                        Text('Trasporto', style: TextStyle(fontSize: 20)),
-                       //Text(' 5.99 €',
-                          Text(' 5.99 €',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold))
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                                    height: MediaQuery.of(context).size.height * 0.56,
+
+                                    child: productItems.isNotEmpty?
+                                    // FadeAnimation(
+                                    //     1.4,
+                                    AnimatedList(
+                                        scrollDirection: Axis.vertical,
+                                        /// Number of element into the list mandatory , if you would show all element in the list
+                                        initialItemCount: productItems.length,
+                                        //   initialItemCount: productsItemCount.length,
+                                        itemBuilder: (context, index, animation) {
+                                          return Slidable(
+                                            // actionPane: const SlidableDrawerActionPane(),
+                                            //secondaryActions: [
+                                            groupTag: <Widget>[
+                                              MaterialButton(
+                                                color: Colors.red.withOpacity(0.15),
+                                                elevation: 2,
+                                                height: 35,
+                                                minWidth: 60,
+                                                shape: const CircleBorder(),
+                                                child: const Icon(
+                                                  Icons.delete,
+                                                  color: Colors.red,
+                                                  size: 30,
+                                                ),
+                                                onPressed: () {
+                                                  setState(() {
+
+                                                    //totalPrice = totalPrice - (int.parse(productItems[index].price.toString()) * productsItemCount[index]);
+                                                    //   totalPrice = totalPrice - (int.parse(singleProdItemCount[index].price.toString()) * singleProdItemCount[index]);
+                                                    ///   totalPrice = totalPrice -(int.parse(productItems[index].price.toString()) *  productsItemCount[index]);
+
+                                                    AnimatedList.of(context).removeItem(
+                                                        index, (context, animation) {
+                                                          return  Column(
+                                                            children: getChildrenWithSeperator(
+                                                              addToLastChild: false,
+                                                              /// widgets: demoItems.map((e) {
+                                                              // widgets: cartItems.asMap().entries.map((e){
+                                                              //   int index =e.key;
+                                                              //   var indexNew=cartItems.indexOf(e.value);
+                                                              //   var index2=e.key;
+                                                              //   var value =e.value;
+                                                              //   //Product product=e.value;
+                                                              //
+                                                              //   return Container(
+                                                              //     padding:  const EdgeInsets.symmetric(
+                                                              //       horizontal: 25,
+                                                              //     ),
+                                                              //     width: double.maxFinite,
+                                                              //     child: ChartItemWidget(
+                                                              //       item:e.value,
+                                                              //      // index: [e.key],
+                                                              //       /// amount: const [],
+                                                              //     ),
+                                                              //   );
+                                                              // }).toList(),
+
+                                                              // widgets: cartItems.asMap().entries.map<Widget>((e){
+                                                              //   int index =e.key;
+                                                              //   Product product=e.value;
+                                                              //   return Container(
+                                                              //     padding:  const EdgeInsets.symmetric(
+                                                              //       horizontal: 25,
+                                                              //     ),
+                                                              //     width: double.maxFinite,
+                                                              //     child: ChartItemWidget(
+                                                              //       item:e.value,
+                                                              //       index: const [],
+                                                              //       amount: const [],
+                                                              //     ),
+                                                              //   );
+                                                              // }).toList(),
+
+                                                              widgets: productItems.map((e) {
+                                                                /// var indexNew=cartItems.indexOf(e);
+                                                                // var index2=e.key;
+                                                                // var value =e.value;
+                                                                return Container(
+                                                                  padding: const EdgeInsets.symmetric(
+                                                                    horizontal: 25,
+                                                                  ),
+                                                                  width: double.maxFinite,
+                                                                  child: ChartItemWidget(
+                                                                    item: e,
+                                                                    index:index,
+                                                                    /// index: cartItemCount,
+                                                                    /// amount: amount,
+                                                                    /// amount:amount ,
+                                                                  ),
+                                                                );
+                                                              }).toList(),
+
+                                                              seperator: const Padding(
+                                                                padding: EdgeInsets.symmetric(
+                                                                  horizontal: 25,
+                                                                ),
+                                                                child: Divider(
+                                                                  thickness: 1,
+                                                                ),
+                                                                // getCheckoutButton(context)
+                                                              ),
+                                                            ),
+                                                          );
+                                                      // return cartItem(
+                                                      //     productItems[index],
+                                                      //     // cart!,
+                                                      //     index,
+                                                      //     productItems[index].codeProd,
+                                                      //     productsItemCount[index].toInt(),
+                                                      //    /// quantity.toInt(),
+                                                      //    // _counter,
+                                                      //     animation);
+                                                    });
+                                                    //  singleProdItemCount.removeAt(index);
+
+                                                   // productItems.removeAt(index);
+                                                   // productsItemCount.removeAt(index);
+                                                  });
+                                                },
+                                              ),
+                                            ],
+                                            child: cartItem(
+                                                productItems[index],
+                                                //cart!,
+                                                index,
+                                                productItems[index].codeProd,
+                                                productsItemCount[index].toInt(),
+                                               // quantity,
+                                                //_counter,
+                                                animation
+                                            ),
+
+                                          );
+                                        })
+
+                                    //)
+                                        : Container(),
+                                  ),
+                                  const SizedBox(height: 8),
+                                  // FadeAnimation(
+                                  //   1.2,
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                                    child: const Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        //Shipping
+                                        Text('Trasporto', style: TextStyle(fontSize: 20)),
+                                        //Text(' 5.99 €',
+                                        Text(' 5.99 €',
+                                            style: TextStyle(
+                                                fontSize: 20, fontWeight: FontWeight.bold))
+                                      ],
+                                    ),
+                                  ),
+
+                                  const SizedBox(height: 10),
+
+                                  /** Button go to home **/
+
+                  /** Button go to home **/
+                  /// FadeAnimation(1.4,
+                            MaterialButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ShoppingCartScreen(amountProductMap: amountProductMap)));
+                              },
+
+                              height: 50,
+                              elevation: 0,
+                              splashColor: Colors.yellow[700],
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              color: Colors.yellow[800],
+                              child: const Center(
+                                child: Text(
+                                  "Cart",
+                                  style: TextStyle(color: Colors.white, fontSize: 16),
+                                ),
+                              ),
+                            ),
+
+                                  const SizedBox(height: 10),
+                                  MaterialButton(
+                                    onPressed: () {
+                                      onCleanItemCartClicked(context, listProductItemsCart);
+                                   },
+
+                                    height: 50,
+                                    elevation: 0,
+                                    splashColor: Colors.indigoAccent[400],
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10)),
+                                    color: Colors.yellow[800],
+                                    child: const Center(
+                                      child: Text(
+                                        "Clean Cart",
+                                        style: TextStyle(color: Colors.white, fontSize: 16),
+                                      ),
+                                    ),
+                                  ),
+
+                                  // ),
+                                  //  FadeAnimation(
+                                  //      1.3,
+                                  Column(
+                                    children: [
+                                      Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.all(10.0),
+                                            child: DottedBorder(
+                                                color: Colors.grey.shade400,
+                                                dashPattern: const [10, 10],
+                                                padding: const EdgeInsets.all(0),
+                                                child: Container()),
+                                            //)
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  // FadeAnimation(
+                                  //     1.3,
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                                    child: const Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text('Total :', style: TextStyle(fontSize: 20)),
+                                        // Text('\$${totalPrice.toDouble() + 8.99}',
+                                        Text('\$${8.99}',
+                                            style: TextStyle(
+                                                fontSize: 15, fontWeight: FontWeight.bold))
+                                      ],
+                                    ),
+                                  ),
+                                  //),
+                                  const SizedBox(height: 10),
+                                  // FadeAnimation(
+                                  //     1.4,
+                                  Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: MaterialButton(
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    PaymentPage(totalPrice: totalPrice)));
+                                        // MaterialPageRoute( builder: (context) => const MenuNavigationComponents()));
+                                      },
+                                      height: 50,
+                                      elevation: 0,
+                                      splashColor: const Color.fromARGB(255, 41, 218, 18),
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10)),
+                                      color: const Color.fromARGB(255, 67, 219, 54),
+                                      child: const Center(
+                                        child: Text(
+                                          "Checkout",
+                                          style: TextStyle(color: Colors.white, fontSize: 18),
+                                        ),
+                                      ),
+                                    ),
+                                    //   )
+                                  ),
+                                  const SizedBox(height: 10),
+
+
+                                  const SizedBox(
+                                    height: 5.0,
+                                  ),
+
+                                ]
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                  ),
-               // ),
-               //  FadeAnimation(
-               //      1.3,
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: DottedBorder(
-                          color: Colors.grey.shade400,
-                          dashPattern: const [10, 10],
-                          padding: const EdgeInsets.all(0),
-                          child: Container()),
-                    //)
-                ),
-                // FadeAnimation(
-                //     1.3,
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          const Text('Total :', style: TextStyle(fontSize: 20)),
-                          Text('\$${totalPrice + 8.99}',
-                              style: const TextStyle(
-                                  fontSize: 15, fontWeight: FontWeight.bold))
-                        ],
-                      ),
-                    ),
-                //),
-                const SizedBox(height: 10),
-                // FadeAnimation(
-                //     1.4,
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: MaterialButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      PaymentPage(totalPrice: totalPrice)));
-                          // MaterialPageRoute( builder: (context) => const MenuNavigationComponents()));
-                        },
-                        height: 50,
-                        elevation: 0,
-                        splashColor: const Color.fromARGB(255, 41, 218, 18),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
-                        color: const Color.fromARGB(255, 67, 219, 54),
-                        child: const Center(
-                          child: Text(
-                            "Checkout",
-                            style: TextStyle(color: Colors.white, fontSize: 18),
-                          ),
-                        ),
-                      ),
-                 //   )
-                ),
-                const SizedBox(height: 10),
 
-                /** Button go to home **/
-         // FadeAnimation(1.4,
-             MaterialButton(
-               onPressed: () {
+                  );
 
-                 isLoadedlistProduct=false;
-                 // Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));{{{}}}}[[]]**
-                 Navigator.push(
-                     context,
-                     MaterialPageRoute(
-                        builder: (context) =>  const MenuNavigationComponents()));
-                        // builder: (context) =>  const ShoppingCartScreen()));
-               },
-               height: 50,
-               elevation: 0,
-               splashColor: Colors.yellow[700],
-               shape: RoundedRectangleBorder(
-                   borderRadius: BorderRadius.circular(10)),
-               color: Colors.yellow[800],
-               child: const Center(
-                 child: Text(
-                   "Back to Home1",
-                   style: TextStyle(color: Colors.white, fontSize: 16),
-                 ),
-               ),
-             ),
-               // ),
-                const SizedBox(
-             height: 5.0,
-                ),
-
-
-
-             /*   Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    height: MediaQuery.of(context).size.height * 0.40,
-                  child: Column(
-                    children: const [
-                      // TODO back _buildStyleSelector(),
-                     // Divider(),
-// child: MenuNavigationComponents()
-                      Expanded(
-                         child: MenuNavigation()
-                      // child: MenuNavigationComponents()
-                         // child: MystatefulWidget()
-                      ),
-                    ],
-                    //  children: pagesContainer,
-                  ),
-               )
-             Column(
-             children: const [
-
-              // child: MenuNavigationComponents()
-
-              MenuNavigation()
-
-             //  MenuNavigationComponents()
-             // child: MenuNavigationComponents()
-             // child: MystatefulWidget()
-
-              ]
-             )
-          */
-
-         /** Button go to home **/
-         /*       FadeAnimation(
-             1.4,
-             MaterialButton(
-               onPressed: () {
-                 // Navigator.push(context, MaterialPageRoute(builder: (context) => HomePage()));{{{}}}}[[]]**
-                 Navigator.push(
-                     context,
-                     MaterialPageRoute(
-                         builder: (context) =>
-                         const MenuNavigationComponents()));
-               },
-               height: 50,
-               elevation: 0,
-               splashColor: Colors.yellow[700],
-               shape: RoundedRectangleBorder(
-                   borderRadius: BorderRadius.circular(10)),
-               color: Colors.yellow[800],
-               child: const Center(
-                 child: Text(
-                   "Back to Home",
-                   style: TextStyle(color: Colors.white, fontSize: 16),
-                 ),
-               ),
-             ),
-                ),
-                const SizedBox(
-             height: 5.0,
-                ),
-*/
-              ]),
-
-
-        )
-          //+++++++++++++++++++++++++++++++++++
-
-        ],
-
-
-      ),
-      /// ==================================END BODY==================================================
-
-
-   /*   persistentFooterButtons: <Widget>[
-        Row(
-          children: const <Widget>[
-           HomeCategoryViewScreen(),
-            SearchScreen(),
-             WishListScreen(),
-          ],
-        )
-      ],
-           */
-
-      // key: children: _widgetOptions.elementAt(_selectedIndex),
-      //
-      // child:[widget
-      //
-      //  children: _widgetOptions.elementAt(_selectedIndex),
-      // ],
-
-
-
-      //  child: _widgetOptions.elementAt(_selectedIndex),
-// DIVISION MANY SECTION TO PAGE : CLASS
-   /* ok   bottomNavigationBar: Container(
-        padding: EdgeInsets.all(0.0),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-
-          children: const <Widget>[
-
-            Expanded(
-              flex: 1,
-              child: ShoppingCartScreen(),
-            ),
-
-            Expanded(
-              flex: 1,
-              child: HomeCategoryViewScreen()
-            ),
-
-            Expanded(
-              flex: 1,
-              child:SearchScreen()
-            ),
-          ],
-        ),
-      ),
-      */
-
-      /// MENU NAV BAR SECOND LIVEL
-/**
-      persistentFooterButtons: <Widget>[
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            MaterialButton(
-              color: Colors.red.withOpacity(0.15),
-              elevation: 2,
-              height: 35,
-              minWidth: 60,
-              shape: const CircleBorder(),
-              child: const Icon(
-                Icons.home,
-                color: Colors.red,
-                size: 30,
-              ),
-
-              onPressed: () {
-                setState(() {
-                  children: const HomeCategoryViewScreen();
-                });
-              },
-            ),
-            MaterialButton(
-              color: Colors.red.withOpacity(0.15),
-              elevation: 2,
-              height: 35,
-              minWidth: 60,
-              shape: const CircleBorder(),
-              child: const Icon(
-                Icons.search,
-                color: Colors.red,
-                size: 30,
-              ),
-              onPressed: () {
-                setState(() {
-
-                });
-              },
-            ),
-            MaterialButton(
-              color: Colors.red.withOpacity(0.15),
-              elevation: 2,
-              height: 35,
-              minWidth: 60,
-              shape: const CircleBorder(),
-              child: const Icon(
-                Icons.category,
-                color: Colors.red,
-                size: 30,
-              ),
-              onPressed: () {
-                setState(() {
-
-                });
-              },
-            ),
-
-
-
-                   //_widgetOptions.elementAt(_selectedIndex),
-          ],
-        ),
-      ],
- */
-
-      //   bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Home',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.search),
-      //       label: 'Search',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.category),
-      //       label: 'Category',
-      //     ),
-      //
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.shopping_cart),
-      //       label: 'Buy',
-      //     ),
-      //
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.settings_applications),
-      //       label: 'Setting',
-      //     ),
-      //
-      //   ],
-      //
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: Colors.amber[800],
-      //     onTap: _onItemTapped,
-      //        //_widgetOptions.elementAt(_selectedIndex),
-      // ),
-
-     //),
-
-
-           // children: [MenuNavigation()]
-
-                // child: MenuNavigationComponents()
-
-
-
-              //  MenuNavigationComponents()
-              // child: MenuNavigationComponents()
-              // child: MystatefulWidget()
-
-
-
-
-      // BUTTON MENU BAR
-   /*   bottomNavigationBar: ConvexAppBar.badge(
-        // Optional badge argument: keys are tab indices, values can be
-        // String, IconData, Color or Widget.
-        /*badge=*/
-        const <int, dynamic>{5: '99+'},
-        style: _tabStyle,
-        items: <TabItem>[
-          for (final entry in _kPages.entries)
-            TabItem(icon: entry.value, title: entry.key),
-        ],
-        // ignore: avoid_print
-        onTap: (int i) => print('click index=$i'),
-      ),
-
-*/
-
-
-      //ok
-   /*   bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+              // return Center(
+              //   child: Text(
+              //     '${tab.text!} Tab',
+              //     style: Theme.of(context).textTheme.headlineSmall,
+              //   ),
+              // );
+            }).toList(),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.business),
-            label: 'Business',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.school),
-            label: 'School',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        onTap: _onItemTapped,
-      ),
-
-      */
-    )
-    );
-    //);
-  }
-
-  buildFruitsVegetablew(cartItems, context, totalPrice, cartItemCount) {
-    initState();
-    Column(crossAxisAlignment: CrossAxisAlignment.start, children: <Widget>[
-      //SearchWidget(),
-      SizedBox(
-        height: 10,
-        child: Container(
-          color: const Color(0xFFf5f6f7),
-        ),
-      ),
-      Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        height: MediaQuery.of(context).size.height * 0.50,
-        // height: MediaQuery.of(context).size.height * 0.45,
-        child: cartItems.isNotEmpty?
-        // FadeAnimation(
-        //         1.4,
-                AnimatedList(
-                    scrollDirection: Axis.vertical,
-                    initialItemCount: cartItems.length,
-                    itemBuilder: (context, index, animation) {
-                      return Slidable(
-                        // actionPane: const SlidableDrawerActionPane(),
-                        //secondaryActions: [
-                        groupTag: <Widget>[
-                          MaterialButton(
-                            color: Colors.red.withOpacity(0.15),
-                            elevation: 2,
-                            height: 60,
-                            minWidth: 60,
-                            shape: const CircleBorder(),
-                            child: const Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                              size: 30,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                totalPrice = totalPrice -
-                                    (int.parse(
-                                            cartItems[index].price.toString()) *
-                                        cartItemCount[index]);
-
-                                AnimatedList.of(context).removeItem(index,
-                                    (context, animation) {
-                                  return cartItem(
-                                      cartItems[index],
-                                      //cart!,
-                                      index,
-                                      cartItems[index].codeProd,
-                                      _counter,
-                                      animation);
-                                });
-
-                                cartItems.removeAt(index);
-                                cartItems.remove(codeProd);
-                                cartItemCount.removeAt(index);
-                              });
-                            },
-                          ),
-                        ],
-                      //  child: cartItem(cartItems[index], cart!, index,
-                        child: cartItem(cartItems[index],index,
-                            codeProd, quantyProdToAdd, animation),
-                      );
-                    })
-             // )
-            : Container(),
-      ),
-      const SizedBox(height: 30),
-      // FadeAnimation(
-      //   1.2,
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              //Shipping
-              Text('Trasporto', style: TextStyle(fontSize: 20)),
-              Text(' 5.88 €',
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold))
-            ],
-          ),
-        ),
-      // ),
-      // FadeAnimation(
-      //     1.3,
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: DottedBorder(
-                color: Colors.grey.shade400,
-                dashPattern: const [10, 10],
-                padding: const EdgeInsets.all(0),
-                child: Container()),
-          //)
-          ),
-      // FadeAnimation(
-      //     1.3,
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                const Text('Total', style: TextStyle(fontSize: 20)),
-                Text(
-                    NumberFormat.currency(locale: 'eu', symbol: '€')
-                        .format(totalPrice + 5.99),
-                    // 123.456,00 ?t({totalPrice + 5.99}),
-                    // Text('€ ${totalPrice + 5.99}',
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold))
-              ],
-            ),
-          ),
-    //),
-      const SizedBox(height: 10),
-
-    ]
-        // ),
         );
+      }),
+    );
   }
+
 
   //Widget cartItem(Product product, Cart cart, int index, String codeProd,
-  Widget cartItem(Product product, int index, String codeProd,
-      int quantyProdToAdd, Animation<double> animation) {
-    // LIMITI THE LIST INDEX 12,12,.... OR cartItems.length
-    // List<int> cartItemCount = List<int>.generate(cartItems.length, (index) => index + 1);
+  Widget cartItem(Product product, int index, String codeProd, int quantity, Animation<double> animation) {
+
+
+    // LIMITI THE LIST INDEX 12,12,.... OR productItems.length
+    // List<int> productsItemCount = List<int>.generate(productItems.length, (index) => index + 1);
 
     // CLEAR THE LIST CARTCOUNTITEM EQUAL 0 IF NOTE SELECTED PRODOCT
-    //List<int> cartItemCount =  List<int>.generate(cartItems.length, (index) => index + 0);
+    //List<int> productsItemCount =  List<int>.generate(productItems.length, (index) => index + 0);
 
-   // Cart cart_provider;
+    // Cart cart_provider;
     return GestureDetector(
       onTap: () {
+        /// Add implemnent ProductViewPage
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ProductViewPage(product: product)));
+                builder: (context) => ProductViewPage(product: product, quantity:productsItemCount[index]))
+        );
+       /// Add implement product into the ShoppingCardScreen
+       //  Navigator.push(
+       //      context,
+       //      MaterialPageRoute(
+       //          builder: (context) => ShoppingCartScreen(product: product, quantity:productsItemCount[index], cartItems: productItems[index]))
+       //  );
+
       },
       child: SlideTransition(
         position: Tween<Offset>(begin: const Offset(-1, 0), end: Offset.zero)
@@ -1304,7 +645,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
                 // imageURL of link String
-                child: Image.network(
+                child: Image.asset(
                   product.imageURL,
                   fit: BoxFit.cover,
                   height: 100,
@@ -1341,7 +682,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
                     ),
                     const SizedBox(height: 15),
                     Text(
-                      '€ ${product.price}',
+                      '€ ${product.price} /kg ',
                       style: TextStyle(
                         fontSize: 20,
                         color: Colors.grey.shade800,
@@ -1353,70 +694,37 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
             Column(
               // REMOVED DELETE PRODOCT FROM  LIST
               crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                //QUANTITY PROD IN THE GARBAGE CESTINO
-                Container(
-                  child: Center(
-                    child: Text(
-                      'Code :$codeProd',
-                      //  'Index' + index.toString(),
-                      // "3333",
-                      style:
-                          TextStyle(fontSize: 20, color: Colors.grey.shade800),
-                    ),
-                  ),
-                ),
-                /* SizedBox(
-                  height: 150,
-                  child: ListView.builder(
-                    itemCount: products.length,
-                    itemBuilder: (ctx, i) {
-                      return ListTile(
-                        leading: CircleAvatar(
-                          child: FittedBox(
-                            child: Text(products[i].price.toStringAsFixed(2)),
-                          ),
-                        ),
-                        title: Text(products[i].title),
-                        subtitle: Text(
-                            "Price: ${(products[i].price * products[i].quantity).toStringAsFixed(2)}"),
-                        trailing: Text(
-                            "Qty: ${(products[i].quantity).toStringAsFixed(2)}"),
-                      );
-                    },
-                  ),
-                ),
-                */
+              children: <Widget>[
                 MaterialButton(
                   minWidth: 10,
                   padding: const EdgeInsets.all(0),
                   onPressed: () {
                     setState(() {
-                     // if (singleProdItemCount >= 1) {
-                        if (product.codeProd.isNotEmpty &&
-                            product.codeProd == codeProd) {
-                          singleProdItemCount--;
+                    //  if (productsItemCount[index] >= 1) {
 
-                          totalPrice == totalPrice - product.price;
+                       /// productsItemCount[index]--;
+                      //  amount[index]--;
+                        ////itemCounterWidget.amount =productsItemCount[index];
+                        ///  amount=productsItemCount;
 
-                       //   cartItems.removeAt(index);
-                        //  cartItems.remove(codeProd);
-                          //cartItemCount.removeAt(index);
+                        int newAmount= amounts[index];
+                        int newAmountCount= productsItemCount[index];
 
-                          // if (cartItemCount[index] >= 1) {
-                          //   cartItemCount[index]--;
-                          // }
 
-                          cart.removeItem(product.codeProd.toString(), index, cartItemCount);
-                          cart.cartItemDecrement(product.codeProd.toString(), index, quantityXArticlesAdd, cartItemCount);
-                       //   cart.addItem(product.id.toString(), product.price.toDouble() ,product.description, product.imageURL,index, cartItemCount);
+                        // cartItemCount.add(newAmountCount);
+                           amounts.add(newAmount);
 
-                          cart.getItemsFromLocalstorages( product.codeProd);
-                        }
+                        // amountProductMap.putIfAbsent(newAmount, () => product);
+
+                        ///---------------------------------------------------------------------------------------
+                             itemCounterWidget.createState().decrementAmount(index) ;
+                        quantity =productsItemCount[index].toInt();
+
+                        totalPrice == totalPrice - product.price;
                       //}
                     });
-                    // cartItems.removeAt(index);
-                    //cartItemCount.removeAt(index);
+                    // productItems.removeAt(index);
+                    //productsItemCount.removeAt(index);
                   },
                   shape: const CircleBorder(),
                   child: const Icon(
@@ -1426,134 +734,202 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
                     size: 30,
                   ),
                 ),
-                //QUANTITY PROD IN THE GARBAGE CESTINO
-                /*  Container(
-                  child: Center(
-                    child: Text(
-                      'id' + codeProd.toString(),
-                      // "3333",
-                      style:
-                          TextStyle(fontSize: 20, color: Colors.grey.shade800),
-                    ),
-                  ),
-                ),
-                */
-                //QUANTITY
+
+                /// QUNTITY PRODUCT
                 Container(
-                  child: Center(
-                    child: Text(
-                 //  cartItemCount[index].toString(),
-                      quantityXArticlesAdd[index].toString(),
-                    //  getQuantityXArticlesAdd.toString(),
-                      // quantityProdCart[index].toString(),
-                             // quantityXArticles.toString(),
-
-                     // cart.quantityProdCart.toString(),
-                      style:
-                      TextStyle(fontSize: 20, color: Colors.grey.shade800),
-
-                    //  quantity_cart!.quantity.toString(),
-                      //  '${numberOfItems[index]}',
-                      //lahat
-                      // '$_counter[index]',
-                      //'$quantity',
-                      // '$cart.add(data.data[$index])',
-
-                      //  '${numberOfItems[index].name.toString()}\n',
-                      // '$numberOfItems[index.length]',
-
-                      // cartItemCount[index].toString(),
-                      //quantyProdToAdd.toString(),
-                      // quantity.toString(),
-                      // '$_counter',
+                    child: itemCounterWidget.createState().getText(
+                        text: amounts[index].toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
+                        // text: productsItemCount[index].toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
+                    )
 
 
+                  // child: Center(
+                  //   child: Text(
+                  //       productsItemCount[index].toString(),
+                  //     style:
+                  //     TextStyle(fontSize: 20, color: Colors.grey.shade800),
+                  //     //  quantity_cart!.quantity.toString(),
+                  //   ),
+                  // ),
+                ),
+
+                ///>>>>>> ADD PRODOCT IN TO THE CART <<<<<<<<<<<
+                const SizedBox(width: 18),
+                itemCounterWidget.createState().iconWidget(Icons.add,
+                    iconColor: AppColors.primaryColor,
+                    index:index,
+                    onPressed:(){
+                      setState(() {
+
+                      //       /// INCREMENTE
+                     ///   productsItemCount[index]++;
+                       // amount[index]++;
+                        ////itemCounterWidget.amount =productsItemCount[index];
+                       ///  amount=productsItemCount;
+
+                        // int newAmount= amounts[index];
+                        // int newAmountCount= productsItemCount[index];
+
+///---------------------------------------------------------------------------------------
+                      //  itemCounterWidget.createState().incrementAmount(index) ;
+                           incrementAmount(index, product, amounts[index]);
+
+                     //   quantity =productsItemCount[index].toInt();
+
+                      ///  itemCounterWidget.createState().incrementAmount ;
+                        /// ADD LIST PRODUCT  INTO THE CART
+                        // if(!listProductItemsCart.contains(product)){
+                        //   listProductItemsCart.add(product);
+                        //   cartItemCount.add(newAmountCount);
+                        // //  amount.add(newAmount);
+                        //   amountProductMap.putIfAbsent(amounts, () => listProductItemsCart);
+                        //
+                        //   product.amountProducts?.putIfAbsent(newAmountCount, () => product);
+                        //   product.amountProducts?.forEach((key, value) {
+                        //     debugPrint('$key:$value');
+                        //   });
+                        // }else{
+                        //   cartItemCount.add(newAmountCount);
+                        //  // amount.add(newAmount);
+                        //   amountProductMap.putIfAbsent(newAmount, () => product);
+                        // }
+                      });
+                    }
                     ),
-                  ),
-                ),
-                //>>>>>> ADD PRODOCT IN TO THE CART <<<<<<<<<<<
-                MaterialButton(
-                  padding: const EdgeInsets.all(0),
-                  minWidth: 10,
-                  splashColor: const Color.fromARGB(255, 12, 146, 46),
-                  onPressed: () {
-                    setState(() {
-                      if (product.codeProd.isNotEmpty &&
-                          product.codeProd == codeProd) {
-                        // _incrementCounter();
-                        //quantityProd();
-            //  sss
-                       // cartItemCount[index]++;
-                      // cart.addItem(product,product.id,product.codeProd.toString(), product.price.toDouble() ,product.description, product.imageURL,index, cartItemCount);
-                      //   cart.cartItemIncrement(product,index, cartItemCount,cartItemsProvider,quantityProdCart);
 
-                      //  cart.getItemsFromLocalstorage(product.codeProd, _cartItems);
+                // Container(
+                //   child: Center(
+                //     child: Text(
+                //         productsItemCount[index].toString(),
+                //      // quantityXArticlesAdd[index].toString(),
+                //
+                //       // cart.quantityProdCart.toString(),
+                //       //cart!.quantity.toString(),
+                //      // "10",
+                //       style:
+                //       TextStyle(fontSize: 20, color: Colors.grey.shade800),
+                //       //  quantity_cart!.quantity.toString(),
+                //     ),
+                //   ),
+                // ),
 
-                        cart.addItem(product,index, cartItemCount);
-                        cart.cartItemIncrement(product,index, cartItemCount,quantityXArticlesAdd,cartItemsProvider);
-
-                        // save data item to local storage
-                        cart.cartAddItemsToLocalStorage(product.codeProd.toString(),cartItems);
-
-                        //save data database sqlLite
-                    //   cart.getConfigurationSqlLite();
-
-                        //conectionDbSqlLite();
-
-                       //  connectionSqlLite.connectionDb();
-
-                        ///    dbconnectSqLite.database_sqlite;
-
-                        List listQty= _cartItems.values.toList();
-
-                         // retrieve items cart
-                           cart.getItemsCart();
-
-
-                       // final listQty = _cartItems.values.toList(growable: false);
-
-                     /*    for (var listQty in cartItemCount) {
-                     //ok     quantityXArticles  =  cart.getQuantityXArticles(index,codeProd, listQty);
-
-                           //quantityXArticles  =  cart.getQuantityXArticles(index,codeProd, _cartItems.values.toList());
-                           quantityXArticlesAdd.clear();
-                           quantityXArticlesAdd.add(cartItemCount.length);
-
-
-                           quantityXArticlesAdd  =  cart.getQuantityXArticlesAdd(index,codeProd, cartItemCount.toList());
-                       }
-                           */
-
-
-                        // 1.  call _cartItems and add all Items element class cart_provid
-
-                        /*  cart.addItem(
-                            product.codeProd,
-                            product.price.toDouble(),
-                            product.name,
-                            product.imageURL);
-
-                            */
-                        //cart?.quantity;
-
-                       // totalPrice == totalPrice + product.price;
-                        //totalPrice == cart.subTotalPrice;
-                        // quantyProdToAdd++;
-                      } else {
-                        singleProdItemCount;
-                      }
-                      // cartItemCount++;
-                      // totalPrice = totalPrice + product.price;
-                    });
-                  },
-                  shape: const CircleBorder(),
-                  child: const Icon(
-                    //Icons.add_shopping_cart,
-                    Icons.add_circle,
-                    color: Color.fromARGB(255, 46, 126, 59),
-                    size: 30,
-                  ),
-                ),
+                // MaterialButton(
+                //   padding: const EdgeInsets.all(0),
+                //   minWidth: 10,
+                //   splashColor: const Color.fromARGB(255, 12, 146, 46),
+                //   onPressed: () {
+                //     setState(() {
+                //       /// list INT
+                //       productsItemCount[index]++;
+                //
+                //
+                //       ///quantity= productsItemCount[index].toInt();
+                //       // quantityCart =productsItemCount[index].toInt();
+                //       // productCart=productItems[index];
+                //
+                //
+                //       cart.addItemCart(product, index, productsItemCount);
+                //
+                //       cart.cartItems.values.toList();
+                //
+                //       ///LIST PRODUCTI AGRICULTURE BIOLOGICA
+                //          productItems;
+                //       /// INDEX PRODUCT SELETED
+                //          index;
+                //         /// PRODUCT SELECTE
+                //       productssss;
+                //
+                //          codeProd;
+                //
+                //       /// INCREMENTE
+                //       cartItemCount[index]++;
+                //       int newAmount =cartItemCount[index];
+                //
+                //
+                //      amount=newAmount;
+                //
+                //        ///ItemCounterWidget(amount: amount);
+                //
+                //       /// ADD LIST PRODUCT  INTO THE CART
+                //       if(!listProductItemsCart.contains(product)){
+                //         listProductItemsCart.add(product);
+                //       }
+                //
+                //
+                //
+                //       // for(var product in productItems){
+                //       //   listProductItemsCart.add(product[index]);
+                //       // }
+                //
+                //
+                //       for(var i in productsItemCount){
+                //         /// ok productsItemCount.add(i.quantity);
+                //         cartItemCount.add(quantityProduct);
+                //       }
+                //
+                //       // /// Add implement product into the ShoppingCardScreen
+                //
+                //       // if(!AgricultureBiologique.cartItemsProducts.contains(productItems[index])){
+                //       //
+                //       //   AgricultureBiologique.cartItemsProducts.add(productItems[index]);
+                //       //  /// AgricultureBiologique.cartItemCount.add(productItems[index]);
+                //       //
+                //       // }else{
+                //       //   AgricultureBiologique.cartItemCount.add(cartItemCount[index]);
+                //       // }
+                //
+                //
+                //       // AgricultureBiologique.cartItemsProducts = productItems;
+                //
+                //      // cartItems?.add(productItems[index]);
+                //
+                //       // ShoppingCartScreen().cartItems?.add(productCart);
+                //
+                //
+                //     ///  productItemsCart.add(productCart);
+                //
+                //   ///    addListProductItems(productCart!);
+                //
+                //  ///     productItemsCart.add(productItems[index]);
+                //
+                //       // ShoppingCartScreen().cartItems?.add(Product.fromJson(productItems[index]));
+                //
+                //       // if(!productItemsCart.contains(productCart)){
+                //       //      productItemsCart.add(productCart);
+                //       //
+                //       // }else{
+                //       //   quantityCart=productItems[index];
+                //       // }
+                //
+                //
+                //      // Navigator.push(
+                //     ///    ShoppingCartScreen(product: product, quantity:quantity, cartItems: cartItems);
+                //       ///);
+                //
+                //       // Navigator.push(
+                //       //     context,
+                //       //     MaterialPageRoute(
+                //       //         builder: (context) => ShoppingCartScreen(product: product, quantity:quantity, cartItems: productItems))
+                //       // );
+                //
+                //     //  var newQuantitySession = getQuantityFromPrefs();
+                //     //   _counterQuantity;
+                //
+                //
+                //       // totalPrice = totalPrice + product.price;
+                //       totalPrice = (totalPrice + product.price);
+                //
+                //
+                //     });
+                //   },
+                //   shape: const CircleBorder(),
+                //   child: const Icon(
+                //     //Icons.add_shopping_cart,
+                //     Icons.add_circle,
+                //     color: Color.fromARGB(255, 46, 126, 59),
+                //     size: 30,
+                //   ),
+                // ),
               ],
             ),
           ]),
@@ -1562,11 +938,127 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
     );
   }
 
+
+  // check() {
+  //   for (var value in productItems) {
+  //     // productsItemCount.add(productItems.length);
+  //     productsItemCount.add(productItems.length);
+  //   }
+  // }
+
+  //void addListProductItems(Product product,int index, List<int> productsItemCount ) {
+
+  void addListProductItems(int amount, Product product) {
+
+    if (_productItems.containsKey(product.codeProd)) {
+
+    } else {
+      _productItems.putIfAbsent(
+          amount,
+         // product.codeProd,
+              () => Product(
+              product.id,
+              product.codeProd,
+              product.name,
+              product.description,
+              product.price,
+              product.quantityStock,
+              product.quantity,
+              product.category,
+              product.brand,
+              product.brandModel,
+              product.codeEan,
+              product.codeQr,
+              product.country,
+              product.city,
+              product.currency,
+              product.kilometer,
+              product.imageURL,
+              product.image,
+              product.datePublication,
+              product.dateUpdate,
+              product.isFavorite,
+              product.isEnabled,
+             /// product.amountProducts
+              )
+      );
+    }
+
+  }
+
+  //  final Map<String, CartItem> _cartItemsProd = {};
+  // checkTest() {
+  //   for (var value in productItems) {
+  //     // productsItemCount.add(productItems.length);
+  //     productsItemCount.add(productItems.length);
+  //
+  //     _cartItemsProd.forEach((key, productItems) {
+  //       _cartItemsProd.values.map((e) => productItems);
+  //     });
+  //
+  //     cart!.productItems.addAll(_cartItemsProd);
+  //     _incrementCounter();
+  //   }
+  // }
+
+  sumTotal() {
+    //productItems.forEach((item) {totalPrice = item.price + totalPrice;
+    for (var item in productItems) {
+      totalPrice = item.price + totalPrice;
+    }
+  }
+
+  generateCodeProd() {
+    for (var item in productItems) {
+      codeProd = item.codeProd;
+    }
+  }
+
+  getQuantityProd() {
+    quantyProdToAdd++;
+    quantyToAdd.add(quantyProdToAdd);
+
+    // productsItemCount++;
+    //  singleProdItemCount++;
+    // productsItemCount.length++;
+  }
+
+  getQuantityProd22() {
+    for (var item in productItems) {
+      if (item.codeProd.isNotEmpty && item.codeProd == codeProd) {
+        quantyProdToAdd = quantyProdToAdd++;
+        quantyToAdd.add(quantyProdToAdd);
+
+        // productsItemCount++;
+        singleProdItemCount++;
+        // productsItemCount.length++;
+
+        // } else {
+        //   singleProdItemCount--;
+      }
+    }
+  }
+
+  quantityProd() {
+    for (var item in cartItemsListQuantity) {
+      // if (item.codeProd.isNotEmpty && item.codeProd == codeProd) {
+      quantity++;
+      //}
+    }
+  }
+
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
+
+
   void _handleTap(int index, List listTab) {
     //assert(index >= 0 && index < widget.tabs.length);
     assert(index >= 0 && index < listTab.length);
     _controller!.animateTo(index);
-    widget.onTap?.call(index);
+   // widget.onTap?.call(index);
   }
 
   void buildController(int index) {
@@ -1577,23 +1069,6 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
       setState(() {
         _selectedIndex = _controller!.index;
       });
-      //   print("Selected Index: " + _controller.index.toString());
-
-      // IDENTIFICATION TAB
-      var indexTab = _controller!.index.toString();
-
-      switch (indexTab) {
-        case '0':
-          tabName = AppLocalizations.translate('fruitsVegetables').toString();
-          break;
-        case '1':
-          tabName = AppLocalizations.translate('fruits').toString();
-          break;
-        case '2':
-          tabName = AppLocalizations.translate('vegetables').toString();
-          break;
-        default:
-      }
     });
   }
 
@@ -1616,4 +1091,367 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
       child: const Icon(Icons.add, color: Colors.black87),
     );
   }
+
+  Future <void> saveIcrementCounter(List<dynamic> cartItemsList,  Map<String, Product> productItems) async {
+   final SharedPreferences prefs=await _prefs;
+
+
+///***************************************************************************************
+ /// OK Convert List<dynamic> product to list<String> and save the list into the shredPreference
+
+   List<String> pro = cartItemsList.map((i) => i.toString()).toList();
+   prefs.setStringList("pro", pro);
+
+   List<String>? elementProd  = prefs.getStringList("pro");
+
+   ///***************************************************************************************
+   //--------------------------------------------------------------------------
+
+   /// List<dynamic> ====> List<String>
+   List<Map<String, dynamic>> mapsProd =  <Map<String, dynamic>>[];
+
+   List<String> cartItemsListDynamic=cartItemsList.map((i) => i.toString()).toList();
+
+
+    prefs.setStringList('cartItemsListDynamic', cartItemsListDynamic);
+
+   List<String>? cartItemsDynamic  = prefs.getStringList("cartItemsListDynamic");
+
+
+   // List<String> ggg = productItems.;
+
+  // List<String> li = productItems.map((i) => Product.fromJson(i)).toList();
+   // String? elementProd  = prefs.getString("pro");
+
+  //  Map prodMap =jsonDecode(Product.fromJson(elementProd as Map<String, dynamic>).toJson() as String);
+
+   //--------------------------------------------------------------------------
+
+
+
+  // prefs.setStringList('dataProductItems', dataProductItems.values.toList().toString() as List<String>);
+
+   //prefs.getStringList(dataProductItems);
+
+   //Save list
+   List<dynamic> listCartItemsList=productsItemCount.map((i) => i.toString()).toList();
+
+   /// New List Steing form List Dynamic
+   // List<String> listCartItemsLists=cartItemsList.map((i) => i.toString()).toList();
+   String listCartItemsLists= jsonEncode(cartItemsList);
+   prefs.setString('listCartItemsLists', listCartItemsLists);
+  // prefs.setStringList('listCartItemsLists', listCartItemsLists);
+
+   // save Map
+  // prefs.setStringList('cartItemsList', productItems);
+
+
+
+   /// final int  counter  =(prefs.getInt('counter') ?? 0)+ 1;
+   int counter=0;
+     prefs.setInt('counter' ,counter);
+
+   //   prefs.setStringList('cartItemsList', cartItemsList);
+
+    // setState(() {
+    //   _counterQuantity=prefs.setInt('counter', counter).then((bool success){
+    //     return _counterQuantity;
+    //   });
+    // });
+
+  }
+
+
+
+    Future<int> getQuantityFromPrefs() async{
+      var prefs= await SharedPreferences.getInstance();
+
+     List<String>? elementProd  = prefs.getStringList("pro");
+
+
+      // int? counter=prefs.getInt('counter');
+
+     ///Ok int?  counter  =(prefs.getInt('counter') ?? 0)+ 1;
+         int?  counter  =prefs.getInt('counter')!+1;
+              prefs.setInt('counter', counter);
+
+
+           List<String>? getListFromShared = prefs.getStringList('cartItemsList');
+            List<dynamic>? getListFromShared2 = prefs.getStringList('cartItemsList');
+
+            List<dynamic> listCartItemsList=productsItemCount.map((i) => i.toString()).toList();
+
+       ///  var listCartItemsLists  =prefs.getStringList('listCartItemsLists');
+          // var listCartItemsLists                =prefs.getStringList('listCartItemsLists');
+          //  List<dynamic>? listCartItemsListsDyn = prefs.getStringList('listCartItemsLists');
+          //  List<String>? listCartItemsListsString = prefs.getStringList('listCartItemsLists');
+
+
+          /// List<String>? myList = (prefs.getStringList('mylist') ?? List<String>()) ;
+
+          return counter;
+
+    }
+  List<Widget> listTab = [
+//  List<Tab> listTab = [
+    //  Tab(icon: Icon(Icons.card_travel)),
+    // Tab(icon: Icon(Icons.add_shopping_cart)),
+    Tab(
+      child: Text(
+        AppLocalizations.translate('fruitsVegetable').toString(),
+        style: const TextStyle(
+            fontSize: 15.0,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.bold),
+      ),
+    ),
+    Tab(
+      child: Text(
+        AppLocalizations.translate('fruits').toString(),
+        style: const TextStyle(
+            fontSize: 15.0,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.bold),
+      ),
+    ),
+    Tab(
+      child: Text(
+        AppLocalizations.translate('vegetables').toString(),
+        style: const TextStyle(
+            fontSize: 15.0,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.bold),
+      ),
+    ),
+  ];
+
+
+  List<Tab> tabs2 = <Tab>[
+//  List<Tab> listTab = [
+    //  Tab(icon: Icon(Icons.card_travel)),
+    // Tab(icon: Icon(Icons.add_shopping_cart)),
+    Tab(
+      child: Text(
+        AppLocalizations.translate('fruitsVegetable').toString(),
+        style: const TextStyle(
+            fontSize: 15.0,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.bold),
+      ),
+    ),
+    Tab(
+      child: Text(
+        AppLocalizations.translate('fruits').toString(),
+        style: const TextStyle(
+            fontSize: 15.0,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.bold),
+      ),
+    ),
+    Tab(
+      child: Text(
+        AppLocalizations.translate('vegetables').toString(),
+        style: const TextStyle(
+            fontSize: 15.0,
+            fontFamily: 'Quicksand',
+            fontWeight: FontWeight.bold),
+      ),
+    ),
+  ];
+
+  List<Tab> tabs = <Tab>[
+    Tab(text: AppLocalizations.translate('fruitsVegetable').toString()),
+    Tab(text: AppLocalizations.translate('fruits').toString()),
+    Tab(text: AppLocalizations.translate('vegetables').toString()),
+  ];
+
+  void calculateElementTab(int tabIndex) {
+
+    // Arrivo dalla home Tab default = 0 Fruits and Vegetable
+    // TAB_0 --> FRUITS  AND VEGETABLE
+
+      for (var i in cartItemsList) {
+        productItems.add(i);
+      }
+      elementList=productItems.length;
+
+      //flagItemEnabled = false;
+
+
+  }
+
+
+  void recalculateElementTab(int tabIndex) {
+
+    // Arrivo dalla home Tab default = 0 Fruits and Vegetable
+    // TAB_0 --> FRUITS  AND VEGETABLE
+    if (tabIndex == 0) {
+
+      /// productItems.clear();
+      for (var i in cartItemsList) {
+        productItems.add(i);
+          ///int index = cartItemsList.indexOf(i, 0);
+         /// indexList.add(cartItemCount);
+      }
+
+
+      elementList=productItems.length;
+
+      //flagItemEnabled = false;
+    } else
+      // TAB_1 --> FRUITS
+    if (tabIndex == 1) {
+      productItems.clear();
+      for (var i in cartItemsList) {
+        if (i.category.toString().toLowerCase() ==
+            AppLocalizations.translate('fruits').toString().toLowerCase()) {
+          productItems.add(i);
+          // category = i.category.toString().toLowerCase();
+        }
+      }
+      elementList=productItems.length.bitLength;
+    } else {
+      // TAB_0 --> VEGETABLE
+      if ( tabIndex ==2) {
+          productItems.clear();
+        for (var i in cartItemsList) {
+          if (i.category.toString().toLowerCase() ==
+              AppLocalizations.translate('vegetables').toString().toLowerCase()) {
+            productItems.add(i);
+            // category = i.category;
+          }
+        }
+        elementList=productItems.length;
+      }
+    }
+
+  }
+
+  void onCategoryItemClicked(BuildContext context) {
+    Navigator.of(context).push( MaterialPageRoute(
+      builder: (BuildContext context) {
+        return ShoppingCartScreen();
+      },
+    ));
+  }
+
+  void onCleanItemCartClicked(BuildContext context, List<Product> listProductItemsCart,) {
+    listProductItemsCart.clear();
+    cartItemCount.clear();
+    amounts.clear();
+    amountProductMap.clear();
+  }
+
+  void incrementAmount(int index, Product product, newAmount) {
+
+    amount= (newAmount + 1);
+    amounts[index] = amount;
+
+    if(!listProductItemsCart.contains(product)){
+      listProductItemsCart.add(product);
+      /// amountProductMap.putIfAbsent(amount, () => product);
+      // if (amountProductMap.containsKey(product)) {
+      //       amount;
+      //       product;
+      // } else {
+      //     amountProductMap.putIfAbsent(amount, () => product);
+      // }
+      // amountProductHashMap.addAll(<amount,product>);
+
+
+
+       // debugPrint(listProductItemsCart as String?.toList());
+    }
+
+    amountProductMap.putIfAbsent(index, () => product);
+
+
+       updateParent(index);
+
+  /// / getAmountProductMap();
+
+   /// getQuantityXArt(index, product.codeProd);
+
+
+   // indexCartProd= amounts[index];
+   // indexList.add(amounts[index]);
+    // index.add(amount[indexProd]);
+    /// updateParent(indexProd);
+    // updateParent();
+    // //setState(() {
+    //   for (var amountCart in AgricultureBiologique.amount){
+    //     if(amountCart==index){
+    //        amount[index] = (amount[index] + 1);
+    //      // updateParent();
+    //     }
+    //   }
+    //   // amount = (amount + 1);
+    //   // updateParent();
+    // //});
+  }
+
+
+  void decrementAmount(int indexProd) {
+
+    amount= (amount - 1);
+
+
+
+    if(!listProductItemsCart.contains(product)){
+      listProductItemsCart.add(product);
+      amountProductMap.putIfAbsent(amount, () => product);
+     }
+      // else{
+    //   // amountProductMap.putIfAbsent(amount, () => product);
+    //   amountProductMap.updateAll((amount, value) => product);
+    // }
+
+    updateParent(index);
+
+
+    // amounts[indexProd] = (amounts[indexProd] - 1);
+    //
+    // indexList.add(amounts[indexProd]);
+    ///index.add(amount[indexProd]);
+    /// updateParent(indexProd);
+    // setState(() {
+    //   for (var amountCart in AgricultureBiologique.amount ){
+    //     if(amountCart==indexProd){
+    //       amount[indexProd] = (amount[indexProd] - 1);
+    //      // updateParent();
+    //     }
+    //   }
+    // amount = (amount - 1);
+    // updateParent();
+    // });
+  }
+
+  /// getItem into the cart
+  Iterable<Product> getAmountProductMap(){
+    amountProductMap.keys;
+    return amountProductMap.values;
+  }
+
+  int getQuantityXArt(int index, String codeProd){
+    // if (_cartItems.containsKey(codeProd) && _cartItems.values.toList().contains(index)) {
+    var mapnews =amountProductMap.values.toList();
+
+    if (amountProductMap.containsKey(codeProd)){
+      amountProductMap.forEach((key, value) {
+        int quantity = value.quantity;
+      });
+    }
+    return quantity;
+  }
+
+  void updateParent(int index) {
+    if (widget.onAmountChanged != null) {
+      widget.onAmountChanged!(amounts[index]);
+    }
+  }
+
 }
+
+
+
+
