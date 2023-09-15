@@ -119,9 +119,7 @@ class _ProductsBiologiqueState extends State<ProductsBiologique> {
                           child: Container(
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(20),
-                                image: DecorationImage(
-                                    image: AssetImage(item),
-                                    fit: BoxFit.cover)),
+                                image: DecorationImage(image: AssetImage(item), fit: BoxFit.cover)),
                             child: Transform.translate(
                               offset: const Offset(50, -50),
                               child: Container(

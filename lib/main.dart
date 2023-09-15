@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
+import 'package:ecobioweb/loader/data_loader.dart';
 import 'package:ecobioweb/settings/localisation/translation/components/appLocalizations.dart';
 import 'package:ecobioweb/storages/locale/shared_preferences_locale.dart';
 import 'package:flutter/material.dart';
@@ -215,6 +216,9 @@ class MyApp extends StatelessWidget {
             }
             controller.forgetSavedTheme();
           }
+              /// LOAD PRODUCT AGRICULTURE BIOLOGIQUE
+            loadProductAgricultureBio();
+
         },
 
     child: MaterialApp(
@@ -305,6 +309,12 @@ class MyApp extends StatelessWidget {
     // state?.setState((){
     //   state._locale=newLocale;
     // });
+  }
+
+  void loadProductAgricultureBio() {
+    DataLoader dataLoader= const DataLoader();
+
+    dataLoader.createState().initState();
   }
 }
 

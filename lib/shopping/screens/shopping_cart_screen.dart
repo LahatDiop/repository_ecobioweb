@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:ecobioweb/cart/widgets/item_counter_widget.dart';
 import 'package:ecobioweb/category/detailCategory/agriculture_biologique.dart';
+import 'package:ecobioweb/shopping/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -43,7 +44,7 @@ class ShoppingCartScreen extends StatefulWidget {
    // Iterable<CartItem> cartItemsProduct =Cart().getItemsCart();
 
 
-    const ShoppingCartScreen({Key? key,Map<int, Product>? amountProductMap}) : super(key: key);
+    const ShoppingCartScreen({Key? key,Map<Product, int>? amountProductMap}) : super(key: key);
 
 
 
@@ -64,10 +65,11 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
   /// get list from class loder   /// get list from class loder
 
    List<Product> cartItems = AgricultureBiologique.cartItemsProducts;
+  Map<String, Product> cartItemsMap = CartScreen.cartItemsMap;
   //List<String> cartItems = AgricultureBiologique.cartItemsProducts;
    List<int> cartItemCount =AgricultureBiologique.cartItemCount;
   List<int> amounts = AgricultureBiologique.amounts;
-   Map<int, Product> amountProductMap= AgricultureBiologique.amountProductMap;
+   // Map<Product, int>? amountProductMap= AgricultureBiologique.amountProductMap;
 
 
   late List<dynamic> cartItems2 = [];
@@ -76,7 +78,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
 
   double totalPrice = 0;
 
-  ItemCounterWidget itemCounterWidget =  const ItemCounterWidget();
+  ItemCounterWidget itemCounterWidget =   ItemCounterWidget();
 
 
   @override
@@ -148,7 +150,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                                  // cartItems[index] as Product, index, animation),
                                   cartItems[index] , index, animation),
                             );
-                          })
+                          }
+                          )
                    // )
                   : Container(),
             ),
@@ -482,7 +485,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                             //     ),
                             //     width: double.maxFinite,
                             //     child: ChartItemWidget(
-                            //       item:e.value,
+                            //       item:e,
+                            //       // item:e.value,
                             //      // index: [e.key],
                             //       /// amount: const [],
                             //     ),
@@ -505,7 +509,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                             //   );
                             // }).toList(),
 
-                            widgets: cartItems.map((e) {
+                            widgets: cartItemsMap.values.toList().map((e) {
+                            //widgets: _cartItems.map((e) {
                               /// var indexNew=cartItems.indexOf(e);
                               // var index2=e.key;
                               // var value =e.value;
@@ -536,7 +541,8 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                           ),
                         );
 
-                      },),
+                      },
+                    ),
                   ),
 
                 ],

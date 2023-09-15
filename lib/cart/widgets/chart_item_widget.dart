@@ -4,6 +4,7 @@ import 'package:ecobioweb/products/components/product.dart';
 import 'package:flutter/material.dart';
 
 import '../../commonWidgets/app_text.dart';
+import '../../shopping/screens/cart_screen.dart';
 import '../../utils/theme/app_theme.dart';
 import 'item_counter_widget.dart';
 
@@ -12,19 +13,26 @@ import 'item_counter_widget.dart';
 class ChartItemWidget extends StatefulWidget {
 
 
-   ChartItemWidget({Key? key, required this.item, required this.index}) : super(key: key);
+   const ChartItemWidget({Key? key,this.index, this.amount, this.product, required this.item}) : super(key: key);
   // final GroceryItem item;
   ///final CartItem item;
-  ///
+
    final Product item;
+   final int? index;
+   final int? amount;
+   final Product? product;
+   ///final CartItem item;
 
-   final int index;
+   ///final int index;
 
-  @override
-  _ChartItemWidgetState createState() => _ChartItemWidgetState();
+   @override
+   _ChartItemWidgetState createState() => _ChartItemWidgetState();
 }
 
+
 class _ChartItemWidgetState extends State<ChartItemWidget> {
+
+
   final double height = 110;
 
   final Color borderColor = const Color(0xffE2E2E2);
@@ -32,48 +40,51 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
   final double borderRadius = 18;
 
   List<int> amounts=AgricultureBiologique.amounts;
-  final List<int> indexList=AgricultureBiologique.indexList;
+
 
   late int index;
 
- ItemCounterWidget itemCounterWidget =  const ItemCounterWidget();
+  /// **********************************************************************************
+  ///Map<String, CartItem> cartItemsMap =CartScreen.cartItems;
+  final Map<String, Product> cartItemsMap = CartScreen.cartItemsMap;
+  ///   /// **********************************************************************************
+
+
+ // ItemCounterWidget itemCounterWidget =   ItemCounterWidget(amount: widget.item.quantity);
+
+  int amount=0;
 
   @override
-  void initState() {
-    // TODO: implement initState
-    //super.initState();
-    // Create TabController for getting the index of current tab
-    ///Implement the list tab of controller
+  // void initState() {
+  //   // TODO: implement initState
+  //   //super.initState();
+  //   // Create TabController for getting the index of current tab
+  //   ///Implement the list tab of controller
+  //
+  //
+  //   ///  DataLoader dataLoader= const DataLoader();
+  //   // fetchItems(indexTab, flagItemEnabled).whenComplete(() => setState(() {}));
+  //   fetchIndexItems().whenComplete(() => setState(() {}));
+  //   super.initState();
+  // }
 
-
-    ///  DataLoader dataLoader= const DataLoader();
-    // fetchItems(indexTab, flagItemEnabled).whenComplete(() => setState(() {}));
-    fetchIndexItems().whenComplete(() => setState(() {}));
-    super.initState();
-  }
-
-  Future<void> fetchIndexItems() async {
-
-    // List<int> indexList = ItemCounterWidget.index;
-
-    for(var amount in amounts ){
-
-     // if(amount[newIndex]==indexList[newIndex]){
-       amounts.elementAt(amount);
-         amounts.indexed.elementAt(amount);
-           amount=amount.toInt();
-           indexList.add(amount);
-           indexList.first.toInt();
-     // }
-
-    }
-  }
-
-
-
-
-
-
+  // Future<void> fetchIndexItems() async {
+  //
+  //   // List<int> indexList = ItemCounterWidget.index;
+  //
+  //   for(var amountCart in amounts ){
+  //
+  //       amount=amountCart;
+  //    // if(amount[newIndex]==indexList[newIndex]){
+  //      amounts.elementAt(amount);
+  //        amounts.indexed.elementAt(amount);
+  //          amount=amount.toInt();
+  //          indexList.add(amount);
+  //          indexList.first.toInt();
+  //    // }
+  //
+  //   }
+  // }
 
 
  /// int? amount = ChartItemWidget(item: null,).amount.toInt();
@@ -81,6 +92,8 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
   ///List<int> amount=AgricultureBiologique.amount;
   ///
   //List<int> amount=[];
+
+
 
 
   @override
@@ -95,7 +108,8 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            imageWidget(),
+            /// IMAGE PRODUCT CART SCREEN
+            imageWidget(widget.item.imageURL),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -117,32 +131,21 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
                 ),
                 const Spacer(),
 
-                // ItemCounterWidget(
-                //   onAmountChanged: (newAmount) {
-                //     setState(() {
-                //       amounts[index] = newAmount;
-                //     });
-                //   },
-                // )
-
-                /// QUNTITY PRODUCT
-                Container(
-                    child: itemCounterWidget.createState().getText(
-                        text: getAmount().toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
-                      // text: productsItemCount[index].toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
-                    )
-
-
-                  // child: Center(
-                  //   child: Text(
-                  //       productsItemCount[index].toString(),
-                  //     style:
-                  //     TextStyle(fontSize: 20, color: Colors.grey.shade800),
-                  //     //  quantity_cart!.quantity.toString(),
-                  //   ),
-                  // ),
-                ),
-
+                // AppText(
+                //     text: widget.item.quantity.toString(),
+                //     fontSize: 14,
+                //     fontWeight: FontWeight.bold,
+                //     color: AppColors.darkGrey),
+                // const Spacer(),
+                ItemCounterWidget(
+                  onAmountChanged: (newAmount) {
+                    setState(() {
+                      /// amount = widget.item.quantity;
+                      amount =newAmount;
+                      /// amount ?? newAmount;
+                    });
+                  }, amount: widget.item.quantity,
+                )
               ],
             ),
             Column(
@@ -173,12 +176,25 @@ class _ChartItemWidgetState extends State<ChartItemWidget> {
     );
   }
 
-  Widget imageWidget() {
+  Widget imageWidget(item) {
     return Container(
-      width: 100,
-      child: Image.asset(widget.item.imageURL),
+        margin: const EdgeInsets.only(right: 2,left: 2,top: 2,bottom: 0),
+        width: 130,
+        height: 100,
+        decoration: BoxDecoration(
+          borderRadius:const BorderRadius.all(Radius.circular(14)) ,
+          color: Colors.blue.shade200,
+          image: DecorationImage(image: AssetImage(item), fit: BoxFit.cover)),
     );
   }
+
+
+  // Widget imageWidget() {
+  //   return Container(
+  //     width: 100,
+  //     child: Image.asset(widget.item.imageURL),
+  //   );
+  // }
 
   double getPrice() {
     ///return widget.item.price * amount;

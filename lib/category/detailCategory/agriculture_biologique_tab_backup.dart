@@ -472,28 +472,30 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
       _productItems.putIfAbsent(
           product.codeProd,
               () => Product(
-              product.id,
-              product.codeProd,
-              product.name,
-              product.description,
-              product.price,
-              product.quantityStock,
-              product.quantity,
-              product.category,
-              product.brand,
-              product.brandModel,
-              product.codeEan,
-              product.codeQr,
-              product.country,
-              product.city,
-              product.currency,
-              product.kilometer,
-              product.imageURL,
-              product.image,
-              product.datePublication,
-              product.dateUpdate,
-              product.isFavorite,
-              product.isEnabled));
+                  id :product.id,
+                  codeProd:product.codeProd ,
+                  name:product.name ,
+                  description:product.description ,
+                  price:product.price ,
+                  quantityStock:product.quantityStock ,
+                  quantity:product.quantity ,
+                  category:product.category ,
+                  brand:product.brand ,
+                  brandModel:product.brandModel ,
+                  codeEan:product.codeEan ,
+                  codeQr:product.codeQr ,
+                  country:product.country ,
+                  city:product.city ,
+                  currency:product.currency ,
+                  kilometer:product.kilometer ,
+                  imageURL:product.imageURL ,
+                  image:product.image ,
+                  datePublication:DateTime.now().toString() ,
+                  dateUpdate:product.dateUpdate ,
+                  isFavorite:product.isFavorite,
+                  isEnabled:product.isEnabled
+
+              ));
     }
 
   }
@@ -1505,8 +1507,8 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
 
                         //  cart.getItemsFromLocalstorage(product.codeProd, _cartItems);
 
-                        cart.addItemCart(product,index, cartItemCount);
-                        cart.cartItemIncrement(product,index, cartItemCount,quantityXArticlesAdd,cartItemsProvider);
+                        cart.addItemCart(product,index);
+                      //  cart.cartItemIncrement(product,index, cartItemCount,quantityXArticlesAdd,cartItemsProvider);
 
                         // save data item to local storage
                         cart.cartAddItemsToLocalStorage(product.codeProd.toString(),cartItems);

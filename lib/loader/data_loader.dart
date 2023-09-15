@@ -3,6 +3,7 @@ import 'dart:convert';
 // import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../category/components/gestion_agriculture_bio.dart';
 import '../products/components/product.dart';
 // import '../modules/products/components/product.dart';
 
@@ -28,91 +29,39 @@ class DataLoaderAppSetting extends State<DataLoader>  with TickerProviderStateMi
 
   bool isFlagLoaderEnabled = true;
 
-  List<dynamic> cartItems = [];
-  List<dynamic> cartItemsList = [];
-  List<int> cartItemCount = [0, 0, 0, 0, 0, 0, 0, 0];
+  // List<dynamic> productItemsList =  GestionAgricultureBio(productItemsList:  [], productItemsMap:  {},).productItemsList;
+  // // ignore: prefer_const_literals_to_create_immutables
+  // Map<String, Product> productItemsMap=GestionAgricultureBio(productItemsList: [], productItemsMap: <String, Product>{},).productItemsMap;
 
-  Map<String, Product> mapProductsAgriBio = <String, Product>{};
-  final Map <String, Product> _productItems={};
+  List<dynamic>? productItemsList =  GestionAgricultureBio(productItemsList:  [], productItemsMap:  {},).productItemsList;
 
-  var indexTab;
-
+  Map<String, Product>? productItemsMap=GestionAgricultureBio(productItemsList:  [], productItemsMap:  {},).productItemsMap;
 
   @override
   void initState() {
-    fetchItems(categoryToLoad, isFlagLoaderEnabled).whenComplete(() => setState(() {}));
-    super.initState();
+   /// super.initState();
+    fetchItems(categoryToLoad, isFlagLoaderEnabled);
   }
 
   Future<void> fetchItems(String categoryToLoad,bool flagItemEnabled) async {
-    cartItems.length;
-    mapProductsAgriBio= _productItems;
 
-/*
-   if(mapProductsAgriBio.isEmpty){
-      isLoadedlistProduct=true;
-   }
-   */
     if (flagItemEnabled && isFlagLoaderEnabled) {
       final String response =
-      await rootBundle.loadString('../../assets/json/products.json');
+      await rootBundle.loadString('assets/json/products.json');
       final data = await json.decode(response);
-      //var indexTab = 0;
-      cartItemsList = data['products'].map((data) => Product.fromJson(data)).toList();
 
-      cartItemCount.add(cartItemsList.length);
 
-      // quantityXArticlesAdd.clear();
+      productItemsList = data['products'].map((data) => Product.fromJson(data)).toList();
 
-      // ADD THE LIST OF PRODUCTS INTO THE MAP PRODUCT LIST
-      for (var product in cartItemsList) {
-        addListProductItems(product);
-      }
-      cartItemCount.add(cartItemsList.length);
+      /// productItemsMap?.putIfAbsent("product", () => productItemsList!.toList());
+      for (var product in productItemsList!) {
+             setProductItemsMap(product);
+         }
 
       // Disabled flagItemEnabled per evitare di caticare la lista json per ogni click
-      flagItemEnabled = false;
+     // flagItemEnabled = false;
     }
 
-    //cartItems.clear();
-    for (var i in cartItemsList) {
-           cartItems.add(i);
-          category = i.category;
-    }
-
-    // Arrivo dalla home Tab default = 0 Fruits and Vegetable
-    // TAB_0 --> FRUITS  AND VEGETABLE
-    // if (indexTab == 0) {
-    //   cartItems.clear();
-    //   for (var i in cartItemsList) {
-    //     cartItems.add(i);
-    //      category = AppLocalizations.translate('fruitsVegetable').toString() .toLowerCase();
-    //   }
-    //   //flagItemEnabled = false;
-    // } else
-    //   // TAB_1 --> FRUITS
-    // if (indexTab == 1) {
-    //   cartItems.clear();
-    //   for (var i in cartItemsList) {
-    //     if (i.category.toString().toLowerCase() ==
-    //         AppLocalizations.translate('fruits').toString().toLowerCase()) {
-    //       cartItems.add(i);
-    //       category = i.category.toString().toLowerCase();
-    //     }
-    //   }
-    // } else {
-    //   // TAB_0 --> VEGETABLE
-    //   //if (indexTab == 2) {
-    //   cartItems.clear();
-    //   for (var i in cartItemsList) {
-    //    // if (i.category.toString().toLowerCase() ==
-    //     //    AppLocalizations.translate('vegetables').toString().toLowerCase()) {
-    //       cartItems.add(i);
-    //       category = i.category;
-    //   //  }
-    //   }
-    // }
-    // generateCodeProd();
   }
   @override
   Widget build(BuildContext context) {
@@ -120,35 +69,38 @@ class DataLoaderAppSetting extends State<DataLoader>  with TickerProviderStateMi
     throw UnimplementedError();
   }
 
-  void addListProductItems(Product product) {
+ void  setProductItemsMap(Product product) {
 
-    if (_productItems.containsKey( product.codeProd)) {
+    if (productItemsMap!.containsKey(product.codeProd)) {
 
     } else {
-      _productItems.putIfAbsent(
+      productItemsMap?.putIfAbsent(
           product.codeProd,
               () => Product(
-              product.id,
-              product.codeProd,
-              product.name,
-              product.description,
-              product.price,
-              product.quantityStock, product.quantity,
-              product.category,
-              product.brand,
-              product.brandModel,
-              product.codeEan,
-              product.codeQr,
-              product.country,
-              product.city,
-              product.currency,
-              product.kilometer,
-              product.imageURL,
-              product.image,
-              product.datePublication,
-              product.dateUpdate,
-              product.isFavorite,
-              product.isEnabled));
+                  id :product.id,
+                  codeProd:product.codeProd ,
+                  name:product.name ,
+                  description:product.description ,
+                  price:product.price ,
+                  quantityStock:product.quantityStock ,
+                  quantity:product.quantity ,
+                  category:product.category ,
+                  brand:product.brand ,
+                  brandModel:product.brandModel ,
+                  codeEan:product.codeEan ,
+                  codeQr:product.codeQr ,
+                  country:product.country ,
+                  city:product.city ,
+                  currency:product.currency ,
+                  kilometer:product.kilometer ,
+                  imageURL:product.imageURL ,
+                  image:product.image ,
+                  datePublication:DateTime.now().toString() ,
+                  dateUpdate:product.dateUpdate ,
+                  isFavorite:product.isFavorite,
+                  isEnabled:product.isEnabled,
+              )
+      );
     }
 
   }

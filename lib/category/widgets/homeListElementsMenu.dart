@@ -1,3 +1,4 @@
+import 'package:ecobioweb/category/components/gestion_agriculture_bio.dart';
 import 'package:ecobioweb/category/detailCategory/agriculture_biologique.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -171,6 +172,10 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
               if (items[index].description ==
                   AppLocalizations.translate('agricultureBiological')
                       .toString()) {
+                // Navigator.of(context).push(MaterialPageRoute(
+                //  builder: (context) => GestionAgriBio(),
+                // ));
+
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => AgricultureBiologique(),
                 ));

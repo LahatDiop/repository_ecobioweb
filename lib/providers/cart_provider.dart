@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:ecobioweb/shopping/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
 import '../cart/cart.dart';
@@ -35,6 +36,10 @@ class CartItem {
 class Cart with ChangeNotifier {
    Map<String, CartItem> _cartItems = {};
 
+   Map<String, CartItem> get cartItems {
+     return {..._cartItems};
+   }
+
    final LocalStorage storage = LocalStorage('localeStporage_app');
 
    // list index single quantiti in the cart
@@ -46,20 +51,19 @@ class Cart with ChangeNotifier {
 
  // List<int> cartItemCount = [0, 0, 0, 0, 0, 0, 0, 0];
 
-  Map<String, CartItem> get cartItems {
-    return {..._cartItems};
-  }
+
 
   /// ADD PRODUCT TO CART - SAVE PRODUCT TO LOCALSTORAGE - ADD PRODUCT INTO THE CART
 
    /// ==============================  INIT ADD DATA PRODUCT FROM CART MAP CART   =============================================
 //  aggiunge prodotti nel carello
-  void addItemCart(Product product,int index, List<int> cartItemCount ) {
+   void addItemCart(Product product,int index) {
+//   void addItemCart(String productId, double price, String title, String imgUrl) {
 
     if (_cartItems.containsKey(product.codeProd)) {
-         quantity;
-         totalPrice;
-         totalPriceTransport;
+         // quantity;
+         // totalPrice;
+         // totalPriceTransport;
 
     } else {
 
@@ -79,11 +83,37 @@ class Cart with ChangeNotifier {
                   // id: DateTime.now().toString(),
               )
       );
-            quantityProdList.add(cartItemCount[index]);
+
+    ///  cartItems.addAll(_cartItems);
+            //quantityProdList.add(cartItemCount[index]);
             // flagItemEnabled =false;
     }
+
+
     //  cartItemCount[index]++;
     notifyListerner();
+  }
+
+
+  /// UPDATE ITEM CART
+  void incrementItemCart(Product product,int index) {
+    notifyListerner();
+    if (_cartItems.containsKey(product.codeProd)) {
+      _cartItems.update(
+          product.codeProd,
+              (existingCartItem) => CartItem(
+              id: existingCartItem.id,
+              name: existingCartItem.name,
+              description: existingCartItem.description,
+              codeProd: existingCartItem.codeProd,
+              codeEan: existingCartItem.codeEan,
+              codeQr: existingCartItem.codeQr,
+              price:existingCartItem.price.toDouble(),
+              quantityStock: existingCartItem.quantityStock,
+              quantity: existingCartItem.quantity +1,
+              imageURL: existingCartItem.imageURL.toString()
+          ));
+    }
   }
 
 
@@ -98,10 +128,9 @@ class Cart with ChangeNotifier {
   }
 
 
-  /// UPDATE ITEM CART
-// update prodotti
+
  // void cartItemIncrement(Product product,int index, List<int> cartItemCount, Map<String, CartItem> cartItems, List<int> quantityProdCart) {
-  void cartItemIncrement(Product product,int index, List<int> cartItemCount, List<int> quantityXArticlesAdd, Map<String, CartItem> cartItems) {
+  void cartItemIncrement(Product product,int index) {
     notifyListerner();
     if (_cartItems.containsKey(product.codeProd)) {
       _cartItems.update(
@@ -119,8 +148,8 @@ class Cart with ChangeNotifier {
                   imageURL: existingCartItem.imageURL.toString()
               ));
 
-         cartItemCount[index]++ ;
-         quantityXArticlesAdd[index]++ ;
+         // cartItemCount[index]++ ;
+         // quantityXArticlesAdd[index]++ ;
 
    //   getItemsFromLocalstorage(product.codeProd, _cartItems);
      // cart.getItemsFromLocalstorages('1003');
@@ -136,8 +165,12 @@ class Cart with ChangeNotifier {
 
   /// getItem into the cart
  Iterable<CartItem> getItemsCart(){
-    return _cartItems.values;
+    return _cartItems.values.toList();
  }
+
+ List<CartItem> getItemsCarts(){
+    return _cartItems.values.toList();
+  }
 
   int getQuantityXArticles(int index, String codeProd, List listQty){
     // if (_cartItems.containsKey(codeProd) && _cartItems.values.toList().contains(index)) {
@@ -177,7 +210,7 @@ class Cart with ChangeNotifier {
     return _cartItems.values.toList();
   }
 
-// update aggiono i prodotti eliminati
+// update aggiono i prodotti eliminatQQQi
   void cartItemDecrement(String codeProd, int index,List<int> quantityXArticlesAdd, List<int> cartItemCount) {
     if (_cartItems.containsKey(codeProd)) {
       _cartItems.update(
