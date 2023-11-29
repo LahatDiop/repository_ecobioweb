@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../settings/localisation/translation/components/appLocalizations.dart';
+import '../../roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
 
 
 

@@ -2,9 +2,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../products/components/product.dart';
-import '../../products/screen/product_view.dart';
-import '../../settings/localisation/translation/components/appLocalizations.dart';
+import '../../roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
+import '../../roots/trunk/branches/products/components/product.dart';
+import '../../roots/trunk/branches/products/screens/product_view.dart';
 
 class AgricultureBiodymamique extends StatefulWidget {
   const AgricultureBiodymamique({Key? key}) : super(key: key);
@@ -228,7 +228,9 @@ class _AgricultureBiodymamiqueState extends State<AgricultureBiodymamique>
                         itemCount: productList.length,
                         itemBuilder: (context, index) {
                           return forYou(productList[index]);
-                        }))
+                        }
+                        )
+                     )
               ])),
           Container(
               padding: const EdgeInsets.only(top: 20, left: 20),
@@ -306,7 +308,7 @@ class _AgricultureBiodymamiqueState extends State<AgricultureBiodymamique>
 
   Future<void> products() async {
     final String response =
-        await rootBundle.loadString('../../assets/json/products.json');
+        await rootBundle.loadString('assets/json/products.json');
     final data = await json.decode(response);
 
     setState(() {
@@ -410,7 +412,7 @@ class _AgricultureBiodymamiqueState extends State<AgricultureBiodymamique>
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        product.brand,
+                        product.brand.toString(),
                         style: TextStyle(
                           color: Colors.orange.shade400,
                           fontSize: 14,
@@ -491,7 +493,7 @@ class _AgricultureBiodymamiqueState extends State<AgricultureBiodymamique>
                           height: 5,
                         ),
                         Text(
-                          product.brand,
+                          product.brand.toString(),
                           style: TextStyle(
                             color: Colors.orange.shade400,
                             fontSize: 13,

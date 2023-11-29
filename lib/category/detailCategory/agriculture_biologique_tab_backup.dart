@@ -1,32 +1,17 @@
 //ok page diversi tabView
-
-// ignore_for_file: unrelated_type_equality_checks
-
 import 'dart:convert';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
-
-import '../../cart/cart.dart';
-import '../../home/screens/wishListScreen.dart';
-
-import '../../menu/components/menuNavigationComponents.dart';
-import '../../products/components/product.dart';
-import '../../products/screen/product_view.dart';
+import '../../roots/trunk/branches/cart/components/cart_item.dart';
 import '../../providers/cart_provider.dart';
-import '../../search/screen/searchScreen.dart';
-
-import '../../settings/admin/screens/setting_screen.dart';
-import '../../settings/localisation/translation/components/appLocalizations.dart';
-import '../../settings/payment/screens/payment.dart';
-import '../../shopping/screens/shopping_cart_screen.dart';
-import '../BrandsAgriculture/Fruits.dart';
-import '../BrandsAgriculture/FruitsVegetables.dart';
-import '../BrandsAgriculture/Vegetables.dart';
-import '../widgets/homeListElementsMenu.dart';
-
+import '../../roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
+import '../../roots/trunk/branches/menu/menu_settings/settings/payment/screens/payment.dart';
+import '../../roots/trunk/branches/menu/navigation_bar/components/menu_navigation_components.dart';
+import '../../roots/trunk/branches/products/components/product.dart';
+import '../../roots/trunk/branches/products/screens/product_view.dart';
 
 class AgricultureBiologique extends StatefulWidget {
   AgricultureBiologique({Key? key}) : super(key: key);
@@ -1340,7 +1325,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      product.brand,
+                      product.brand.toString(),
                       style: const TextStyle(
                         color: Color.fromARGB(255, 20, 179, 28),
                         fontSize: 14,
@@ -1572,6 +1557,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologique>
                     size: 30,
                   ),
                 ),
+
               ],
             ),
           ]),

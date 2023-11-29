@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../products/components/product.dart';
-import '../../settings/localisation/translation/components/appLocalizations.dart';
+import '../../roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
+import '../../roots/trunk/branches/products/components/product.dart';
 
 class AgricultureBiodymamique extends StatefulWidget {
   final Product product;
@@ -112,7 +112,7 @@ class _AgricultureBiodymamiqueState extends State<AgricultureBiodymamique> {
                             height: 5,
                           ),
                           Text(
-                            widget.product.brand,
+                            widget.product.brand.toString(),
                             style: TextStyle(
                               color: Colors.orange.shade400,
                               fontSize: 14,

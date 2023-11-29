@@ -4,8 +4,8 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:ecobioweb/loader/data_loader.dart';
-import 'package:ecobioweb/settings/localisation/translation/components/appLocalizations.dart';
-import 'package:ecobioweb/storages/locale/shared_preferences_locale.dart';
+import 'package:ecobioweb/roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:path/path.dart';
@@ -14,6 +14,9 @@ import 'package:theme_provider/theme_provider.dart';
 
 
 import 'package:ecobioweb/shared/root/root.dart' as router;
+
+import 'roots/trunk/branches/database/storages/locale/shared_preferences_locale.dart';
+
 
 //import 'objectbox.g.dart';
 //import 'objectbox.g.dart' if (dart.library.html) 'objectbox.g.dart';
@@ -60,23 +63,25 @@ Future<void> main() async {
 
 
     // Get the initial locale values
-    final String defaultSystemLocale = Platform.localeName;
+ ///   final String defaultSystemLocale = Platform.localeName;
     final List<Locale> systemLocales = WidgetsBinding.instance.window.locales;
 
    // save language Locale into SharedPreference
 
     // Locale locale = const Locale(defaultSystemLocale,'IT');
-    Locale locale = Locale(defaultSystemLocale,"+39");
+   // Locale locale = Locale(defaultSystemLocale,"+39");
 
 
     SharedPreferencesLocale saveLanguageLocale = SharedPreferencesLocale();
-           saveLanguageLocale.setLocale(pref, context, locale,defaultSystemLocale);
+         //  saveLanguageLocale.setLocale(pref, context, locale,defaultSystemLocale);
 
 
     WidgetsFlutterBinding.ensureInitialized();
 
-
-
+    /// LOAD PRODUCT AGRICULTURE BIOLOGIQUE
+     // loadProductAgricultureBio();
+    //
+    //
     // if(!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)){
     //   // setWindowTitle('Pokédex by Alan Santos');
     //   // setWindowMinSize(const Size(1366, 768));
@@ -85,6 +90,13 @@ Future<void> main() async {
          runApp(MyApp(pref));
      });
 
+}
+
+
+void loadProductAgricultureBio() {
+  DataLoader dataLoader= const DataLoader();
+
+  dataLoader.createState().initState();
 }
 
 
@@ -197,7 +209,7 @@ class MyApp extends StatelessWidget {
     return ThemeProvider(
    //   initTheme:this.prefs.getBool("greenTheme") ?? false ? greenTheme : greenTheme,
    //      saveThemesOnChange: false, // per adesso non serve salvarlo
-        saveThemesOnChange: true,
+        saveThemesOnChange: false,
         loadThemeOnInit: false,
 
         onInitCallback: (controller, previouslySavedThemeFuture) async {
@@ -217,12 +229,12 @@ class MyApp extends StatelessWidget {
             controller.forgetSavedTheme();
           }
               /// LOAD PRODUCT AGRICULTURE BIOLOGIQUE
-            loadProductAgricultureBio();
+           // loadProductAgricultureBio();
 
         },
 
     child: MaterialApp(
-      title: 'ecobio',
+      title: 'ecobioWEB',
       builder: (context, child) {
         child = botToastBuilder(context, child);
         return child;
@@ -311,11 +323,11 @@ class MyApp extends StatelessWidget {
     // });
   }
 
-  void loadProductAgricultureBio() {
-    DataLoader dataLoader= const DataLoader();
-
-    dataLoader.createState().initState();
-  }
+  // void loadProductAgricultureBio() {
+  //   DataLoader dataLoader= const DataLoader();
+  //
+  //   dataLoader.createState().initState();
+  // }
 }
 
 

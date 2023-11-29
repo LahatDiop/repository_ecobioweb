@@ -1,5 +1,0 @@
-
-Emulator
-https://www.genymotion.com/download/
-
-https://www.virtualbox.org/wiki/Downloads --> Downloads window host

@@ -19,7 +19,12 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '3.1.0-262.2.beta'
+  sdk: 3.3.0-91.0.dev
+  #sdk: 3.2.0-210.4.beta
+  #sdk: 3.16.0-0.4.pre
+  #sdk: 3.3.0-80.0.dev
+  #sdk: '3.1.4'
+  #sdk: '3.1.0-262.2.beta'
   #sdk: '3.1.0-63.1.beta'
   #sdk: '2.17.0-266.8.beta'
   #sdk: '^3.1.0-63.1.beta'
@@ -52,11 +57,12 @@ dependencies:
   path_provider: ^2.0.14
   path: ^1.8.1
   sqlite3_flutter_libs: ^0.5.13
-  drift_sqflite: ^1.0.0
-  drift: ^1.7.1
-  logger: ^1.3.0
-  logging_manager: ^2.3.1
-  flutter_secure_storage: ^8.0.0
+  drift_sqflite: ^2.0.1
+  drift: ^2.13.0
+  drift_dev: ^2.13.1
+  logger: ^2.0.2+1
+  #logging_manager: ^2.3.1 discontinued
+  flutter_secure_storage: ^9.0.0
   sqflite: ^2.2.8
   clay_containers: ^0.3.2
   dotted_border: ^2.0.0+3
@@ -65,18 +71,19 @@ dependencies:
   convex_bottom_bar: ^3.2.0
   font_awesome_flutter: ^10.4.0
   email_validator: ^2.1.17
-  image_picker: ^0.8.7+4
+  image_picker: ^1.0.4
   string_validator: ^1.0.0
   ffi: ^2.0.1
-  reflectable: ^3.0.10
+  reflectable: ^4.0.5
   source_gen: ^1.2.6
   quiver: ^3.2.1
-  http: ^0.13.6
+  http: ^1.1.0
   flutter_slidable: ^3.0.0
   animations: ^2.0.7
   animated_text_kit: ^4.2.2
-  moor: ^4.6.1+1
-  moor_flutter: ^4.1.0
+  #moor: ^4.6.1+1 discontinued
+  #moor_flutter: ^4.1.0 discontinued
+  #moor_generator: ^4.6.0+1 moor_generator
   provider: ^6.0.5
   flutter_localizations:
     sdk: flutter
@@ -86,12 +93,28 @@ dependencies:
   theme_provider: ^0.6.0
   bot_toast: ^4.0.4
   flutter_svg: ^2.0.7
+  app_bar_with_search_switch: ^1.5.4
+  flutter_staggered_grid_view: ^0.7.0
+  get_it: ^7.6.4
+  mobx: ^2.2.1
+  smooth_page_indicator: ^1.1.0
+  carousel_slider: ^4.2.1
+  logging_manager_flutter: ^2.2.1
+  dart_style: ^2.3.2
+  analyzer_plugin: ^0.11.2
+  analyzer: ^5.13.0
+
+
+
+
+
   #json_annotation: ^4.8.1
   #flutter_signin_button: ^2.0.0-nullsafety.0
 
 dev_dependencies:
-  moor_generator: ^4.6.0+1
-  analyzer: ^4.7.0
+  #moor_generator: ^4.6.0+1
+  #analyzer: ^4.7.0
+  #analyzer: ^6.3.0
   flutter_test:
     sdk: flutter
 
@@ -100,9 +123,9 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  build_runner: ^2.3.3
+  build_runner: ^2.4.6
   #json_serializable: ^6.5.4
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -116,20 +139,21 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/images/ecorp.png
-    - assets/images/ic_add_cart.png
-    - assets/images/ic_discount.png
-    - assets/images/promotion_one.png
-    - assets/images/promotion_two.png
-    - assets/images/promotion__one.png
-    - assets/images/promotion_three.png
-    - assets/images/ic_app_icon.png
-    - assets/images/ic_category_image.png
-    - assets/images/empty_shopping_cart_image.png
-    - assets/images/empty_shopping_cart.png
-    - assets/images/empty_wish_list.png
+    - assets/images/inspiration/ecorp.png
+    - assets/images/inspiration/ic_add_cart.png
+    - assets/images/inspiration/ic_discount.png
+    - assets/images/inspiration/promotion_one.png
+    - assets/images/inspiration/promotion_two.png
+    - assets/images/inspiration/promotion__one.png
+    - assets/images/inspiration/promotion_three.png
+    - assets/images/inspiration/ic_app_icon.png
+    - assets/images/inspiration/ic_category_image.png
+    - assets/images/inspiration/empty_shopping_cart_image.png
+    - assets/images/inspiration/empty_shopping_cart.png
+    - assets/images/inspiration/empty_wish_list.png
     - assets/images/home/img_0.jpg
     - assets/images/home/img_1.jpg
+    - assets/images/home/welcome_image.png
     - assets/images/home/img_2.jpg
     - assets/images/home/img_3.jpg
     - assets/images/home/img_4.jpg
@@ -145,6 +169,8 @@ flutter:
     - assets/images/admin/three.jpg
     - assets/images/admin/four.jpg
     - assets/images/admin/five.jpg
+    - assets/icons/app_icon_color.svg
+    - assets/icons/app_icon.svg
     - assets/images/agriculture/agriculture_0.png
     - assets/images/agriculture/agriculture_1.png
     - assets/images/agriculture/agriculture_2.png
@@ -157,6 +183,12 @@ flutter:
     - assets/images/agriculture/agriculture_9.png
     - assets/images/agriculture/agriculture_10.png
     - assets/images/agriculture/agriculture_11.png
+    - assets/images/agriculture/vegan/vegan_1.png
+    - assets/images/agriculture/vegan/vegan_2.png
+    - assets/images/agriculture/vegan/vegan_3.png
+    - assets/images/agriculture/vegan/vegan_4.png
+    - assets/images/agriculture/vegan/vegan_5.png
+    - assets/images/agriculture/vegan/vegan_6.png
     - assets/images/bioedilizia/bioedilizia_0.jpg
     - assets/images/bioedilizia/bioedilizia_1.jpg
     - assets/images/bioedilizia/bioedilizia_2.jpg
@@ -170,7 +202,20 @@ flutter:
     - assets/images/bioedilizia/bioedilizia_10.jpg
     - assets/images/bioedilizia/bioedilizia_11.jpg
     - assets/images/bioedilizia/bioedilizia_12.jpg
+    - assets/images/bioedilizia/bioedilizia_13.jpg
+    - assets/images/bioedilizia/bioedilizia_14.jpg
+    - assets/images/apiculture/honey/miele_1.jpg
+    - assets/images/apiculture/honey/miele_2.jpg
+    - assets/images/apiculture/honey/miele_3.jpg
+    - assets/images/apiculture/honey/miele_4.jpg
+    - assets/images/apiculture/honey/miele_5.jpg
+    - assets/images/apiculture/honey/miele_6.jpg
+    - assets/images/apiculture/honey/miele_7.jpg
+    - assets/images/apiculture/honey/miele_8.jpg
+    - assets/images/apiculture/honey/miele_9.jpg
+    - assets/images/apiculture/honey/miele_10.jpg
     - assets/images/apiculture/apiculture_0.jpg
+    - assets/images/apiculture/apiculture_01.jpg
     - assets/images/apiculture/apiculture_1.jpg
     - assets/images/apiculture/apiculture_2.jpg
     - assets/images/apiculture/apiculture_3.jpg
@@ -192,8 +237,13 @@ flutter:
     - assets/images/hotel/hotel_3.jpg
     - assets/images/hotel/hotel_4.jpg
     - assets/images/hotel/hotel_5.jpg
+    - assets/json/home.json
+    - assets/json/admin.json
     - assets/json/products.json
+    - assets/json/honey.json
     - assets/json/market.json
+    - assets/json/groups.json
+    - assets/json/groups_admin.json
     - assets/language/it.json
     - assets/language/en.json
     - assets/language/fr.json

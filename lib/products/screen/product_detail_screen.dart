@@ -1,21 +1,8 @@
 
-// import 'package:ecobio/widgets/common_widget/CircularProgress.dart';
 import 'package:flutter/material.dart';
-
-import '../../settings/localisation/translation/components/appLocalizations.dart';
+import '../../roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
 import '../models/product_details.dart';
 import '../widgets/CircularProgress.dart';
-
-
-/*
-import 'package:flutter_ecommerce_app/common_widget/AppBarWidget.dart';
-import 'package:flutter_ecommerce_app/common_widget/CircularProgress.dart';
-import 'package:flutter_ecommerce_app/models/ProductDetails.dart';
-import 'package:flutter_ecommerce_app/utils/Urls.dart';
-
-
-*/
-
 ProductDetails? productDetails;
 
 class ProductDetailScreen extends StatefulWidget {
@@ -325,7 +312,8 @@ class _DetailScreenState extends State<DetailScreen> {
 }
 
 
-
+*/
+/*
 Future<ProductDetails> getDetailData(String slug) async {
   Response response;
   response = await get(Urls.ROOT_URL + slug);

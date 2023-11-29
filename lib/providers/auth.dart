@@ -3,14 +3,10 @@
 /// 
 
 import 'package:flutter/material.dart';
-import '../settings/auth/models/term_of_service.dart';
-
-
-
-import '../settings/auth/providers/flutter_login.dart';
-import '../settings/auth/singin/models/login_data.dart';
-import '../settings/auth/singup/models/signup_data.dart';
-
+import '../roots/trunk/branches/menu/menu_settings/settings/auth/models/term_of_service.dart';
+import '../roots/trunk/branches/menu/menu_settings/settings/auth/providers/flutter_login.dart';
+import '../roots/trunk/branches/menu/menu_settings/settings/auth/singin/models/login_data.dart';
+import '../roots/trunk/branches/menu/menu_settings/settings/auth/singup/models/signup_data.dart';
 enum AuthMode { signup, login }
 
 enum AuthType { provider, userPassword }

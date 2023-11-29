@@ -3,6 +3,7 @@
     "beekeepingMeterials": "Beekeeping Meterials",
     "beekeeping": "Beekeeping",
     "beekeepingBio": "BEEKEEPING BIO",
+    "beekeepingBiological": " Biological Beekeeping",
     "country": "country" ,  
     "countryLocation": "United Kengdom" ,
     "regio": "regio" ,
@@ -34,8 +35,10 @@
     "agricultureBiological":"Agriculture Biological",
     "agricultureBiodynamic":"Agriculture Biodinamic",
     "agricultureIntegration":"Agriculture Integration",
+    "agricultureBioVegan":"Agricoltura BioVegan",
     "agricultureKmZero":"Km Zero",
     "hotelBio":"Hotel Bio",
+    "hotelsBiological":"Hotel Bio",
     "farmHouseBio":"FarmHouse Bio",
     "rbb":"R&B Bio",
     "airBnbBio":"R&B Bio",
@@ -49,6 +52,7 @@
     "infoContact":"Info Contact",
     "infoService":"Info Service",
     "honey":"Honey",
+    "honeyBio":"Honey BIO",
     "cara":"Cara",
     "propolis":"Propolis",
     "products":"Products",
@@ -59,6 +63,7 @@
     "first_string" : "Hello World BIO!" ,
     "second_string" : "Language English",
    "add":"add",
+   "cart":"Cart",
    "cancel":"cancel",
    "close":"Close",
    "back":"Back",
@@ -66,7 +71,28 @@
    "delete":"Delete",
    "send":"Send",
    "search":"Search",
-   "search_point":"search..." 
-   
-   
-   }
+   "search_point":"search...",
+    "welcome":"Welcome",
+    "volume":"Volume",
+    "unit":"Unit",
+    "height":"Height",
+    "weight":"Weight",
+    "dimensions":"Dimensions",
+    "ingredients":"Ingredients",
+    "indication":"Indication",
+    "allergenInformation":"Allergen Information's",
+    "warnings":"Warnings",
+    "producer":"Producer",
+    "addProduct":"Add Product",
+    "editProduct":"Edit Product",
+    "deleteProduct":"Delete Product",
+    "searchProduct":"Search Product",
+    "groups":"Groups",
+    "addUser":"Add User",
+    "editUser":"Edit User",
+    "deleteUser":"Delete User",
+    "searchUser":"Search User",
+    "subTitle":"Sub Title"
+
+
+  }

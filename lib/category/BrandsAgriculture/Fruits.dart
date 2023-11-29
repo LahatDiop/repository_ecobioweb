@@ -2,29 +2,13 @@ import 'dart:convert';
 
 
 import 'package:dotted_border/dotted_border.dart';
-// import 'package:dotted_border/dotted_border.dart';
-//import 'package:ecobio/animation/fade_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-// import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
-
-// import '../../../animation/fade_animation.dart';
-// import '../../../payment/screens/payment.dart';
-
-import '../../products/components/product.dart';
-import '../../products/screen/product_view.dart';
-import '../../settings/payment/screens/payment.dart';
-
-/*
-import 'package:day34/animation/FadeAnimation.dart';
-import 'package:day34/models/product.dart';
-import 'package:day34/pages/payment.dart';
-import 'package:day34/pages/product_view.dart';
-import 'package:dotted_border/dotted_border.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-*/
+import '../../roots/trunk/branches/menu/menu_settings/settings/payment/screens/payment.dart';
+import '../../roots/trunk/branches/products/components/product.dart';
+import '../../roots/trunk/branches/products/screens/product_view.dart';
 
 // fruits
 class Fruits extends StatefulWidget {
@@ -57,7 +41,7 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
 
   Future<void> fetchItems() async {
     final String response =
-        await rootBundle.loadString('/assets/json/products.json');
+        await rootBundle.loadString('../assets/json/products.json');
     final data = await json.decode(response);
 
     cartItemsList =
@@ -126,8 +110,9 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
           color: Colors.black,
         ),
       ),*/
-      body: Column(crossAxisAlignment: CrossAxisAlignment.start, children: <
-          Widget>[
+      body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
         //SearchWidget(),
         SizedBox(
           height: 10,
@@ -261,7 +246,8 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
               ),
             )
        // )
-      ]),
+      ]
+      ),
       // ),
     );
   }
@@ -322,12 +308,13 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
                ),
             ),
             //BRAND
-            Expanded(
-              child: Column(
+            SizedBox(
+              width: 130,
+              child:Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      product.brand,
+                      product.brand.toString(),
                       style: const TextStyle(
                         color: Color.fromARGB(255, 20, 179, 28),
                         fontSize: 14,
@@ -353,8 +340,42 @@ class _FruitsState extends State<Fruits> with TickerProviderStateMixin {
                       ),
                     ),
                     const SizedBox(height: 10),
-                  ]),
+                  ]
+              ),
             ),
+            // Expanded(
+            //   child: Column(
+            //       crossAxisAlignment: CrossAxisAlignment.start,
+            //       children: <Widget>[
+            //         Text(
+            //           product.brand.toString(),
+            //           style: const TextStyle(
+            //             color: Color.fromARGB(255, 20, 179, 28),
+            //             fontSize: 14,
+            //           ),
+            //         ),
+            //         const SizedBox(
+            //           height: 5,
+            //         ),
+            //         //PRODUCT NAME
+            //         Text(
+            //           product.name,
+            //           style: const TextStyle(
+            //             fontSize: 18,
+            //             fontWeight: FontWeight.w600,
+            //           ),
+            //         ),
+            //         const SizedBox(height: 15),
+            //         Text(
+            //           '€ ${product.price}',
+            //           style: TextStyle(
+            //             fontSize: 20,
+            //             color: Colors.grey.shade800,
+            //           ),
+            //         ),
+            //         const SizedBox(height: 10),
+            //       ]),
+            // ),
             Column(
               // DELETE PRODOCT FROM  LIST
               crossAxisAlignment: CrossAxisAlignment.center,

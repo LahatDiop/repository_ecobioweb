@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../category/screens/subCategoryScreen.dart';
+import '../../category/screens/sub_category_screen.dart';
 import '../screen/product_detail_screen.dart';
 import '../screen/products_screen.dart';
 

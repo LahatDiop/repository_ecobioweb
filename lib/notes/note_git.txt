@@ -1,8 +1,0 @@
-
-INSTALL FLUTTER GITHUP:
-C:\src>git clone https://github.com/flutter/flutter.git -b stable
-
-
-All progets git
- git remote -vgit remote set-urt
-

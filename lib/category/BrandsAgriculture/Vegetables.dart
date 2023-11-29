@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
 
-// import '../../../animation/fade_animation.dart';
 
-import '../../products/components/product.dart';
-import '../../products/screen/product_view.dart';
-import '../../settings/payment/screens/payment.dart';
+import '../../roots/trunk/branches/menu/menu_settings/settings/payment/screens/payment.dart';
+import '../../roots/trunk/branches/products/components/product.dart';
+import '../../roots/trunk/branches/products/screens/product_view.dart';
+
 
 class Vegetables extends StatefulWidget {
   Vegetables({selectedIndex? selectedIndex, Key? key}) : super(key: key);
@@ -329,7 +329,7 @@ class _VegetablesState extends State<Vegetables> with TickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      product.brand,
+                      product.brand.toString(),
                       style: const TextStyle(
                         color: Color.fromARGB(255, 20, 179, 28),
                         fontSize: 14,

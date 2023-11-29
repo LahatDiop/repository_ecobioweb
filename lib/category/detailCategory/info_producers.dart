@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
+import '../../roots/trunk/branches/menu/menu_search/screens/search_screen.dart';
+import '../../roots/trunk/branches/products/components/product.dart';
+
 class InfoProducers extends StatefulWidget {
   const InfoProducers({Key? key}) : super(key: key);
 
@@ -20,6 +24,10 @@ class _InfoProducersState extends State<InfoProducers> {
     '../assets/images/admin/five.jpg',
   ];
 
+  TextEditingController textInputSearch =  TextEditingController();
+  List<Product> products = [];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +36,35 @@ class _InfoProducersState extends State<InfoProducers> {
         backgroundColor: const Color.fromARGB(0, 16, 202, 25),
         elevation: 0,
         // leading: const Icon(Icons.menu),
-        title: const Text("Setting"),
+        title: TextField(
+          controller:textInputSearch ,
+          cursorColor: Colors.white,
+          decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white70,
+              contentPadding: const EdgeInsets.only(
+                  left: 14.0, bottom: 8.0, top: 8.0),
+              focusedBorder: OutlineInputBorder(
+                borderSide:  const BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(25.7),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide:  const BorderSide(color: Colors.white),
+                borderRadius:  BorderRadius.circular(25.7),
+              ),
+              /// hintText: " Search...",
+              hintText: AppLocalizations.translate("search_point"),
+              border: InputBorder.none,
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.search),
+                color: const Color.fromRGBO(90, 25, 72, 1),
+                onPressed: () {
+                  showSearch(context: context, delegate: DataSearch(products,textInputSearch.value.text.toString()));
+                },
+              )),
+          style: const TextStyle(color: Colors.black, fontSize: 15.0),
+        ),
+       // title: const Text("Setting"),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(10.0),

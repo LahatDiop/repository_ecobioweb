@@ -2,8 +2,8 @@
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import '../../roots/trunk/branches/menu/menu_home/models/background.dart';
 
-import '../../home/models/background.dart';
 
 //https://stackoverflow.com/questions/51910725/flutter-displaying-two-listviews-on-one-screen
 
@@ -222,8 +222,8 @@ class _HomeListViewAgriculureScreeState
                 ],
                 image: new DecorationImage(
                   image: new ExactAssetImage(
-                      // 'assets/images/bioedilizia/img_${index % itemsBioEdilizia.length}.jpg'),
-                      'images/bioedilizia/bioedilizia_${index % itemsBioEdilizia.length}.jpg'),
+                       'assets/images/bioedilizia/img_${index % itemsBioEdilizia.length}.jpg'),
+                    //  'images/bioedilizia/bioedilizia_${index % itemsBioEdilizia.length}.jpg'),
                   fit: BoxFit.fitHeight,
                 ),
               ),

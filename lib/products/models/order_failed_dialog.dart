@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../commonWidgets/app_button.dart';
-import '../../commonWidgets/app_text.dart';
+import '../../roots/trunk/branches/commun_data_utils/utils/button/app_button.dart';
+import '../../roots/trunk/branches/commun_data_utils/utils/text/app_text.dart';
 import 'order_accepted_screen.dart';
 
 class OrderFailedDialogue extends StatelessWidget {

@@ -1,0 +1,11 @@
+
+
+flutter pub add localstorage  :https://stackoverflow.com/questions/41369633/how-to-save-to-local-storage-using-flutter
+
+Flutter UI | Minimal UI Designs | Grocery Shopping App | Part-2 | Protorix Code :
+https://www.google.com/imgres?imgurl=https%3A%2F%2Fi.ytimg.com%2Fvi%2F3PQbKVTetZE%2Fmaxresdefault.jpg&tbnid=43dUisjIZkQYcM&vet=12ahUKEwimqer5s9yAAxWki_0HHejbASYQMygQegUIARDsAQ..i&imgrefurl=https%3A%2F%2Fm.youtube.com%2Fwatch%3Fv%3D3PQbKVTetZE&docid=v0dBif8n3TPd2M&w=1280&h=720&q=flutter%20shopping%20app%20example&ved=2ahUKEwimqer5s9yAAxWki_0HHejbASYQMygQegUIARDsAQ
+
+-- Ecommerce grocery epiceri:
+https://github.com/mohammedhashim44/Flutter-Grocery-App-UI
+
+http://json.parser.online.fr/

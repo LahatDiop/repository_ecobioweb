@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../roots/trunk/branches/menu/menu_search/screens/search_screen.dart';
+import '../../roots/trunk/branches/products/components/product.dart';
+
 class ProductsBiologique extends StatefulWidget {
   const ProductsBiologique({Key? key}) : super(key: key);
 
@@ -20,15 +23,45 @@ class _ProductsBiologiqueState extends State<ProductsBiologique> {
     'images/admin/five.jpg',
   ];
 
+  TextEditingController textInputSearch =  TextEditingController();
+  List<Product> products = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 39, 126, 68),
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(0, 16, 202, 25),
-        elevation: 10,
-        leading: const Icon(Icons.menu),
-        title: const Text("Setting"),
+        elevation: 0,
+        // leading: const Icon(Icons.menu),
+        title: TextField(
+          controller:textInputSearch ,
+          cursorColor: Colors.white,
+          decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white70,
+              contentPadding: const EdgeInsets.only(
+                  left: 14.0, bottom: 8.0, top: 8.0),
+              focusedBorder: OutlineInputBorder(
+                borderSide:  const BorderSide(color: Colors.white),
+                borderRadius: BorderRadius.circular(25.7),
+              ),
+              enabledBorder: UnderlineInputBorder(
+                borderSide:  const BorderSide(color: Colors.white),
+                borderRadius:  BorderRadius.circular(25.7),
+              ),
+              hintText: " Search...",
+              border: InputBorder.none,
+              suffixIcon: IconButton(
+                icon: const Icon(Icons.search),
+                color: const Color.fromRGBO(90, 25, 72, 1),
+                onPressed: () {
+                  showSearch(context: context, delegate: DataSearch(products,textInputSearch.value.text.toString()));
+                },
+              )),
+          style: const TextStyle(color: Colors.black, fontSize: 15.0),
+        ),
+        // title: const Text("Setting"),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(10.0),

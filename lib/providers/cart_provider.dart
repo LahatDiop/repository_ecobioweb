@@ -1,9 +1,10 @@
 import 'dart:convert';
-import 'package:ecobioweb/shopping/screens/cart_screen.dart';
+import 'package:ecobioweb/roots/trunk/branches/cart/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:localstorage/localstorage.dart';
-import '../cart/cart.dart';
-import '../products/components/product.dart';
+
+import '../roots/trunk/branches/cart/components/cart_item.dart';
+import '../roots/trunk/branches/products/components/product.dart';
 
 // Class cart che gestisce il carello
 /*Map<String, CartItem> _cartItems = {};
@@ -79,7 +80,8 @@ class Cart with ChangeNotifier {
                   price:product.price.toDouble(),
                   quantityStock: product.quantityStock,
                   quantity: product.quantity,
-                  imageURL: product.imageURL.toString()
+                  imageURL: product.imageURL.toString(),
+                  image: product.imageURL.toString()
                   // id: DateTime.now().toString(),
               )
       );
@@ -91,13 +93,13 @@ class Cart with ChangeNotifier {
 
 
     //  cartItemCount[index]++;
-    notifyListerner();
+    notifyListeners();
   }
 
 
   /// UPDATE ITEM CART
   void incrementItemCart(Product product,int index) {
-    notifyListerner();
+    notifyListeners();
     if (_cartItems.containsKey(product.codeProd)) {
       _cartItems.update(
           product.codeProd,
@@ -111,7 +113,9 @@ class Cart with ChangeNotifier {
               price:existingCartItem.price.toDouble(),
               quantityStock: existingCartItem.quantityStock,
               quantity: existingCartItem.quantity +1,
-              imageURL: existingCartItem.imageURL.toString()
+              imageURL: existingCartItem.imageURL.toString(),
+              image: existingCartItem.imageURL.toString()
+
           ));
     }
   }
@@ -124,14 +128,14 @@ class Cart with ChangeNotifier {
      // _cartItems.remove(codeProd);
        cartItemCount[index]--;
     }
-    notifyListerner();
+    notifyListeners();
   }
 
 
 
  // void cartItemIncrement(Product product,int index, List<int> cartItemCount, Map<String, CartItem> cartItems, List<int> quantityProdCart) {
   void cartItemIncrement(Product product,int index) {
-    notifyListerner();
+    notifyListeners();
     if (_cartItems.containsKey(product.codeProd)) {
       _cartItems.update(
           product.codeProd,
@@ -145,7 +149,8 @@ class Cart with ChangeNotifier {
                   price:existingCartItem.price.toDouble(),
                   quantityStock: existingCartItem.quantityStock,
                   quantity: existingCartItem.quantity +1,
-                  imageURL: existingCartItem.imageURL.toString()
+                  imageURL: existingCartItem.imageURL.toString(),
+                  image: existingCartItem.imageURL.toString()
               ));
 
          // cartItemCount[index]++ ;
@@ -225,8 +230,9 @@ class Cart with ChangeNotifier {
               price:existingCartItem.price.toDouble(),
               quantityStock: existingCartItem.quantityStock,
               quantity: existingCartItem.quantity -1,
-              imageURL: existingCartItem.imageURL.toString()
-          )
+              imageURL: existingCartItem.imageURL.toString(),
+              image: existingCartItem.imageURL.toString()
+              )
       );
     }
 
@@ -235,7 +241,7 @@ class Cart with ChangeNotifier {
 
     // cartItemCount[index]--;
     quantityXArticlesAdd[index]-- ;
-    notifyListerner();
+    notifyListeners();
   }
 
 
@@ -300,16 +306,16 @@ class Cart with ChangeNotifier {
 // rimuove
   void removeCartItem(String prodoctId) {
     _cartItems.removeWhere((key, value) => value.id == prodoctId);
-    notifyListerner();
+    notifyListeners();
   }
 
   /// Clear cart
   void clearCart() {
     _cartItems = {};
-    notifyListeners();
+    // notifyListeners();
   }
 
-  void notifyListerner() {}
+
 
   /// ==============================  END ADD DATA PRODUCT FROM CART MAP CART   =============================================
 

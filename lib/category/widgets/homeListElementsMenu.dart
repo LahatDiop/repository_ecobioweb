@@ -1,11 +1,15 @@
 import 'package:ecobioweb/category/components/gestion_agriculture_bio.dart';
 import 'package:ecobioweb/category/detailCategory/agriculture_biologique.dart';
+import 'package:ecobioweb/roots/trunk/branches/business/agricultures/agriculture_biological/screens/agriculture_biologique_screenOK.dart';
+import 'package:ecobioweb/roots/trunk/branches/business/honey/honet_Propolis_bio/screens/honey_biological_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../home/models/background.dart';
-import '../../settings/localisation/translation/components/appLocalizations.dart';
-import '../components/customerCategory.dart';
+import '../../roots/trunk/branches/business/agricultures/agriculture_biodynamica/screens/agriculture_biodynamica_screen.dart';
+import '../../roots/trunk/branches/business/agricultures/agriculture_biological/screens/agriculture_biologique_screen.dart';
+import '../../roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
+import '../../roots/trunk/branches/menu/menu_home/models/background.dart';
+import '../../roots/trunk/branches/menu/navigation_bar/components/customerCategory.dart';
 import '../detailCategory/product_home.dart';
 import '../detailCategory/agriculture_integration.dart';
 import '../detailCategory/agriculture_km_zero.dart';
@@ -34,6 +38,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
     AppLocalizations.translate('agricultureBiological').toString(),
     AppLocalizations.translate('agricultureBiodynamic').toString(),
     AppLocalizations.translate('agricultureIntegration').toString(),
+    AppLocalizations.translate('agricultureBioVegan').toString(),
     AppLocalizations.translate('agricultureKmZero').toString(),
     AppLocalizations.translate('productsBiologiques').toString(),
   ];
@@ -44,13 +49,14 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
     AppLocalizations.translate('propolis').toString(),
     AppLocalizations.translate('products').toString(),
     AppLocalizations.translate('beekeepingMeterials').toString(),
+    AppLocalizations.translate('cooperativesBiological').toString(),
   ];
 
   //GREEN BUILDING
   // List<String> itemsBioEdilizia = ["Canapa", "Isolamento", "Produttori"];
   List<String> itemsBioEdilizia = [
-    AppLocalizations.translate('honey').toString(),
-    AppLocalizations.translate('isolation').toString(),
+    AppLocalizations.translate('hanf').toString(),
+    AppLocalizations.translate('greenBuilderProducts').toString(),
     AppLocalizations.translate('propolis').toString(),
   ];
 
@@ -63,6 +69,8 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
   ];
 
   final elementKey = GlobalKey<FormState>();
+
+
   //get elementKey => 1020;
 
   @override
@@ -124,9 +132,17 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
       CustomerCategory(
         description: AppLocalizations.translate('infoProducts').toString(),
         subtitle: AppLocalizations.translate('infoProducts').toString(),
+        // builder: (context) => const AdminScreen()
+        trailing: const Icon(Icons.arrow_forward_ios_outlined),
+      ),
+
+      CustomerCategory(
+        description: AppLocalizations.translate('honey').toString(),
+        subtitle: AppLocalizations.translate('honey').toString(),
         // builder: (context) => const ProfileAdmin()
         trailing: const Icon(Icons.arrow_forward_ios_outlined),
       ),
+
     ];
 
 
@@ -176,15 +192,19 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                 //  builder: (context) => GestionAgriBio(),
                 // ));
 
+
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => AgricultureBiologique(),
+                 /// builder: (context) => AgricultureBiologique(item: GestionAgricultureBio().product, itemCart: GestionAgricultureBio().itemCart)
+                  //builder: (context) => AgricultureBiologique(item: GestionAgricultureBio().product),
+                    builder: (context) => AgricultureBiologiqueScreen(item: GestionAgricultureBio().product),
                 ));
               }
               if (items[index].description ==
                   AppLocalizations.translate('agricultureBiodynamic')
                       .toString()) {
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const AgricultureBiodymamique(),
+                  // builder: (context) => const AgricultureBiodymamique(),
+                  builder: (context) =>  AgricultureBiodynamicaScreen(),
                 ));
               }
               if (items[index].description ==
@@ -210,6 +230,13 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                   AppLocalizations.translate('infoProducts').toString()) {
                 Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => const InfoProducers(),
+                ));
+              }
+
+              if (items[index].description ==
+                  AppLocalizations.translate('honey').toString()) {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>  HoneyBiologicalScreen(),
                 ));
               }
               // debug
@@ -247,8 +274,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                   image: ExactAssetImage(
                        //  'assets/images/agriculture/img_${index % itemsaBioAgriculture.length}.png'),
                       // ok all
-                       './assets/images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png'),
+                      './assets/images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png'),
                     //  '/images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png'),
+                     /// '.../agriculture_${index % itemsaBioAgriculture.length}.png'),
                   fit: BoxFit.fitHeight,
                 ),
               ),
@@ -321,8 +349,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                   image: ExactAssetImage(
                     //  'assets/images/apiculture/img_${index % itemsBioApicoltura.length}.jpg'),
                     // ok all
-                      './assets/images/apiculture/apiculture_${index % itemsBioApicoltura.length}.jpg'),
+                       './assets/images/apiculture/apiculture_${index % itemsBioApicoltura.length}.jpg'),
                     //  '/images/apiculture/apiculture_${index % itemsBioApicoltura.length}.jpg'),
+                     // '.../apiculture_${index % itemsBioApicoltura.length}.jpg'),
                   fit: BoxFit.fitHeight,
                 ),
               ),
@@ -346,7 +375,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Flexible(child: Text(
-                              itemsBioApicoltura[index % itemsBioApicoltura.length],
+                              itemsBioApicoltura[index% itemsBioApicoltura.length],
                               style: const TextStyle(color: Colors.white,fontSize: 12),
                               ),
                             )
@@ -396,8 +425,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                 image: DecorationImage(
                 
                   image: ExactAssetImage(
-                  // 'assets/images/bioedilizia/img_${index% itemsBioEdilizia.length}.jpg'),
-                   './assets/images/bioedilizia/bioedilizia_${index % itemsBioEdilizia.length}.jpg'),
+                   'assets/images/bioedilizia/img_${index% itemsBioEdilizia.length}.jpg'),
+                  //  './assets/images/bioedilizia/bioedilizia_${index % itemsBioEdilizia.length}.jpg'),
+                      //'.../bioedilizia_${index % itemsBioEdilizia.length}.jpg'),
                     //  'images/bioedilizia/bioedilizia_${index % itemsBioEdilizia.length}.jpg'),
                   fit: BoxFit.fitHeight,
                 ),
@@ -470,8 +500,8 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                       blurRadius: 15.0)
                 ],
                 image: DecorationImage(
-                  image: ExactAssetImage(
-                      './assets/images/hotel/hotel_${index % itemsBioHotel.length}.jpg'),
+                 image: ExactAssetImage('./assets/images/hotel/hotel_${index % itemsBioHotel.length}.jpg'),
+                  //image: ExactAssetImage('.../hotel/hotel_${index % itemsBioHotel.length}.jpg'),
                   fit: BoxFit.fitHeight,
                 ),
               ),
@@ -740,8 +770,9 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
                                                 const Radius.circular(12.0)),
                                             image: DecorationImage(
                                               image: ExactAssetImage(
-                                                 './assets/images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png',
+                                                 // './assets/images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png',
                                                // 'images/agriculture/agriculture_${index % itemsaBioAgriculture.length}.png',
+                                                '.../agriculture/agriculture_${index % itemsaBioAgriculture.length}.png',
                                               ),
                                               fit: BoxFit.cover,
                                             )),

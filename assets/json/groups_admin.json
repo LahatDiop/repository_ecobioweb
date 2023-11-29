@@ -1,0 +1,85 @@
+
+{
+  "groups": [
+
+  {    
+    "id":"1",
+    "name":"agricultureBiological",
+    "code":"1010",
+    "description":"agricultoriBiological",
+    "seachArea":"1010",
+    "imagePath":"assets/images/agriculture/agriculture_3.png",
+    "pageScreenPath": "AgricultureBiologiqueScreen",
+    "isShowGroups":true,
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":false,
+    "isRecently":false,
+    "datePublication": "2022-11-03T10:14:45",
+    "dateUpdate": "2022-11-03T10:14:45"
+  },
+
+  {
+    "id":"2",
+    "name":"beekeepingBiological",
+    "code":"2020",
+    "description":"beekeepingBiological",
+    "seachArea":"2020",
+    "imagePath":"assets/images/apiculture/apiculture_14.jpg",
+    "pageScreenPath": "AgricultureBiologiqueScreen",
+    "isShowGroups":true,
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":false,
+    "isRecently":false,
+    "datePublication": "2022-11-03T10:14:45",
+    "dateUpdate": "2022-11-03T10:14:45"
+  },
+  {
+    "id":"3",
+    "name":"greenBuilding",
+    "code":"3030",
+    "description":"greenBuilding",
+    "seachArea":"1010",
+    "imagePath":"assets/images/bioedilizia/bioedilizia_9.jpg",
+    "pageScreenPath": "greenBuildingScreen()",
+    "isShowGroups":true,
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":false,
+    "isRecently":false,
+    "datePublication": "2022-11-03T10:14:45",
+    "dateUpdate": "2022-11-03T10:14:45"
+  },
+
+  {
+    "id":"4",
+    "name":"hotelsBiological",
+    "code":"4040",
+    "description":"hotelsBiological",
+    "seachArea":"1010",
+    "imagePath":"assets/images/bioedilizia/bioedilizia_9.jpg",
+    "pageScreenPath": "hotelsBiologicalScreen()",
+    "isShowGroups":true,
+    "isShowMarket":true,
+    "isShowCategory":true,
+    "isVisibility":true,
+    "isEnabled":true,
+    "isIva":true,
+    "isFavorite":false,
+    "isRecently":false,
+    "datePublication": "2022-11-03T10:14:45",
+    "dateUpdate": "2022-11-03T10:14:45"
+  }
+
+  ]
+}

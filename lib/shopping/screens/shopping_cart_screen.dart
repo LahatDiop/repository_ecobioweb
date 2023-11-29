@@ -2,9 +2,10 @@ import 'dart:collection';
 import 'dart:convert';
 
 import 'package:dotted_border/dotted_border.dart';
-import 'package:ecobioweb/cart/widgets/item_counter_widget.dart';
+import 'package:ecobioweb/category/components/gestion_agriculture_bio.dart';
 import 'package:ecobioweb/category/detailCategory/agriculture_biologique.dart';
-import 'package:ecobioweb/shopping/screens/cart_screen.dart';
+import 'package:ecobioweb/roots/trunk/branches/business/agricultures/agriculture_biological/screens/agriculture_biologique_screenOK.dart';
+import 'package:ecobioweb/roots/trunk/branches/cart/screens/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -12,15 +13,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 // import '../../../animation/fade_animation.dart';
 
 import '../../../providers/cart_provider.dart';
-import '../../cart/cart.dart';
-import '../../cart/checkout_bottom_sheet.dart';
-import '../../cart/widgets/chart_item_widget.dart';
-import '../../commonWidgets/app_button.dart';
-import '../../helpers/column_with_seprator.dart';
-import '../../products/components/product.dart';
-import '../../products/screen/product_view.dart';
-import '../../settings/payment/screens/payment.dart';
 
+import '../../roots/trunk/branches/business/agricultures/agriculture_biological/screens/agriculture_biologique_screen.dart';
+import '../../roots/trunk/branches/cart/checkout_bottom_sheet.dart';
+import '../../roots/trunk/branches/cart/components/cart_item.dart';
+import '../../roots/trunk/branches/commun_data_utils/utils/button/app_button.dart';
+import '../../roots/trunk/branches/commun_data_utils/utils/columns/column_with_seprator.dart';
+import '../../roots/trunk/branches/menu/menu_settings/settings/payment/screens/payment.dart';
+import '../../roots/trunk/branches/products/components/product.dart';
+import '../../roots/trunk/branches/products/screens/product_view.dart';
 
 class ShoppingCartScreen extends StatefulWidget {
 
@@ -64,11 +65,11 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
 
   /// get list from class loder   /// get list from class loder
 
-   List<Product> cartItems = AgricultureBiologique.cartItemsProducts;
-  Map<String, Product> cartItemsMap = CartScreen.cartItemsMap;
+   List<Product> cartItems = AgricultureBiologiqueScreen.cartItemsProducts;
+  Map<String, Product> cartItemsMap = GestionAgricultureBio().productItems;
   //List<String> cartItems = AgricultureBiologique.cartItemsProducts;
-   List<int> cartItemCount =AgricultureBiologique.cartItemCount;
-  List<int> amounts = AgricultureBiologique.amounts;
+   List<int> cartItemCount =AgricultureBiologiqueScreen.cartItemCount;
+  List<int> amounts = AgricultureBiologiqueScreen.amounts;
    // Map<Product, int>? amountProductMap= AgricultureBiologique.amountProductMap;
 
 
@@ -78,7 +79,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
 
   double totalPrice = 0;
 
-  ItemCounterWidget itemCounterWidget =   ItemCounterWidget();
+  ///ItemCounterCartWidget itemCounterCartWidget=   ItemCounterCartWidget(itemProd: null,);
 
 
   @override
@@ -285,7 +286,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      product.brand,
+                      product.brand.toString(),
                       style: TextStyle(
                         color: Colors.orange.shade400,
                         fontSize: 14,
@@ -359,22 +360,22 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                 // ),
 
                 /// QUNTITY PRODUCT
-                Container(
-                    child: itemCounterWidget.createState().getText(
-                        text: amounts[index].toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
-                      // text: productsItemCount[index].toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
-                    )
-
-
-                  // child: Center(
-                  //   child: Text(
-                  //       productsItemCount[index].toString(),
-                  //     style:
-                  //     TextStyle(fontSize: 20, color: Colors.grey.shade800),
-                  //     //  quantity_cart!.quantity.toString(),
-                  //   ),
-                  // ),
-                ),
+                // Container(
+                //     child: itemCounterWidget.createState().getText(
+                //         text: amounts[index].toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
+                //       // text: productsItemCount[index].toString(), fontSize: 18, isBold: true, color: Colors.grey.shade800
+                //     )
+                //
+                //
+                //   // child: Center(
+                //   //   child: Text(
+                //   //       productsItemCount[index].toString(),
+                //   //     style:
+                //   //     TextStyle(fontSize: 20, color: Colors.grey.shade800),
+                //   //     //  quantity_cart!.quantity.toString(),
+                //   //   ),
+                //   // ),
+                // ),
                 //>>>>>> ADD PRODOCT IN TO THE CART <<<<<<<<<<<
                 MaterialButton(
                   padding: const EdgeInsets.all(0),
@@ -519,13 +520,13 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                                   horizontal: 25,
                                 ),
                                 width: double.maxFinite,
-                                child: ChartItemWidget(
-                                  item: e,
-                                  index: index,
-                                  /// index: cartItemCount,
-                                  /// amount: amount,
-                                  /// amount:amount ,
-                                ),
+                                // child: ChartItemWidget(
+                                //   item: e,
+                                //   //index: index,
+                                //   /// index: cartItemCount,
+                                //   /// amount: amount,
+                                //   /// amount:amount ,
+                                // ),
                               );
                             }).toList(),
 
