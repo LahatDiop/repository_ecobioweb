@@ -1,5 +1,6 @@
 import 'package:ecobioweb/roots/trunk/branches/cart/provider/cart_provider.dart';
 import 'package:ecobioweb/roots/trunk/branches/cart/screens/cart_screen.dart';
+import 'package:ecobioweb/roots/trunk/branches/commun_data_utils/utils/helper/subtitle.dart';
 import 'package:ecobioweb/roots/trunk/branches/commun_data_utils/utils/theme/app_theme.dart';
 import 'package:ecobioweb/roots/trunk/branches/favorites/provider/favorites_provider.dart';
 import 'package:ecobioweb/roots/trunk/branches/favorites/screens/favourite_screen.dart';
@@ -8,6 +9,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../cart/components/cart_item.dart';
+import '../../../../commun_data_utils/utils/helper/padded.dart';
 import '../../../../commun_data_utils/utils/text/app_text.dart';
 import '../../../../favorites/screens/filter_screen.dart';
 
@@ -16,6 +18,7 @@ import '../../../../localisation/translation/components/appLocalizations.dart';
 import '../../../../menu/menu_search/screens/search_screen.dart';
 import '../../../../products/components/product.dart';
 import '../../../../products/screens/product_details_screen.dart';
+import '../../../../search/widgets/search_bar_widget.dart';
 import '../provider/honey_biological_provider.dart';
 
 
@@ -65,7 +68,7 @@ class HoneyBiologicalScreen extends StatelessWidget {
         var listProductsBioHoney= context.read<HoneyBiologicalProvider>().getData(tabIndex);
 
         cartItems=context.read<CartProvider>().cartItems;
-      //  products =context.read<HoneyBiologicalProvider>().products;
+        //  products =context.read<HoneyBiologicalProvider>().products;
         products =context.read<HoneyBiologicalProvider>().productsHoney;
         productsList=context.read<HoneyBiologicalProvider>().products;
         productItems =context.read<HoneyBiologicalProvider>().productItems;
@@ -136,44 +139,14 @@ class HoneyBiologicalScreen extends StatelessWidget {
               ),
             ],
             ///Search
-            title: TextField(
-              controller:textInputSearch ,
-              cursorColor: Colors.white,
-              decoration: InputDecoration(
-                  filled: true,
-                  // fillColor: Colors.white70,
-                  fillColor: Colors.green.shade100,
-                  contentPadding: const EdgeInsets.only(
-                      left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    // borderSide:  const BorderSide(color: Colors.white),
-                    borderSide:  const BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(25.7),
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide:  const BorderSide(color: Colors.white),
-                    borderRadius:  BorderRadius.circular(25.7),
-                  ),
-                  hintText: AppLocalizations.translate("search_point"),
-                  labelText: "",
-                  border: InputBorder.none,
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.search),
-                    color: const Color.fromRGBO(90, 25, 72, 1),
-                    onPressed: () {
-                      showSearch(context: context, delegate: DataSearch(productsList, textInputSearch.value.text.toString()));
-                    },
-                  )
-              ),
-              style: const TextStyle(color: Colors.black, fontSize: 15.0),
-            ),
+            title: Padded.padded(SearchBarWidget(textInputSearch)),
 
           ),
 
           body: Column(
               children:<Widget> [
                 /// Title Agriculture Biodynamic
-                createSubTitle(),
+                SubTitle.createSubTitle("honeyBio"),
                 Expanded(
                   // padding: const EdgeInsets.symmetric(horizontal: 20),
                   // height: MediaQuery.of(context).size.height * 100,
@@ -183,7 +156,7 @@ class HoneyBiologicalScreen extends StatelessWidget {
 
                     // child: StaggeredGrid.count(
                     StaggeredGrid.count(
-                      crossAxisCount: 2,
+                      crossAxisCount: 3,
                       mainAxisSpacing: 3.0,
                       crossAxisSpacing: 0.0,
 
@@ -215,83 +188,6 @@ class HoneyBiologicalScreen extends StatelessWidget {
       },
     );
 
-
-    // return Scaffold(
-    //   appBar: AppBar(
-    //     backgroundColor: Colors.transparent,
-    //     elevation: 0,
-    //     centerTitle: true,
-    //     automaticallyImplyLeading: false,
-    //     leading: GestureDetector(
-    //       onTap: () {
-    //         Navigator.pop(context);
-    //       },
-    //       child: Container(
-    //         padding: const EdgeInsets.only(left: 25),
-    //         child: const Icon(
-    //           Icons.arrow_back_ios,
-    //           color: Colors.black,
-    //         ),
-    //       ),
-    //     ),
-    //     actions: [
-    //       GestureDetector(
-    //         onTap: () {
-    //           Navigator.push(
-    //             context,
-    //             MaterialPageRoute(builder: (context) => FilterScreen()),
-    //           );
-    //         },
-    //         child: Container(
-    //           padding: const EdgeInsets.only(right: 25),
-    //           child: const Icon(
-    //             Icons.sort,
-    //             color: Colors.black,
-    //           ),
-    //         ),
-    //       ),
-    //     ],
-    //     title: Container(
-    //       padding: const EdgeInsets.symmetric(
-    //         horizontal: 25,
-    //       ),
-    //       child: const AppText(
-    //         text: "Favorites",
-    //         fontWeight: FontWeight.bold,
-    //         fontSize: 20,
-    //       ),
-    //     ),
-    //   ),
-    //   body: SingleChildScrollView(
-    //
-    //     child:productsFavorite!.isNotEmpty?
-    //
-    //     // child: StaggeredGrid.count(
-    //      StaggeredGrid.count(
-    //       crossAxisCount: 2,
-    //       mainAxisSpacing: 3.0,
-    //       crossAxisSpacing: 0.0,
-    //
-    //                 // I only need two card horizontally
-    //       children: productsFavorite!.asMap().entries.map<Widget>((e) {
-    //         // GroceryItem groceryItem = e.value;
-    //         Product groceryItem = e.value;
-    //         return GestureDetector(
-    //           onTap: () {
-    //             onItemClicked(context, groceryItem);
-    //           },
-    //           child: Container(
-    //             padding: const EdgeInsets.all(10),
-    //             child: GroceryItemCardWidget(
-    //               item: groceryItem,
-    //               heroSuffix: "explore_screen",
-    //             ),
-    //           ),
-    //         );
-    //       }).toList(), // add some space
-    //     ):Container(),
-    //   ),
-    // );
   }
 
   // void onItemClicked(BuildContext context, GroceryItem groceryItem) {
@@ -306,25 +202,6 @@ class HoneyBiologicalScreen extends StatelessWidget {
       ),
     );
   }
-  /// Agriculture Biodynamic
-  createSubTitle() {
-    return Container(
-      padding: const EdgeInsets.symmetric( horizontal: 20),
-      alignment: Alignment.topLeft,
-      child:
-      Text(
-        AppLocalizations.translate('honeyBio').toString(),
-        style: const TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontFamily: 'Quicksand',
-            fontWeight: FontWeight.bold),
-      ),
-    );
-  }
-
-
-
 
 }
 

@@ -1,4 +1,5 @@
 import 'package:ecobioweb/roots/trunk/branches/business/agricultures/agriculture_biological/screens/agriculture_biologique_screenOK.dart';
+import 'package:ecobioweb/roots/trunk/branches/cart/counter/screens/counter_cart_widget.dart';
 import 'package:ecobioweb/shopping/screens/shopping_cart_screen.dart';
 import 'package:flutter/material.dart';
 import '../../business/agricultures/agriculture_biological/screens/agriculture_biologique_screen.dart';
@@ -16,11 +17,11 @@ class ItemCounterCartWidget extends StatefulWidget {
   static List<Product> listProductItemsCart= AgricultureBiologiqueScreen.cartItemsProducts;
    ///final int? amount;
 
-     ItemCounterCartWidget({Key? key,this.onAmountChanged, required this.itemCart}) : super(key: key);
+     ItemCounterCartWidget({Key? key,this.onAmountChanged, required this.itemCart, this.product}) : super(key: key);
 
  // final CartItem? itemCart = CartProvider().cartItem;
  final CartItem itemCart ;
-
+ final Product? product;
  final Function? onAmountChanged;
 
  ///final int? index;
@@ -60,13 +61,86 @@ List<Product> listProductItemsCart= ItemCounterCartWidget.listProductItemsCart;
 
 
 @override
-  Widget build(BuildContext context) {
+
+@override
+Widget build(BuildContext context) {
+  CartItem? cartItem =widget.itemCart;
+  Product? product=widget.product;
+  int? quantity = widget.itemCart.quantity;
+
+  return Container(
+      height: 40,
+      margin: const EdgeInsets.symmetric(
+        vertical: 20,
+      ),
+     child:  IntrinsicWidth(
+            child: Row(
+                children:<Widget> [
+
+                  Expanded(
+                         flex: 3,
+                         child: Container(
+                           padding: const EdgeInsets.only(top: 10),
+                             child: CounterCartWidget(
+                                 cartItem:cartItem,
+                                 product: product!,
+                                 heroSuffix: "cart_screen",
+
+                             ),
+                         ),
+
+
+                  ),
+
+
+
+                  Expanded(
+                     flex: 2,
+                    child: Container(
+                      child:
+                      iconWidget(
+                          context,Icons.remove, iconColor: AppColors.darkGrey, onPressed:() =>decrementAmount(context,cartItem,quantity)
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      child:
+                      getText(
+                        text:CartProvider.getAmount(newCartItems(widget.itemCart),widget.itemCart.quantity).toString() ,fontSize: 15, isBold: true,
+                        //text:widget.itemCart.quantity.toString() , fontSize: 15, isBold: true
+
+                      )
+                    ),
+                  ),
+                  Expanded(
+                     flex:2,
+                    child: Container(
+                      child:
+                      iconWidget(
+                          context, Icons.add, iconColor: AppColors.primaryColor, onPressed:() => incrementAmount(context)
+                      ),
+                    ),
+                  ),
+                ],
+            ),
+     ),
+    );
+
+  }
+
+  Widget build1(BuildContext context) {
  CartItem? cartItem =widget.itemCart;
  int? quantity = widget.itemCart.quantity;
+
+
     return Row(
       children: [
-        iconWidget(context,Icons.remove, iconColor: AppColors.darkGrey, onPressed:() =>decrementAmount(context,cartItem,quantity)),
-        const SizedBox(width: 20),
+        iconWidget(
+            context,Icons.remove, iconColor: AppColors.darkGrey, onPressed:() =>decrementAmount(context,cartItem,quantity)
+        ),
+      ///  const SizedBox(width: 20),
         /// QUANTITY CARTSCREEN
         SizedBox(
             width: 35,
@@ -80,8 +154,10 @@ List<Product> listProductItemsCart= ItemCounterCartWidget.listProductItemsCart;
             )
         ),
 
-        const SizedBox(width: 18),
-        iconWidget(context, Icons.add, iconColor: AppColors.primaryColor, onPressed:() => incrementAmount(context)),
+        //const SizedBox(width: 18),
+        iconWidget(
+            context, Icons.add, iconColor: AppColors.primaryColor, onPressed:() => incrementAmount(context)
+        ),
 
         // const SizedBox(width: 18),
         // iconWidget(Icons.add,

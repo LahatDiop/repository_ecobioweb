@@ -12,18 +12,22 @@ import '../../components/cart_item.dart';
 import '../../provider/cart_provider.dart';
 import '../../screens/cart_screen.dart';
 
+/// CLASS FOR MANAGING COUNTER CART APP
 class CounterCartWidget extends StatelessWidget{
 
-  CounterCartWidget({super.key, required this.product, this.heroSuffix});
+  CounterCartWidget({super.key, this.product, this.heroSuffix, this.cartItem, });
 
-  final Product product;
+  final Product? product;
+ final CartItem? cartItem;
   final String? heroSuffix;
   Function? onPressed;
 
 
-  Map<String, CartItem> cartItems=CartScreen().cartItems;
+  //Map<String, CartItem> cartItems=CartScreen().cartItems;
+  // List<CartItem> carts =CartScreen().carts;
 
-  List<CartItem> carts =CartScreen().carts;
+  Map<String, CartItem> cartItems=CartProvider().cartItems;
+  List<CartItem> carts =CartProvider().carts;
 
   TextEditingController textInputSearch =  TextEditingController();
   List<Product> products = [];
@@ -64,30 +68,31 @@ class CounterCartWidget extends StatelessWidget{
           child:  Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
+
             children: [
               ///DECREMENT AMOUNT CARSCREEN
-              iconWidgetDecrement( product,Icons.remove, iconColor: AppColors.darkGrey,
+              iconWidgetDecrement( product!,Icons.remove, iconColor: AppColors.darkGrey,
                   onPressed:(){
                     // int index=product.id;
-                    // product.quantity--;
-                    Product prod= CartProvider().findById(product.codeProd);
+                    // product!.quantity--;
+                    Product prod= CartProvider().findById(product!.codeProd);
 
                     if(prod.quantity <=0){
                       return;
                     }else {
                       // get prod from map
-                      CartProvider.decrementItemCart(CartProvider().newCartItemsProduct(product));
+                      CartProvider.decrementItemCart(CartProvider().newCartItemsProduct(product!));
 
-                      if(!CartProvider.productItems.containsKey(product.codeProd)){
-                        CartProvider.productItems.putIfAbsent(product.codeProd, () => product) ;
+                      if(!CartProvider.productItems.containsKey(product!.codeProd)){
+                        CartProvider.productItems.putIfAbsent(product!.codeProd, () => product!) ;
                       }else {
                         //CartProvider.products.removeWhere((element) => element.codeProd== product.codeProd);
-                        CartProvider.productItems.update(product.codeProd, (value) => product);
+                        CartProvider.productItems.update(product!.codeProd, (value) => product!);
                       }
                     }
                     // CartProvider.decrementItemCart(CartProvider().newCartItemsProduct(product));
 
-                    // decrementAmount(context,CartProvider().newCartItemsProduct(product),item.quantity);
+                    // decrementAmount(context,CartProvider().newCartItemsproduct!(product),item.quantity);
                   }
 
               ),
@@ -98,7 +103,7 @@ class CounterCartWidget extends StatelessWidget{
                   child: Center(
                       child:
                       getText(
-                          text:CartProvider.getAmount(product,product.quantity).toString(), fontSize: 18, isBold: true
+                          text:CartProvider.getAmount(product!,product!.quantity).toString(), fontSize: 18, isBold: true
                         // text: "111", fontSize: 12,
                         //    text:CartProvider.getAmount(products[index].id,products[index].quantity).toString(), fontSize: 18, isBold: true
                       )
@@ -106,17 +111,17 @@ class CounterCartWidget extends StatelessWidget{
               ),
               ///INCREMENT AMOUNT CARSCREEN
               const SizedBox(width: 12),
-              iconWidgetIncrement(product,Icons.add, iconColor: AppColors.primaryColor,
+              iconWidgetIncrement(product!,Icons.add, iconColor: AppColors.primaryColor,
 
                   onPressed:(){
 
-                    CartProvider.addItemCart(CartProvider().newCartItemsProduct(product));
+                    CartProvider.addItemCart(CartProvider().newCartItemsProduct(product!));
 
-                    if(!CartProvider.productItems.containsKey(product.codeProd)){
-                      CartProvider.productItems.putIfAbsent(product.codeProd, () => product) ;
+                    if(!CartProvider.productItems.containsKey(product!.codeProd)){
+                      CartProvider.productItems.putIfAbsent(product!.codeProd, () => product!) ;
                     }else {
                       //CartProvider.products.removeWhere((element) => element.codeProd== product.codeProd);
-                      CartProvider.productItems.update(product.codeProd, (value) => product);
+                      CartProvider.productItems.update(product!.codeProd, (value) => product!);
                     }
                   }
               ),

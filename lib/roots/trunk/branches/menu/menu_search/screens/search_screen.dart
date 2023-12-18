@@ -16,6 +16,9 @@ import '../../../products/screens/product_view.dart';
 
 ///https://stackoverflow.com/questions/58908968/how-to-implement-a-flutter-search-app-bar/58909034#58909034
 
+
+
+/// CLASS FOR MANAGING SERCH BAR ALL PRODUCT APP
 class SearchScreen extends StatefulWidget {
   static List<Product> cartItemsProducts = [];
   Map<String, Product> cartItems = {};
@@ -47,13 +50,8 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
 
 
   late TabController _tabController;
-
   List<dynamic> dataLoader = [];
-
-
   TextEditingController textInputSearch =  TextEditingController();
-
-
 
   @override
   void initState() {
@@ -125,7 +123,6 @@ class _SearchScreenState extends State<SearchScreen> with TickerProviderStateMix
       ),
     ),
   ];
-
 
 
   @override

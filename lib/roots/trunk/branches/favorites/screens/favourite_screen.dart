@@ -4,27 +4,25 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 
 import '../../business/agricultures/agriculture_biological/provider/agriculture_biological_provider.dart';
+import '../../cart/screens/cart_screen.dart';
+import '../../commun_data_utils/utils/helper/padded.dart';
 import '../../commun_data_utils/utils/text/app_text.dart';
+import '../../commun_data_utils/utils/theme/app_theme.dart';
 import '../../products/components/product.dart';
 import '../../products/screens/product_details_screen.dart';
+import '../../search/widgets/search_bar_widget.dart';
 import '../widgets/grocery_item_card_widget.dart';
 import 'filter_screen.dart';
 
 class FavouriteScreen extends StatelessWidget {
+  TextEditingController textInputSearch =  TextEditingController();
+
 // class FavouriteScreen extends StatefulWidget {
   FavouriteScreen({super.key});
-   // FavouriteScreen({this.productsFavorite, super.key});
-  // List<Product>?  productsFavorite=[];
 
    List<Product>?  productsFavorite=FavoriteProvider().favoriteItems;
   @override
   Widget build(BuildContext context) {
-
-    //  var ListProductFromJson=  context.read<AgricultureBiologicalProvider>().getData(_tabController.index.toInt());
-    //
-    // List<Product>  products = context.read<AgricultureBiologicalProvider>().products;
-
-
 
     return Scaffold(
       appBar: AppBar(
@@ -49,7 +47,7 @@ class FavouriteScreen extends StatelessWidget {
             onTap: () {
               Navigator.push(
                 context,
-                 MaterialPageRoute(builder: (context) => FilterScreen()),
+                MaterialPageRoute(builder: (context) => FilterScreen()),
               );
             },
             child: Container(
@@ -60,17 +58,39 @@ class FavouriteScreen extends StatelessWidget {
               ),
             ),
           ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FavouriteScreen()),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.only(right: 25),
+              child: const Icon(
+                Icons.favorite,
+                color: Colors.black,
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => CartScreen()),
+              );
+            },
+            child: Container(
+              padding: const EdgeInsets.only(right: 25),
+              child: const Icon(
+                Icons.shopping_cart_checkout,
+                color: AppColors.greenColor,
+              ),
+            ),
+          ),
         ],
-        title: Container(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 25,
-          ),
-          child: const AppText(
-            text: "Favorites",
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
+        ///Search
+        title: Padded.padded(SearchBarWidget(textInputSearch)),
       ),
 
       body: Column(

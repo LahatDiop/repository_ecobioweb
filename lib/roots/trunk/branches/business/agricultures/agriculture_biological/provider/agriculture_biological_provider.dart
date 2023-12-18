@@ -119,8 +119,13 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
   Product findById(String id) {
     return products.firstWhere((element) => element.id.toString() == id);
   }
+  Product findByCodeProduct(String codeProd) {
+    return products.firstWhere((element) => element.codeProd.toString() == codeProd);
+  }
 
-
+  Product findByCodeProductList(String codeProd,List<Product> products) {
+    return products.firstWhere((element) => element.codeProd.toString() == codeProd);
+  }
   void addItemProduct(Product product) {
     if (_productItem.containsKey(product.codeProd)) {
 

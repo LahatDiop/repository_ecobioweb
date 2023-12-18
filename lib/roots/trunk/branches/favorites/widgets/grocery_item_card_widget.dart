@@ -209,6 +209,7 @@ class GroceryItemCardWidget extends StatelessWidget {
 
               ],
             ),
+            /// COUNTER CART BIODYNAMIC
             Row(
               children:<Widget> [
 
@@ -221,58 +222,35 @@ class GroceryItemCardWidget extends StatelessWidget {
                              product: item,
                              heroSuffix: "GroceryItemCardWidget",
                             ),
-
-                   //// child: addWidgetCounterCard(context,item,onPress),
-                    // const Padding(padding: EdgeInsets.only(left: 25)),
-                    // addWidget(),
-                    //  const Padding(padding: EdgeInsets.only(left: 30)),
-                    //  addFavoriteWidget(context),
                   ),
                 ),
-
 
               ],
             ),
             const SizedBox(
               height: 15,
             ),
-            // Row(
-            //   ///children:[
-            //    // widget(
-            //       children: <Widget> [
-            //         Expanded(
-            //          /// flex: 3,
-            //           child: Container(
-            //             child:
-            //             addWidget(),
-            //
-            //           ),
-            //         ),
-            //         const Padding(padding: EdgeInsets.only(left: 5),),
-            //         Expanded(
-            //           flex: 3,
-            //           child: Container(
-            //             child: addFavoriteWidget(context,item,onPress),
-            //           ),
-            //         ),
-            //       ],
-            //     ),
+
+            /// WIDGET TO CHECK DETAIL OF PRODUCT AND ADD FAVORITE
+            Row(
+                  children: <Widget> [
+                    Expanded(
+                     /// flex: 3,
+                      child: Container(
+                        child:
+                        addWidgetDetailProduct(),
+                      ),
+                    ),
+                    const Padding(padding: EdgeInsets.only(left: 5),),
+                    Expanded(
+                      //flex: 3,
+                      child: Container(
+                        child: addFavoriteWidget(context,item,onPress),
+                      ),
+                    ),
+                  ],
+                ),
               ],
-            //),
-            // Row(
-            //   children: [
-            //
-            //     const Spacer(),
-            //
-            //     addWidgetCounterCard(context,item,onPress),
-            //    // const Padding(padding: EdgeInsets.only(left: 25)),
-            //     addWidget(),
-            //     const Padding(padding: EdgeInsets.only(left: 30)),
-            //     addFavoriteWidget(context),
-            //
-            //   ],
-            // )
-         // ],
         ),
       ),
     );
@@ -487,7 +465,8 @@ class GroceryItemCardWidget extends StatelessWidget {
     );
   }
 
-  Widget addWidget() {
+  /// WIDGET TO CHECK DETAIL OF PRODUCT
+  Widget addWidgetDetailProduct() {
     return Container(
       height: 40,
       width: 40,
@@ -506,21 +485,9 @@ class GroceryItemCardWidget extends StatelessWidget {
     );
   }
 
+  /// WIDGET TO CHECK DETAIL OF PRODUCT AND ADD FAVORITE
 Widget addFavoriteWidget(BuildContext context, Product product,onPress) {
-    return Container(
-      height: 40,
-       width: 40,
-      ///width: MediaQuery.of(context).size.width* 2,
-      decoration: BoxDecoration(
-        border: Border.all(color: borderColor,width: 2),
-        borderRadius: BorderRadius.circular(17),
-         // color: AppColors.darkGrey
-      )
-      ,
-      
-      child: FavoriteToggleIcon(product: product, favorite: product.isFavorite,),
-      
-    );
+    return FavoriteToggleIcon(product: product, favorite: product.isFavorite,);
 }
 
   Widget locationWidget() {

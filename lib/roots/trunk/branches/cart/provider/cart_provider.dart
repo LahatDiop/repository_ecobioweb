@@ -504,6 +504,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
         price: product.price,
         quantityStock: product.quantityStock,
         quantity: product.quantity,
+        category: product.category,
         imageURL: product.imageURL,
         image: product.image,
         images: product.images,);

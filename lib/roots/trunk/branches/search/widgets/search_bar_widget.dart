@@ -159,6 +159,19 @@ class SearchBarWidget extends StatelessWidget {
 
   }
 
+  Widget padded(Widget widget) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: widget,
+    );
+  }
+  Widget paddedTag(Widget widget) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 25),
+      child: widget,
+    );
+  }
+
   Widget build1(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),

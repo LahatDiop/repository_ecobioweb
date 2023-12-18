@@ -5,6 +5,7 @@ import '../../business/agricultures/agriculture_biological/provider/agriculture_
 import '../../business/agricultures/agriculture_biological/screens/agriculture_biologique_screen.dart';
 import '../../business/honey/honet_Propolis_bio/provider/honey_biological_provider.dart';
 import '../../commun_data_utils/utils/button/app_button.dart';
+import '../../commun_data_utils/utils/helper/padded.dart';
 import '../../commun_data_utils/utils/text/app_text.dart';
 import '../../commun_data_utils/utils/columns/column_with_seprator.dart';
 import '../../commun_data_utils/utils/theme/app_theme.dart';
@@ -13,6 +14,7 @@ import '../../favorites/screens/filter_screen.dart';
 import '../../localisation/translation/components/appLocalizations.dart';
 import '../../menu/menu_settings/settings/payment/screens/payment.dart';
 import '../../products/components/product.dart';
+import '../../search/widgets/search_bar_widget.dart';
 import '../checkout_bottom_sheet.dart';
 import '../components/cart_item.dart';
 import '../provider/cart_provider.dart';
@@ -53,6 +55,9 @@ class _CartScreenState extends State<CartScreen>{
   TextEditingController textInputSearch =  TextEditingController();
    List<Product> products = [];
 
+  late CartItem itemCart;
+  late Product product;
+
   @override
   Widget build(BuildContext context) {
 
@@ -71,6 +76,8 @@ class _CartScreenState extends State<CartScreen>{
       builder: (context,child){
         int tabIndex=0;
         final cartProvider=Provider.of<CartProvider>(context);
+        final agriBio=Provider.of<AgricultureBiologicalProvider>(context);
+
         var listProducts= context.read<AgricultureBiologicalProvider>().getData(tabIndex);
 
         cartItems=context.read<CartProvider>().cartItems;
@@ -144,38 +151,8 @@ class _CartScreenState extends State<CartScreen>{
               ),
             ],
             ///Search
-            title: TextField(
-              controller:textInputSearch ,
-              cursorColor: Colors.white,
-              decoration: InputDecoration(
-                  filled: true,
-                  // fillColor: Colors.white70,
-                  fillColor: Colors.green.shade100,
-                  contentPadding: const EdgeInsets.only(
-                      left: 14.0, bottom: 8.0, top: 8.0),
-                  focusedBorder: OutlineInputBorder(
-                    // borderSide:  const BorderSide(color: Colors.white),
-                    borderSide:  const BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(25.7),
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide:  const BorderSide(color: Colors.white),
-                    borderRadius:  BorderRadius.circular(25.7),
-                  ),
-
-                  hintText: AppLocalizations.translate("search_point"),
-                  labelText: "",
-                  border: InputBorder.none,
-                  suffixIcon: IconButton(
-                    icon: const Icon(Icons.search),
-                    color: const Color.fromRGBO(90, 25, 72, 1),
-                    onPressed: () {
-                      showSearch(context: context, delegate: DataSearch(products, textInputSearch.value.text.toString()));
-                    },
-                  )
-              ),
-              style: const TextStyle(color: Colors.black, fontSize: 15.0),
-            ),
+            ///Search
+            title: Padded.padded(SearchBarWidget(textInputSearch)),
 
           ),
 
@@ -428,6 +405,7 @@ class _CartScreenState extends State<CartScreen>{
                          const SizedBox(
                            height: 20,
                          ),
+                         /// CART ITEMS IMG COUNTER...
                          Column(
                            children: getChildrenWithSeperator(
                              addToLastChild: false,
@@ -437,6 +415,8 @@ class _CartScreenState extends State<CartScreen>{
                              widgets: cartItems.entries.map((e){
                                    var value=e.value;
                                    var index =e.key;
+                                   itemCart=e.value;
+                                   product =  context.read<AgricultureBiologicalProvider>().findByCodeProductList(itemCart.codeProd,products);
                               ///int  indexProd=cartItems.elementAt(index);
                                return Container(
                                  padding: const EdgeInsets.symmetric(
@@ -444,7 +424,8 @@ class _CartScreenState extends State<CartScreen>{
                                  ),
                                  width: double.maxFinite,
                                  child: ChartItemCartWidget(
-                                   itemCart: e.value,
+                                   itemCart: itemCart,
+                                  product: product,
                                   /// evalue,
                                    //itemCart: e.value,
                                    ///amount:e.value.quantity,

@@ -1,4 +1,5 @@
 
+import 'package:ecobioweb/roots/trunk/branches/commun_data_utils/utils/helper/text_app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:intl/intl.dart';
@@ -389,22 +390,22 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> wit
   }
 
 
-  Widget getText({
-    required String text,
-    int? index,
-    required double fontSize,
-    bool isBold = false,
-    color = Colors.black,
-  }) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: fontSize,
-        fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-        color: color,
-      ),
-    );
-  }
+  // Widget getText({
+  //   required String text,
+  //   int? index,
+  //   required double fontSize,
+  //   bool isBold = false,
+  //   color = Colors.black,
+  // }) {
+  //   return Text(
+  //     text,
+  //     style: TextStyle(
+  //       fontSize: fontSize,
+  //       fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
+  //       color: color,
+  //     ),
+  //   );
+  // }
 
 
   newCartItems(CartItem newCartItem) {
@@ -728,7 +729,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> wit
             width: 30,
             child: Center(
                 child:
-                getText(
+                TextApp.getText(
                     text:CartProvider.getAmount(products[index],products[index].quantity).toString(), fontSize: 18, isBold: true
                 )
             )

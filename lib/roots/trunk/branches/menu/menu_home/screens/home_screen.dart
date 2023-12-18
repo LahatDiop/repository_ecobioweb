@@ -1,5 +1,7 @@
 
 
+import 'package:ecobioweb/roots/trunk/branches/commun_data_utils/utils/helper/padded.dart';
+import 'package:ecobioweb/roots/trunk/branches/commun_data_utils/utils/helper/subtitle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -114,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             // toolbarHeight: 60.0,
             toolbarHeight: 50.0,
              /// title: SearchBarWidget(textInputSearch),
-            title: padded(SearchBarWidget(textInputSearch)),
+            title: Padded.padded(SearchBarWidget(textInputSearch)),
 
           ),
           body: SafeArea(
@@ -130,31 +132,31 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       // const SizedBox(
                       //   height: 5,
                       // ),
-                      // padded(locationWidget()),
+                      // Padded.padded(locationWidget()),
                       // const SizedBox(
                       //   height: 15,
                       // ),
                      // SearchBarWidget(),
-                     //  padded(SearchBarWidget()),
-                     //  padded(SearchBarWidget(textInputSearch)),
+                     //  Padded.padded(SearchBarWidget()),
+                     //  Padded.padded(SearchBarWidget(textInputSearch)),
                       const SizedBox(
                         height: 2,
                       ),
-                      padded(HomeBanner()),
+                       Padded.padded(HomeBanner()),
                       // const SizedBox(
                       //   height: 5,
                       // ),
-                      padded(subTitle("Exclusive Bio")),
+                      Padded.padded(SubTitle().subTitle("Exclusive Bio")),
                       //  getHorizontalItemSlider(exclusiveOffers),
                       // const SizedBox(
                       //   height: 15,
                       // ),
-                      // padded(subTitle("Best Selling")),
+                      // Padded.padded(subTitle("Best Selling")),
                       // //     getHorizontalItemSlider(greenbuilding),
                       // const SizedBox(
                       //   height: 15,
                       // ),
-                      // padded(subTitle("Groceries")),
+                      // Padded.padded(subTitle("Groceries")),
                       // const SizedBox(
                       //   height: 15,
                       // ),
@@ -340,29 +342,29 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   const SizedBox(
                     height: 5,
                   ),
-                  padded(locationWidget()),
+                  Padded.padded(locationWidget()),
                   const SizedBox(
                     height: 15,
                   ),
-                 /// padded(SearchBarWidget()),
+                 /// Padded.padded(SearchBarWidget()),
                   const SizedBox(
                     height: 25,
                   ),
-                  padded(HomeBanner()),
+                  Padded.padded(HomeBanner()),
                   const SizedBox(
                     height: 25,
                   ),
-                  padded(subTitle("Exclusive Order")),
+                  Padded.padded(SubTitle().subTitle("Exclusive Order")),
                 //  getHorizontalItemSlider(exclusiveOffers),
                   const SizedBox(
                     height: 15,
                   ),
-                  padded(subTitle("Best Selling Lahat")),
+                  Padded.padded(SubTitle().subTitle("Best Selling Lahat")),
              //     getHorizontalItemSlider(greenbuilding),
                   const SizedBox(
                     height: 15,
                   ),
-                  padded(subTitle("Groceries")),
+                  Padded.padded(SubTitle().subTitle("Groceries")),
                   const SizedBox(
                     height: 15,
                   ),
@@ -433,18 +435,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget padded(Widget widget) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: widget,
-    );
-  }
-  Widget paddedTag(Widget widget) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 25),
-      child: widget,
-    );
-  }
 
 // Container getHorizontalItemSlidersList(List<HomeItems> items,BuildContext context,int y) {
 //
@@ -569,24 +559,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   //   );
   // }
 
-  Widget subTitle(String text) {
-    return Row(
-      children: [
-        Text(
-          text,
-          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        const Spacer(),
-        const Text(
-          "See All HomeScreen",
-          style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: AppColors.primaryColor),
-        ),
-      ],
-    );
-  }
+  // Widget subTitle(String text) {
+  //   return Row(
+  //     children: [
+  //       Text(
+  //         text,
+  //         style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+  //       ),
+  //       const Spacer(),
+  //       const Text(
+  //         "See All HomeScreen",
+  //         style: TextStyle(
+  //             fontSize: 18,
+  //             fontWeight: FontWeight.bold,
+  //             color: AppColors.primaryColor),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget locationWidget() {
     String locationIconPath = "assets/icons/location_icon.svg";
@@ -975,15 +965,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //                     const SizedBox(
 //                       height: 5,
 //                     ),
-//                     padded(locationWidget()),
+//                     Padded.padded(locationWidget()),
 //                     const SizedBox(
 //                       height: 15,
 //                     ),
-//                     padded(SearchBarWidget()),
+//                     Padded.padded(SearchBarWidget()),
 //                     const SizedBox(
 //                       height: 25,
 //                     ),
-//                     padded(HomeBanner()),
+//                     Padded.padded(HomeBanner()),
 //                     const SizedBox(
 //                       height: 25,
 //                     ),
@@ -1010,8 +1000,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //                     //     //  for(var group in groups)
 //                     //     Column(
 //                     //       children: List<Widget>.generate(groups.length, (indexTitle) =>
-//                     //           // padded(subTitle(AppLocalizations.translate(groups[indexTitle].name.toString()), items, groups, context)),
-//                     //           padded(subTitleHome(AppLocalizations.translate(groups[indexTitle].name.toString()))),
+//                     //           // Padded.padded(subTitle(AppLocalizations.translate(groups[indexTitle].name.toString()), items, groups, context)),
+//                     //           Padded.padded(subTitleHome(AppLocalizations.translate(groups[indexTitle].name.toString()))),
 //                     //       ),
 //                     //
 //                     //
@@ -1076,7 +1066,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //                     //
 //                     // ),
 //
-//                     // padded(subTitle(AppLocalizations.translate('agricultureBiological').toString())),
+//                     // Padded.padded(subTitle(AppLocalizations.translate('agricultureBiological').toString())),
 //                     getHorizontalItemSliderHome(items),
 //
 //
@@ -1085,7 +1075,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //                     // const SizedBox(
 //                     //   height: 25,
 //                     // ),
-//                     // padded(subTitle(AppLocalizations.translate('beekeepingBiologique').toString())),
+//                     // Padded.padded(subTitle(AppLocalizations.translate('beekeepingBiologique').toString())),
 //                     // getHorizontalItemSlider(beekeepingBiologique),
 //                     const Column(
 //                       children: [
@@ -1094,27 +1084,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //                         ),
 //                       ],
 //                     ),
-//                     // padded(subTitle("hotetBiologique")),
+//                     // Padded.padded(subTitle("hotetBiologique")),
 //                     // getHorizontalItemSlider(hotetBiologique),
 //                     // const SizedBox(
 //                     //   height: 25,
 //                     // ),
-//                     // padded(subTitle("greenbuilding")),
+//                     // Padded.padded(subTitle("greenbuilding")),
 //                     // getHorizontalItemSlider(greenbuilding),
 //                     // const SizedBox(
 //                     //   height: 25,
 //                     // ),
-//                     // padded(subTitle("hotelBiologique")),
+//                     // Padded.padded(subTitle("hotelBiologique")),
 //                     //  getHorizontalItemSlider(hotelBiologique),
 //                     // const SizedBox(
 //                     //   height: 15,
 //                     // ),
-//                     // padded(subTitle("Best Selling")),
+//                     // Padded.padded(subTitle("Best Selling")),
 //                     // getHorizontalItemSlider(hotetBiologique),
 //                     // const SizedBox(
 //                     //   height: 15,
 //                     // ),
-//                     padded(subTitle("Groceries",items, context)),
+//                     Padded.padded(subTitle("Groceries",items, context)),
 //                     const SizedBox(
 //                       height: 15,
 //                     ),
@@ -1163,7 +1153,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //     );
 //   }
 //
-//   Widget padded(Widget widget) {
+//   Widget Padded.padded(Widget widget) {
 //     return Padding(
 //       padding: const EdgeInsets.symmetric(horizontal: 25),
 //       child: widget,
@@ -1210,7 +1200,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //
 //     return groups.map((e) {
 //       return ListTile(
-//         title: padded(Text(AppLocalizations.translate(e).toString())),
+//         title: Padded.padded(Text(AppLocalizations.translate(e).toString())),
 //       );
 //     }).toList();
 //
@@ -1238,13 +1228,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //     for(var i=0; i<groups.length; i++){
 //
 //
-//       listTitleGroupHome.add(padded(Text(AppLocalizations.translate(groups[i]).toString())) );
+//       listTitleGroupHome.add(Padded.padded(Text(AppLocalizations.translate(groups[i]).toString())) );
 //       // for(HomeItems groupItem in itemsHome){
 //       //
 //       //   if(groupItem.groups.toString()== groups[i].toString()){
 //       //
 //       //     // listWidgetGroupHome.add(Text(groups[i]));
-//       //     listTitleGroupHome.add(padded(Text(AppLocalizations.translate(groups[i]).toString())) );
+//       //     listTitleGroupHome.add(Padded.padded(Text(AppLocalizations.translate(groups[i]).toString())) );
 //       //
 //       //   }
 //       // }
@@ -1266,7 +1256,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //     //   children:<Widget>[
 //     //     Row(
 //     //       // OK children:listTitleGroupHome,
-//     //       children: groups.map((item) => padded(Text(AppLocalizations.translate(item.toString()).toString()))).toList(),
+//     //       children: groups.map((item) => Padded.padded(Text(AppLocalizations.translate(item.toString()).toString()))).toList(),
 //     //     ),
 //     //     // Row(
 //     //     //   children: listWidgetGroupHome,
@@ -1373,7 +1363,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //     for(var i=0; i<groups.length; i++){
 //
 //       // listWidgetGroupHome.add(Text(groups[i]));
-//       // listTitleGroupHome.add(padded(Text(AppLocalizations.translate(groups[i]).toString())) );
+//       // listTitleGroupHome.add(Padded.padded(Text(AppLocalizations.translate(groups[i]).toString())) );
 //       // listWidgetGroupHome.add(getHorizontalItemSliderHome(itemsHome, groups));
 //
 //       for(HomeItems groupItem in itemsHome){
@@ -1392,7 +1382,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //       children:<Widget>[
 //         Row(
 //           // OK children:listTitleGroupHome,
-//           children: groups.map((item) => padded(Text(AppLocalizations.translate(item.toString()).toString()))).toList(),
+//           children: groups.map((item) => Padded.padded(Text(AppLocalizations.translate(item.toString()).toString()))).toList(),
 //         ),
 //         Row(
 //           children: listWidgetGroupHome,
@@ -1416,10 +1406,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 //           itemBuilder: (BuildContext context, int index){
 //             return Column(
 //               children: [
-//                 // padded(subTitle(AppLocalizations.translate('agricultureBiological').toString())),
+//                 // Padded.padded(subTitle(AppLocalizations.translate('agricultureBiological').toString())),
 //                 Row(
 //                   children: [
-//                     padded(subTitle(AppLocalizations.translate(items[index].name), items,context)),
+//                     Padded.padded(subTitle(AppLocalizations.translate(items[index].name), items,context)),
 //                   ],
 //                 ),
 //
