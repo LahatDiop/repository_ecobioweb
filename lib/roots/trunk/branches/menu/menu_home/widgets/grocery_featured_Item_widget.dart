@@ -29,7 +29,7 @@ class GroceryFeaturedCard extends StatelessWidget {
     return Container(
       width: 250,
       height: 105,
-      padding: EdgeInsets.symmetric(vertical: 16, horizontal: 17),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 17),
       decoration: BoxDecoration(
           color: color.withOpacity(0.25),
           borderRadius: BorderRadius.circular(18)),
@@ -38,7 +38,7 @@ class GroceryFeaturedCard extends StatelessWidget {
           Image(
             image: AssetImage(groceryFeaturedItem.imagePath),
           ),
-          SizedBox(
+          const SizedBox(
             width: 15,
           ),
           AppText(

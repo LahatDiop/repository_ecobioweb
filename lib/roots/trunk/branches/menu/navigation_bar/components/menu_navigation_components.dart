@@ -1,4 +1,5 @@
 import 'package:ecobioweb/roots/trunk/branches/cart/screens/cart_screen.dart';
+import 'package:ecobioweb/roots/trunk/branches/menu/menu_home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 
@@ -10,7 +11,7 @@ import '../../menu_settings/settings/admin/screens/setting_screen.dart';
 
 
 
-/* ------------------------------------INI MENU NAVIGATION BAR CONVEX------------------------------------- */
+/* ------------------------------------INI MENU NAVIGATION BAR CONTEX------------------------------------- */
 
 // Home--> category : Agricullture Bio, Produits bio, Apiculture bio , Hotel Bio, Vegane Bio
 // Add --> new publication
@@ -42,16 +43,18 @@ class _HomePageAppSetting extends State<MenuNavigationComponents> {
   //Elements list menu navigation bar
   final List<Widget> pagesContainer = [
     // HOME 1
-    HomeViewScreen(),
+    const HomeScreen(),
     //const HomeScreen(),
 
     // SEARCHE 2
     //SearchWidget(),
      SearchScreen(),
 
+    /// CATEGORI 3 HomeViewScreen
+     const HomeViewScreen(),
     // LOCALIZATION
     //const GestionLocalization(),
-    const WishListScreen(),
+   // const WishListScreen(),
 
     // CATEGORY 3
 

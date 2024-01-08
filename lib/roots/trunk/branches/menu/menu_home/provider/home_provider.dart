@@ -55,8 +55,9 @@ class HomeProvider  with ChangeNotifier {
   // Future<List<HomeItems>> getData() async{
   Future<List<HomeItems>> getData() async{
     items = await getHomeItemsList();
-     notifyListeners();
+   notifyListeners();
      return items;
+
   }
 
   Future<List<HomeItems>> getHomeItemsList() async {
@@ -99,7 +100,7 @@ class HomeProvider  with ChangeNotifier {
       updateMap(key,listItemHome,items);
 
     });
-    notifyListeners();
+  ///  notifyListeners();
     return items;
 
   }

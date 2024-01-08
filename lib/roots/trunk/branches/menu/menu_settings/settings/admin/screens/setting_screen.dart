@@ -1,12 +1,17 @@
 
 
+import 'package:path/path.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../../../database/storages/locale/shared_preferences_locale.dart';
+import '../../../../../localisation/country/widget/country_list_pick.dart';
+import '../../../../../localisation/translation/components/appLocalizations.dart';
+import '../../../../../localisation/translation/widget/localizationLang.dart';
 import '../../auth/singin/models/app_singin.dart';
 import '../../auth/singin/screens/login_screen.dart';
 import '../../auth/singup/widgets/app_singup.dart';
 import '../../info/messages/widget/message_save.dart';
-import '../../localisation/country/models/country.dart';
-import '../../localisation/translation/components/appLocalizations.dart';
-import '../../localisation/translation/widget/localizationLang.dart';
+
 import '../../payment/screens/payment.dart';
 import '../../profile/screens/profilePage.dart';
 import 'package:flutter/material.dart';
@@ -34,20 +39,62 @@ class SettingScreen extends StatefulWidget {
   late ValueChanged<ItemSetting> itemSelectedCallback;
   late ItemSetting selectedItem;
 
+ static String? initialSelectionLang;
 
+  static String? currentCodeLang ;
 
-
-  // _FirstPageSetting({
-  //   required this.itemSelectedCallback,
-  //   required this.selectedItem,
-  // });
+  static bool? isInitialLang ;
 
   @override
   _SettingScreenState createState() => _SettingScreenState();
+
 }
 
-class _SettingScreenState extends State<SettingScreen> {
-  // List<CustomerSetting> itemsList = <CustomerSetting>[];
+class _SettingScreenState extends State<SettingScreen>  with TickerProviderStateMixin {
+
+  SharedPreferencesLocale pref = SharedPreferencesLocale();
+
+  @override
+  void initState(){
+    fetchCurrentCodeLang();
+    super.initState();
+    /// fetchItems().whenComplete(() => setState(() {}));
+
+  }
+Future<String?> fetchCurrentCodeLang() async{
+
+ /// super.initState();
+  var prefs= await SharedPreferences.getInstance();
+  /// code lingua actualle
+  String? currentCodeLangDefault = prefs.getString("currentCodeLang");
+
+  /// code lingua actualle
+  SettingScreen.currentCodeLang = currentCodeLangDefault.toString().toLowerCase();
+
+
+  if(SettingScreen.currentCodeLang!.isNotEmpty){
+    SettingScreen.isInitialLang=true;
+  }
+
+
+  return SettingScreen.currentCodeLang;
+
+}
+
+
+  // Future<void> fetchItems() async {
+  //
+  //   /// code lingua actualle
+  //   SettingScreen.currentCodeLang = pref.fetchCurrentCodeLang().toString();
+  //
+  //   if(SettingScreen.currentCodeLang!.isNotEmpty){
+  //     SettingScreen.isInitialLang=true;
+  //   }
+  //
+  //   CountryListPick(isInitialLang: SettingScreen.isInitialLang, currentCodeLang: SettingScreen.currentCodeLang);
+  // }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +133,21 @@ class _SettingScreenState extends State<SettingScreen> {
 
 
 class _FirstPageSetting extends StatelessWidget {
+
+  late ValueChanged<ItemSetting> itemSelectedCallback;
+  late ItemSetting selectedItem;
+
+  static bool? isInitialLang=SettingScreen.isInitialLang;
+  static String? currentCodeLang=SettingScreen.currentCodeLang;
+
+  // _FirstPageSetting({
+  //   required this.itemSelectedCallback,
+  //   required this.selectedItem,
+  // });
+
+  var totalPrice;
+
+
 
   final List<ItemSetting> items = <ItemSetting>[
     ItemSetting(
@@ -158,7 +220,9 @@ class _FirstPageSetting extends StatelessWidget {
       /// 8.'Country'
       title: AppLocalizations.translate('country').toUpperCase(),
       subtitle: AppLocalizations.translate('country').toLowerCase(),
-       builder: (context) => const Country(),
+     ///  builder: (context) => const Country(),
+       // builder: (context) =>  CountryListPick(initialSelectionLang: currentCodeLang),
+       builder: (context) =>   CountryListPick(isInitialLang:SettingScreen.isInitialLang ,currentCodeLang: SettingScreen.currentCodeLang),
       trailing: const Icon(Icons.arrow_forward_ios_outlined),
     ),
     ItemSetting(
@@ -200,15 +264,9 @@ class _FirstPageSetting extends StatelessWidget {
   ];
 
 
-  late ValueChanged<ItemSetting> itemSelectedCallback;
-  late ItemSetting selectedItem;
 
-  // _FirstPageSetting({
-  //   required this.itemSelectedCallback,
-  //   required this.selectedItem,
-  // });
 
-  var totalPrice;
+
 
   _FirstPageSetting(CupertinoPageRoute<void> cupertinoPageRoute);
 
@@ -312,8 +370,9 @@ class _FirstPageSetting extends StatelessWidget {
               if (items.isNotEmpty && items[index].title.toString().toLowerCase() ==
                   AppLocalizations.translate('country').toLowerCase()) {
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => const Country(),
-
+                  /// builder: (context) => const Country(),
+                  builder: (context) =>   CountryListPick(isInitialLang:SettingScreen.isInitialLang ,currentCodeLang: SettingScreen.currentCodeLang),
+                 /// builder: (context) =>  CountryListPick(),
                 ));
               }
 

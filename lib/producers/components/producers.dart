@@ -1,4 +1,4 @@
-class Market {
+class Producers {
   final String? id;
   final String name;
   final String code;
@@ -26,7 +26,7 @@ class Market {
   final bool? isFavorite;
 
 
-  Market( {
+  Producers( {
     this.id,
     required this.name,
     required this.code,
@@ -53,8 +53,8 @@ class Market {
     this.isExchange,
     this.isFavorite});
 
-  factory Market.fromJson(Map<String, dynamic> json) {
-    return Market(
+  factory Producers.fromJson(Map<String, dynamic> json) {
+    return Producers(
       id: json['id'] as String,
       name: json["name"] as String,
       code: json["code"] as String,
@@ -116,7 +116,7 @@ class Market {
 
 /*
 
-  Future<void> market() async {
+  Future<void> Producers() async {
     final String response =
         await rootBundle.loadString('../../assets/json/products.json');
     final data = await json.decode(response);

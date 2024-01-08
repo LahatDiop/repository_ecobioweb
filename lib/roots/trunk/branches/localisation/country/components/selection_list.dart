@@ -1,16 +1,21 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:analyzer/file_system/file_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../market/components/market.dart';
+import '../../../menu/menu_settings/settings/admin/screens/setting_screen.dart';
 import '../../translation/components/appLocalizations.dart';
 import '../widget/country_list_pick.dart';
 import 'code_country.dart';
 import '../../../commun_data_utils/utils/helper/globals.dart' as globals;
+import 'country_selection_theme.dart';
 
 class SelectionList extends StatefulWidget {
   const SelectionList(this.elements, this.initialSelection,
@@ -59,6 +64,13 @@ class _SelectionListState extends State<SelectionList> {
   late String currentDefaultSystemLocale;
   late List<Locale> currentSystemLocales;
 
+  CountryCode? selectedItem;
+
+  List elements = [];
+
+  PreferredSizeWidget? appBar;
+  CountryTheme? theme;
+
   //final LocalStorage storage = new LocalStorage('localstorage_app');
 
   @override
@@ -67,15 +79,19 @@ class _SelectionListState extends State<SelectionList> {
     countries.sort((a, b) {
       return a.name.toString().compareTo(b.name.toString());
     });
+
+    elements=countries;
+    selectedItem=widget.initialSelection;
+
     _controllerScroll = ScrollController();
     _controllerScroll!.addListener(_scrollListener);
     super.initState();
   }
 
-  void _sendDataBack(BuildContext context, CountryCode initialSelection) {
+  void _sendDataBack(BuildContext context,PreferredSizeWidget? appBar, CountryTheme? theme, CountryCode initialSelection,List elements ) {
+    selectedItem=initialSelection;
+   /// elements
     Navigator.pop(context, initialSelection);
-  //  Localizations.localeOf(context);
-    // Localizations.maybeLocaleOf(context);
   }
 
   final List _alphabet =
@@ -83,6 +99,7 @@ class _SelectionListState extends State<SelectionList> {
 
   @override
   Widget build(BuildContext context) {
+
     if (widget.useUiOverlay) {
       SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
         statusBarColor: Colors.white,
@@ -101,7 +118,20 @@ class _SelectionListState extends State<SelectionList> {
     //search_point = Translation.search(context)!;
 
     Widget scaffold = Scaffold(
-      appBar: widget.appBar,
+     appBar: widget.appBar,
+     //  appBar: AppBar(
+     //    title: Text(AppLocalizations.translate("back").toString()),
+     //    backgroundColor: const Color.fromARGB(255, 50, 172, 34),
+     //    leading: BackButton(
+     //      color: Colors.black,
+     //      onPressed: () {
+     //        //   Navigator.pop(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
+     //        // Navigator.pop(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
+     //        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
+     //        );
+     //      },
+     //    ),
+     //  ),
       body: Container(
         color: const Color(0xfff4f4f4),
         child: LayoutBuilder(builder: (context, contrainsts) {
@@ -206,7 +236,7 @@ class _SelectionListState extends State<SelectionList> {
     return widget.useSafeArea ? SafeArea(child: scaffold) : scaffold;
   }
 
-  Widget getListCountry(CountryCode e) {
+  Widget getListCountry(CountryCode countryCode) {
     return Container(
       height: 50,
       color: Colors.white,
@@ -214,11 +244,11 @@ class _SelectionListState extends State<SelectionList> {
         color: Colors.transparent,
         child: ListTile(
           leading: Image.asset(
-            e.flagUri!,
+            countryCode.flagUri!,
             //    package: 'country_list_pick',
             width: 30.0,
           ),
-          title: Text(e.name!),
+          title: Text(countryCode.name!),
 
           //  onTap: () async { await homeController.setLanguage("EN") .then((value) async { await context .setLocale( const Locale( "en")); }) },
           onTap: () {
@@ -233,17 +263,16 @@ class _SelectionListState extends State<SelectionList> {
 
 
 
-            String? localNew = e.code;
-            String? nameLanguageCodeChange = e.name;
+            String? currentCodeLangApp = countryCode.code;
+            String? nameLanguageCodeChange = countryCode.name;
+            bool isInitializedLang=true;
+             elements=countries;
+             selectedItem=countryCode;
 
-         //   if(!defaultSystemLocale.endsWith(localNew!)) {
-              // MyApp.of(context).setLocale(Locale.fromSubtags(languageCode:e.code.toString()));
-              //String codeLanguage = e.code.toString();
 
-              // setCurrentValues();
-              changeLang(e.code);
-         //   }
-               _sendDataBack(context, e);
+           AppLocalizations.saveLanguageApp(currentCodeLangApp!,true);
+
+        _sendDataBack(context,widget.appBar, widget.theme, countryCode,elements);
               //   sendDataBack(context, e);
               //  Utils.updateLocalLanguage(context, codeLanguage);
             }
@@ -481,14 +510,29 @@ class _SelectionListState extends State<SelectionList> {
     currentDefaultSystemLocale = Platform.localeName;
   }
 
-   changeLang(String? codeLanguageChange) {
-
-    // String defaultSystemLocale=Platform.localeName;
-    // AppLocalizations appLocalizations = AppLocalizations(defaultSystemLocale as Locale);
-     //   if(defaultSystemLocale != codeLanguageChange ){
-              /// update app if you change a linguage
-     AppLocalizations.load(Locale(codeLanguageChange.toString()));
-
-
-  }
+  //  changeLang(String? codeLanguageChange) async {
+  //
+  //    var prefs= await SharedPreferences.getInstance();
+  //
+  //    /// Controllo se non è stato salvato un code lingue "it" prendo la lingue del dispositivi o del local
+  //
+  //    /// code lingua actualle
+  //    String? currentCodeLang = prefs.getString("currentCodeLang");
+  //
+  //
+  //    ///"en_US"
+  //    String localeDefault = Intl.getCurrentLocale();
+  //    ///it_IT
+  //    Locale deviceLocale = window.locale;// or html.window.locale
+  //    ///"it"
+  //    String languageCodeDevice = deviceLocale.languageCode;
+  //
+  //   // String defaultSystemLocale=Platform.localeName;
+  //   // AppLocalizations appLocalizations = AppLocalizations(defaultSystemLocale as Locale);
+  //    //   if(defaultSystemLocale != codeLanguageChange ){
+  //             /// update app if you change a linguage
+  //    AppLocalizations.loadLanguageApp(languageCode,true);
+  //
+  //
+  // }
 }

@@ -1,8 +1,13 @@
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../database/storages/locale/shared_preferences_locale.dart';
+import '../../../menu/menu_settings/settings/admin/screens/setting_screen.dart';
 import '../../translation/components/appLocalizations.dart';
 import '../components/code_country.dart';
 import '../components/code_countrys.dart';
@@ -13,18 +18,25 @@ export '../components/country_selection_theme.dart';
 
 class CountryListPick extends StatefulWidget {
 
+   CountryListPick(
+      {super.key,
+        this.onChanged,
+        this.initialSelection,
+        this.isInitialLang,
+        this.currentCodeLang,
+        this.appBar,
+        this.pickerBuilder,
+        this.countryBuilder,
+        this.theme,
+        this.useUiOverlay = true,
+        this.useSafeArea = false});
 
-  const CountryListPick(
-      {super.key, this.onChanged,
-      this.initialSelection,
-      this.appBar,
-      this.pickerBuilder,
-      this.countryBuilder,
-      this.theme,
-      this.useUiOverlay = true,
-      this.useSafeArea = false});
+   CountryCode? initialSelection;
+   static bool? isInitializedLang = true;
+   final  String? currentCodeLang;
 
-  final String? initialSelection;
+   bool? isInitialLang;
+
   final ValueChanged<CountryCode?>? onChanged;
   final PreferredSizeWidget? appBar;
   final Widget Function(BuildContext context, CountryCode? countryCode)?
@@ -35,22 +47,12 @@ class CountryListPick extends StatefulWidget {
   final bool useUiOverlay;
   final bool useSafeArea;
 
-  @override
   // ignore: no_logic_in_create_state
-  _CountryListPickState createState() {
-    List<Map> jsonList = theme?.showEnglishName ?? true ? countriesEnglish : codes;
+  CountryListPickState createState()  {
 
-    //  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-    // final SharedPreferences prefs = await _prefs;
-    //String languageCode=prefs.getString('languageCode')?? 'it';
-    //String countryCode =prefs.getString('countryCode')??'IT';
+   // List<Map> jsonList = theme?.showEnglishName ?? true ? countriesEnglish : codes;
+    List<Map> jsonList = theme?.showEnglishName ?? true ? codes : codes;
 
-    SharedPreferencesLocale sp= SharedPreferencesLocale();
-    String languageCode =sp.fetchLocale().toString();
-
-
-
-    bool? isEnabled;
     List elements = jsonList
         .map((s) => CountryCode(
               name: s['name'],
@@ -62,7 +64,7 @@ class CountryListPick extends StatefulWidget {
         .toList();
 
     // FILTRE THE LIST MARKET ENABLED : LIST CONTRY EANBLED
-    List CountryEnabled = [];
+    List countryEnabled = [];
 
     for (int i = 0; i < elements.length; i++) {
       String codeCountry = elements[i].code;
@@ -70,62 +72,59 @@ class CountryListPick extends StatefulWidget {
 
       String enabled="true";
 
-      if(elements[i].isEnabled == enabled) {
-        CountryEnabled.add(elements[i]);
+      if(elements[i].isEnabled !="null" && elements[i].isEnabled == enabled) {
+        countryEnabled.add(elements[i]);
       }
-      // if (codeCountry == "IT" ||
-      //     codeCountry == 'FR' ||
-      //     codeCountry == 'ES' ||
-      //     codeCountry == 'DE' ||
-      //     codeCountry == 'SN' ||
-      //     codeCountry == 'NG') {
-      //   CountryEnabled.add(elements[i]);
-      // }
     }
-    return _CountryListPickState(CountryEnabled);
+    return CountryListPickState(countryEnabled,isInitialLang,currentCodeLang!);
   }
 }
 
-class _CountryListPickState extends State<CountryListPick> {
+class CountryListPickState extends State<CountryListPick> {
 
-
-
+  CountryListPickState(this.elements,this.isInitialLang,this.currentCodeLang);
+  late List countries;
   CountryCode? selectedItem;
+  CountryCode? initialSelection;
+  // bool? initialSelectionLang;
+  bool? isInitialLang;
+  String currentCodeLang;
+  ValueChanged<CountryCode?>? onChanged;
+  CountryCode? currentCountryCode;
   List elements = [];
+  List elementsCountryEnabled = [];
 
-  _CountryListPickState(this.elements);
-
-
+  final TextEditingController _controller = TextEditingController();
+  ScrollController? _controllerScroll;
 
   @override
+  ///1
   void initState() {
-
-    if (widget.initialSelection != null) {
-      selectedItem = elements.firstWhere(
-          (e) =>
-              (e.code.toUpperCase() ==
-                  widget.initialSelection!.toUpperCase()) ||
-              (e.dialCode == widget.initialSelection),
-          orElse: () => elements[0] as CountryCode);
-    } else {
-      /// check language default not set the fist element of list
-
-
-      // for(var i in elements){
-      //   if(languageCode.substring(3)== i.code){
-      //     selectedItem = i;
-      //     break;
-      //   } {
-      //      selectedItem = elements[0];
-      //   }
-      // }
-
-      selectedItem = elements[0];
-    }
-
     super.initState();
+
+    countries = elements;
+    countries.sort((a, b) {
+      return a.name.toString().compareTo(b.name.toString());
+    });
+
+   setSelectedItem(currentCodeLang);
+  }
+  Future <void> setSelectedItem(String currentCodeLang) async {
+      for(CountryCode countryCode in elements){
+        if(countryCode.code.toString().toLowerCase() == currentCodeLang.toString().toLowerCase()){
+          elementsCountryEnabled.add(countryCode);
+          currentCountryCode =countryCode;
+         /// this.initialSelection!=countryCode;
+           selectedItem = currentCountryCode;
+          break;
+          ///elements.setRange(start, end, iterable)
+        }
+      }
+
+      selectedItem;
   }
 
+/// LIST CONTRY - CHANGE LANGUAGE CONTRY
   void _awaitFromSelectScreen(BuildContext context,
       PreferredSizeWidget? appBar, CountryTheme? theme) async {
     final result = await Navigator.push( context,
@@ -147,117 +146,83 @@ class _CountryListPickState extends State<CountryListPick> {
         ));
 
     setState(() {
-      selectedItem = result ?? selectedItem;
-      widget.onChanged!(result ?? selectedItem);
-      String codeContry = result.code;
-
-    //  updateLang(codeContry);
-
-      //  ChangeLanguage(codeContry);
+      selectedItem = result ?? selectedItem!;
     });
   }
-
+/// PAGE INIATIAL LANGUANGE
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      onPressed: () {
-        _awaitFromSelectScreen(context, widget.appBar, widget.theme);
-      },
-      child: widget.pickerBuilder != null
-          ? widget.pickerBuilder!(context, selectedItem)
-          : Flex(
-              direction: Axis.horizontal,
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                if (widget.theme?.isShowFlag ?? true == true)
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Image.asset(
-                        selectedItem!.flagUri!,
-                        // package: 'country_list_pick',
-                        width: 32.0,
-                      ),
-                    ),
-                  ),
-                if (widget.theme?.isShowCode ?? true == true)
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Text(selectedItem.toString()),
-                    ),
-                  ),
-                if (widget.theme?.isShowTitle ?? true == true)
-                  Flexible(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                      child: Text(selectedItem!.toCountryStringOnly()),
-                    ),
-                  ),
-                if (widget.theme?.isDownIcon ?? true == true)
-                  const Flexible(
-                    child: Icon(Icons.keyboard_arrow_down),
-                  )
-              ],
-            ),
+
+   return Scaffold(
+        //appBar: widget.appBar,
+       appBar: AppBar(
+         title: Text(AppLocalizations.translate("back").toString()),
+         backgroundColor: const Color.fromARGB(255, 50, 172, 34),
+         leading: BackButton(
+           color: Colors.black,
+           onPressed: () {
+             Navigator.of(context).push(MaterialPageRoute(
+               builder: (context) => SettingScreen(),
+             ));
+           },
+         ),
+       ),
+     body:  TextButton(
+       onPressed: () {
+         _awaitFromSelectScreen(context, widget.appBar, widget.theme);
+       },
+       child: widget.pickerBuilder != null
+           ? widget.pickerBuilder!(context, selectedItem)
+           : Flex(
+         direction: Axis.horizontal,
+         mainAxisSize: MainAxisSize.min,
+         children: <Widget>[
+           if (widget.theme?.isShowFlag ?? true == true)
+             Flexible(
+               child: Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                 child: Image.asset(
+                   selectedItem!.flagUri!,
+                   // package: 'country_list_pick',
+                   width: 32.0,
+                 ),
+               ),
+             ),
+           if (widget.theme?.isShowCode ?? true == true)
+             Flexible(
+               child: Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                 child: Text(selectedItem.toString()),
+               ),
+             ),
+           if (widget.theme?.isShowTitle ?? true == true)
+             Flexible(
+               child: Padding(
+                 padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                 child: Text(selectedItem!.toCountryStringOnly()),
+               ),
+             ),
+           if (widget.theme?.isDownIcon ?? true == true)
+             const Flexible(
+               child: Icon(Icons.keyboard_arrow_down),
+             )
+         ],
+       ),
+     )
+     ,
+
     );
+
   }
 
-  // void updateLang(String? codeLanguageChange) {
-  //   if (codeLanguageChange == "DE") {
-  //     //  setState(() {
-  //     AppLocalizations.load(const Locale('de', 'DE'));
-  //     //  });
-  //     if (codeLanguageChange == "DE") {
-  //       AppLocalizations.load(const Locale('de_DE'));
-  //     } else if (codeLanguageChange == "IT") {
-  //       AppLocalizations.load(const Locale('it_IT'));
-  //     } else if (codeLanguageChange == "FR") {
-  //       AppLocalizations.load(const Locale('fr_FR'));
-  //       MyApp.of(context).setLocale(const Locale('fr_FR'));
-  //     } else if (codeLanguageChange == "ES") {
-  //       AppLocalizations.load(const Locale('es_ES'));
-  //     } else if (codeLanguageChange == "SN") {
-  //       AppLocalizations.load(const Locale('sn_SN'));
-  //     } else if (codeLanguageChange == "NG") {
-  //       AppLocalizations.load(const Locale('ng_NG'));
-  //     }
+  // String checkLangInitialized() {
   //
-  //     checkLang(codeLanguageChange);
-  //   }
+  //   SharedPreferencesLocale pref = SharedPreferencesLocale();
+  //   /// code lingua actualle
+  //   String? currentCodeLang = pref.fetchCurrentCodeLang().toString();
   //
+  //   return currentCodeLang;
   // }
-
-  void checkLang(locale) {
-
-    // These delegates make sure that the localization data for the proper language is loaded
-    localizationsDelegates: const [
-
-      // THIS CLASS WILL BE ADDED LATER
-      // A class which loads the translations from JSON files
-      AppLocalizations.delegate,
-      // Built-in localization of basic text for Material widgets
-      GlobalMaterialLocalizations.delegate,
-
-      GlobalCupertinoLocalizations.delegate,
-      // Built-in localization for text direction LTR/RTL
-      GlobalWidgetsLocalizations.delegate,
-    ];
-    // supportedLocales: AppLocalizations.supportedLocales,
-    // Returns a locale which will be used by the app
-    localeResolutionCallback: (locale, supportedLocales) {
-      // Check if the current device locale is supported
-      // for (var supportedLocale in supportedLocales) {
-      //   if (supportedLocale.languageCode == locale!.languageCode &&
-      //       supportedLocale.countryCode == locale.countryCode) {
-      //     return supportedLocale;
-      //   }
-      // }
-      // If the locale of the device is not supported, use the first one
-      // from the list (English, in this case).
-      return supportedLocales.first;
-    };
-  }
 
 
 }

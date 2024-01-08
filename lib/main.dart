@@ -1,13 +1,16 @@
 
 
 import 'dart:io';
+import 'dart:ui';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:ecobioweb/loader/data_loader.dart';
+import 'package:ecobioweb/roots/trunk/branches/localisation/country/widget/country_list_pick.dart';
 import 'package:ecobioweb/roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:path/path.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:theme_provider/theme_provider.dart';
@@ -58,28 +61,28 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Implementation param save small data
-    SharedPreferences.getInstance().then((instance) async{
+  SharedPreferences.getInstance().then((instance) async{
     SharedPreferences pref =await SharedPreferences.getInstance();
 
 
     // Get the initial locale values
- ///   final String defaultSystemLocale = Platform.localeName;
+    ///   final String defaultSystemLocale = Platform.localeName;
     final List<Locale> systemLocales = WidgetsBinding.instance.window.locales;
 
-   // save language Locale into SharedPreference
+    // save language Locale into SharedPreference
 
     // Locale locale = const Locale(defaultSystemLocale,'IT');
-   // Locale locale = Locale(defaultSystemLocale,"+39");
+    // Locale locale = Locale(defaultSystemLocale,"+39");
 
 
     SharedPreferencesLocale saveLanguageLocale = SharedPreferencesLocale();
-         //  saveLanguageLocale.setLocale(pref, context, locale,defaultSystemLocale);
+    //  saveLanguageLocale.setLocale(pref, context, locale,defaultSystemLocale);
 
 
     WidgetsFlutterBinding.ensureInitialized();
 
     /// LOAD PRODUCT AGRICULTURE BIOLOGIQUE
-     // loadProductAgricultureBio();
+    // loadProductAgricultureBio();
     //
     //
     // if(!kIsWeb && (Platform.isWindows || Platform.isLinux || Platform.isMacOS)){
@@ -87,8 +90,8 @@ Future<void> main() async {
     //   // setWindowMinSize(const Size(1366, 768));
     //
     // }
-         runApp(MyApp(pref));
-     });
+    runApp(MyApp(pref));
+  });
 
 }
 
@@ -105,11 +108,11 @@ void loadProductAgricultureBio() {
 
 
 
-  //ConnectionPostgresSql pgr = const ConnectionPostgresSql();
+//ConnectionPostgresSql pgr = const ConnectionPostgresSql();
 
-  //const ConnectionPostgresSql();
+//const ConnectionPostgresSql();
 
-  /*var databaseConnection = PostgreSQLConnection("localhost", 5432, "ecobio",
+/*var databaseConnection = PostgreSQLConnection("localhost", 5432, "ecobio",
       username: "postgres",
       password: "root",
       queryTimeoutInSeconds: 3600,
@@ -122,21 +125,21 @@ void loadProductAgricultureBio() {
   }
 */
 
-  // conectionDbSqlLite();
+// conectionDbSqlLite();
 
 //    ConnectionSqlLite();
 
-  // database = await openDatabase(
-  //   //  by default path for database on the device is /data/data/<your app id>/databases/<your database file.db>
-  //     join(await getDatabasesPath(), 'ofs_sms_database.db'),
-  //     version: 1, onCreate: (Database ddatabase, int version) async {
-  //   await database?.execute(
-  //       "CREATE TABLE smslogs(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, employeeID TEXT, department TEXT, module TEXT, message TEXT, safeUnsafeStatus TEXT, contactNo Text, dateTime INTEGER)");
-  // });
+// database = await openDatabase(
+//   //  by default path for database on the device is /data/data/<your app id>/databases/<your database file.db>
+//     join(await getDatabasesPath(), 'ofs_sms_database.db'),
+//     version: 1, onCreate: (Database ddatabase, int version) async {
+//   await database?.execute(
+//       "CREATE TABLE smslogs(id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, employeeID TEXT, department TEXT, module TEXT, message TEXT, safeUnsafeStatus TEXT, contactNo Text, dateTime INTEGER)");
+// });
 
-  // Database? database;
+// Database? database;
 
-  /* var databasesPath = await getDatabasesPath();
+/* var databasesPath = await getDatabasesPath();
  String path = join(databasesPath, '../../assets/database/ecobio_data.db');
 // databaseExists(path);
 
@@ -202,13 +205,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //  DataLoader(),
     //ok dataLoader.createState().initState();
-   // GetItRegister.register();
+    // GetItRegister.register();
 
     final currentWidth=MediaQuery.of(context).size.width;
     final botToastBuilder = BotToastInit();
+
+
+
     return ThemeProvider(
-   //   initTheme:this.prefs.getBool("greenTheme") ?? false ? greenTheme : greenTheme,
-   //      saveThemesOnChange: false, // per adesso non serve salvarlo
+      //   initTheme:this.prefs.getBool("greenTheme") ?? false ? greenTheme : greenTheme,
+      //      saveThemesOnChange: false, // per adesso non serve salvarlo
         saveThemesOnChange: false,
         loadThemeOnInit: false,
 
@@ -228,107 +234,127 @@ class MyApp extends StatelessWidget {
             }
             controller.forgetSavedTheme();
           }
-              /// LOAD PRODUCT AGRICULTURE BIOLOGIQUE
-           // loadProductAgricultureBio();
+          /// LOAD PRODUCT AGRICULTURE BIOLOGIQUE
+          // loadProductAgricultureBio();
 
         },
 
-    child: MaterialApp(
-      title: 'ecobioWEB',
-      builder: (context, child) {
-        child = botToastBuilder(context, child);
-        return child;
-      },
-
-     // theme: lightTheme,
-      navigatorObservers: [BotToastNavigatorObserver()],
-      debugShowCheckedModeBanner: false,
-      routes: router.Router.getRoutes(context),
-      initialRoute: "/",
+        child: MaterialApp(
+          title: 'ecobioWEB',
+          builder: (context, child) {
+            child = botToastBuilder(context, child);
+            return child;
+          },
 
 
-      //Localization language
-      // List all of the app's supported locales here
-      supportedLocales: const [
-        // Locale('it'), // Italien
-        // Locale('en'), // English
-        // Locale('fr'), // Franch
-        // Locale('es'), // Spanish
-        // Locale('de'), // Germany
 
-        Locale('it', 'IT'),
-        Locale('fr', 'FR'),
-        Locale('en', 'US'),
-        Locale('es', 'ES'),
-        Locale('de', 'DE'),
+          ///Localization implement language App
+          // List all of the app's supported locales here
+          supportedLocales: const [
+            // Locale('it'), // Italien
+            // Locale('en'), // English
+            // Locale('fr'), // Franch
+            // Locale('es'), // Spanish
+            // Locale('de'), // Germany
 
-      ],
+            Locale('it', 'IT'),
+            Locale('fr', 'FR'),
+            Locale('en', 'US'),
+            Locale('es', 'ES'),
+            Locale('de', 'DE'),
 
-      // These delegates make sure that the localization data for the proper language is loaded
-      localizationsDelegates: const [
-        // THIS CLASS WILL BE ADDED LATER
-        // A class which loads the translations from JSON files
-        AppLocalizations.delegate,
-        // Built-in localization of basic text for Material widgets
-        GlobalMaterialLocalizations.delegate,
+          ],
 
-        GlobalCupertinoLocalizations.delegate,
-        // Built-in localization for text direction LTR/RTL
-        GlobalWidgetsLocalizations.delegate,
-      ],
+          // These delegates make sure that the localization data for the proper language is loaded
+          localizationsDelegates: const [
+            // THIS CLASS WILL BE ADDED LATER
+            // A class which loads the translations from JSON files
+            //AppLocalizations.delegate,
+            // Built-in localization of basic text for Material widgets
+            GlobalMaterialLocalizations.delegate,
 
-      // supportedLocales: AppLocalizations.supportedLocales,
-      // Returns a locale which will be used by the app
-      localeResolutionCallback: (locale, supportedLocales) {
-        // Check if the current device locale is supported
-        for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale!.languageCode &&
-              supportedLocale.countryCode == locale.countryCode) {
-            return supportedLocale;
-          }
-        }
-        // If the locale of the device is not supported, use the first one
-        // from the list (English, in this case).
-        return supportedLocales.first;
-      },
+            GlobalCupertinoLocalizations.delegate,
+            // Built-in localization for text direction LTR/RTL
+            GlobalWidgetsLocalizations.delegate,
+          ],
+
+          // supportedLocales: AppLocalizations.supportedLocales,
+          // Returns a locale which will be used by the app
+          localeResolutionCallback: (locale, supportedLocales) {
+            // Check if the current device locale is supported
+            for (var supportedLocale in supportedLocales) {
+              if (supportedLocale.languageCode == locale!.languageCode &&
+                  supportedLocale.countryCode == locale.countryCode) {
+                return supportedLocale;
+              }
+            }
+
+            // AppLocalizations.saveLanguageApp(context, supportedLocales.first.toString(),true);
+            // If the locale of the device is not supported, use the first one
+            // from the list (English, in this case).
+            return supportedLocales.first;
+          },
 
 
-      // DataLoader,
+          /// INITIALIZED LANGUAGE APP SETTING SCREEN
 
-      //  DataLoader(),
-      // dataLoader.createState().initState();
+          //var  countryListPickd=  CountryListPick.createStateInizialize();
 
-     // home: const MenuNavigationComponents(),
-      //home: const MyHomePage(title: 'Flutter Demo Home Page'),
-    )
+
+          // theme: lightTheme,
+         /// navigatorObservers: [BotToastNavigatorObserver()],
+          debugShowCheckedModeBanner: false,
+          /// Route pagina inizial app
+          routes: router.Router.getRoutes(context),
+          initialRoute: "/",
+
+
+          // DataLoader,
+
+          //  DataLoader(),
+          // dataLoader.createState().initState();
+
+          // home: const MenuNavigationComponents(),
+          //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+        )
     );
   }
 
   static of(BuildContext context) {
   }
 
-  /*
-  To Change Locale of App
-   */
-  void setLocale(BuildContext context,Locale newLocale) async {
-    // _MainAppState? state =context.findAncestorStateOfType<_MainAppState>();
-   // _MainAppState? state =context.findAncestorStateOfType<_MainAppState>();
 
-    var prefs =await SharedPreferences.getInstance();
-    prefs.setString('languageCode', newLocale.languageCode);
-    prefs.setString('countruCode', "");
 
     // state?.setState((){
     //   state._locale=newLocale;
     // });
   }
 
-  // void loadProductAgricultureBio() {
-  //   DataLoader dataLoader= const DataLoader();
-  //
-  //   dataLoader.createState().initState();
-  // }
-}
+
+
+
+/*
+  To Change Locale of App
+   */
+// void setLocale(BuildContext context,Locale newLocale) async {
+//   // _MainAppState? state =context.findAncestorStateOfType<_MainAppState>();
+//  // _MainAppState? state =context.findAncestorStateOfType<_MainAppState>();
+//
+//   var prefs =await SharedPreferences.getInstance();
+//   prefs.setString('languageCode', newLocale.languageCode);
+//   prefs.setString('countryCode', newLocale.countryCode!);
+//
+//   // state?.setState((){
+//   //   state._locale=newLocale;
+//   // });
+// }
+
+// void loadProductAgricultureBio() {
+//   DataLoader dataLoader= const DataLoader();
+//
+//   dataLoader.createState().initState();
+// }
+//}
 
 
 /*abstract class AppLocalizations {

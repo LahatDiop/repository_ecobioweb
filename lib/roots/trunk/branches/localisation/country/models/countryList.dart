@@ -162,7 +162,7 @@ class _CountryListState extends State<CountryList> {
                 AppBar(
                   backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
                   title: Text(
-                      AppLocalizations.translate('pickCountry').toString()),
+                      AppLocalizations.translate('back').toString()),
                   //  title: const Text("Select Country"),
                 ),
             theme: theme,
@@ -235,7 +235,7 @@ class _CountryListState extends State<CountryList> {
                     controller: _controllerScroll,
                     physics: const AlwaysScrollableScrollPhysics(),
                     slivers: [
-                      /*SliverToBoxAdapter(
+                      SliverToBoxAdapter(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -297,7 +297,7 @@ class _CountryListState extends State<CountryList> {
                         const SizedBox(height: 15),
                       ],
                     ),
-                  ),*/
+                  ),
                       SliverList(
                         delegate: SliverChildBuilderDelegate((context, index) {
                           return widget.countryBuilder != null

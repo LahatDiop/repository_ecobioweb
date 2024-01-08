@@ -32,4 +32,16 @@ class SharedPreferencesLocale{
     return Locale(languageCode,countryCode);
 
   }
+
+
+  Future<String?> fetchCurrentCodeLang() async{
+    var prefs= await SharedPreferences.getInstance();
+    /// code lingua actualle
+    String? currentCodeLang = prefs.getString("currentCodeLang");
+
+    return currentCodeLang;
+
+  }
+
+
 }

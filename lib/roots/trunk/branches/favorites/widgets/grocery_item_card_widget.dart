@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:ecobioweb/roots/trunk/branches/cart/counter/screens/counter_cart_widget.dart';
+import 'package:ecobioweb/roots/trunk/branches/commun_data_utils/utils/text/app_text_tranlated.dart';
 import 'package:ecobioweb/roots/trunk/branches/products/components/product.dart';
 import 'package:ecobioweb/roots/trunk/branches/products/widgets/favourite_toggle_icon_widget.dart';
 import 'package:flutter/material.dart';
@@ -129,84 +130,63 @@ class GroceryItemCardWidget extends StatelessWidget {
               text: item.name,
               fontSize: 16,
               fontWeight: FontWeight.bold,
+              maxLines:20 ,
             ),
             AppText(
               text: item.description,
               fontSize: 14,
               fontWeight: FontWeight.w600,
               color: const Color(0xFF7C7C7C),
+              maxLines:40 ,
             ),
-            // AppText(
-            //   //text: "${item.weight}  ${item.unit}",
-            //   text: " ${item.price.toStringAsFixed(2)} / ${item.unit}",
-            //   fontSize: 14,
-            //   fontWeight: FontWeight.w600,
-            //   color: const Color(0xFF7C7C7C),
-            // ),
            ]
         ),
-   // const Spacer(),
-            // Column(
-            //     crossAxisAlignment: CrossAxisAlignment.center,
-            //     children: [
-            //       // const SizedBox(
-            //       //   height: 20,
-            //       // ),
-            //       AppText(
-            //         //text: "${item.weight}  ${item.unit}",
-            //         text: " ${item.price.toStringAsFixed(2)} / ${item.unit}",
-            //         fontSize: 14,
-            //         fontWeight: FontWeight.w600,
-            //         color: const Color(0xFF7C7C7C),
-            //         textAlign: TextAlign.right,
-            //       ),
-            //
-            //     ]
-            // ),
-            // const SizedBox(
-            //   height: 20,
-            // ),
-            // Row(
-            //
-            //   children: [
-            //     AppText(
-            //       text: "\$${item.price.toStringAsFixed(2)}",
-            //       fontSize: 18,
-            //       fontWeight: FontWeight.bold,
-            //     ),
-            // //   const Spacer(),
-            //
-            //     // addWidgetCounterCard(context,item,onPress),
-            //     // const Padding(padding: EdgeInsets.only(left: 25)),
-            //     // addWidget(),
-            //     //  const Padding(padding: EdgeInsets.only(left: 30)),
-            //     // addFavoriteWidget(context),
-            //
-            //   ],
-            // ),
-            // const SizedBox(
-            //   height: 10,
-            // ),
+
+            ///PRICE UNITY
+            Row(
+              children:<Widget> [
+
+                Expanded(
+                  flex: 3,
+                  child: Container(
+                    padding:  EdgeInsets.only(top: 10),
+                    alignment: Alignment.topLeft,
+
+                    child:  Text(
+                        "${item.currency} " "${item.price}" "/" " ${ item.unit }",
+                      maxLines:20,
+                      textAlign: TextAlign.right,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+
+            /// BRAND SHOP
             Row(
               children:<Widget> [
                 Expanded(
                   flex: 3,
                   child: Container(
-                    padding: const EdgeInsets.only(top: 10),
+                    padding:  const EdgeInsets.only(top: 10),
                     alignment: Alignment.topLeft,
 
-                    child:  AppText(
-                      //text: "${item.weight}  ${item.unit}",
-                      text: " ${item.price.toStringAsFixed(2)} € / ${item.unit}",
-                      fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: const Color(0xFF7C7C7C),
-                      textAlign: TextAlign.center,
+                    child:  Text(
+                      "${item.brand}",
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontFamily: 'italic',
+                        fontWeight: FontWeight.bold,
+                      ),
+                      // value: "${':'} ${item.price.toStringAsFixed(2)} € / ${item.unit}",
+                      // fontSize: 16,
+                      // fontWeight: FontWeight.w600,
+                      // color: const Color(0xFF7C7C7C),
+                      textAlign: TextAlign.left,
                     ),
+
                   ),
                 ),
-
-
               ],
             ),
             /// COUNTER CART BIODYNAMIC

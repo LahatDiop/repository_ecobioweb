@@ -152,6 +152,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
 
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
       itemCount: itemsaBioAgriculture.length,
 
       itemBuilder: (context, index) {
@@ -312,6 +313,7 @@ class _HomeCategoryViewScreenState extends State<HomeCategoryViewScreen> {
       },
       // scrollDirection: Axis.horizontal,
       // shrinkWrap: true,
+    //  physics: const BouncingScrollPhysics(),
       // itemCount: itemsaBioAgriculture.length,
     );
 

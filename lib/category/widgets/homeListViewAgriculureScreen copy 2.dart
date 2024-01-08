@@ -51,7 +51,7 @@ class HomeListViewAgriculureScree extends StatefulWidget {
               child: Text("ggggrf")),
           ListView(
             physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
+            shrinkWrap: true, physics: const BouncingScrollPhysics(),
             primary: false,
             children: posts,
           ),

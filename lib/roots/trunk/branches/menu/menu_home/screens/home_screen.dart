@@ -1,7 +1,10 @@
 
 
+import 'package:ecobioweb/roots/trunk/branches/business/honey/honet_Propolis_bio/provider/honey_biological_provider.dart';
+import 'package:ecobioweb/roots/trunk/branches/business/honey/honet_Propolis_bio/screens/honey_biological_screen.dart';
 import 'package:ecobioweb/roots/trunk/branches/commun_data_utils/utils/helper/padded.dart';
 import 'package:ecobioweb/roots/trunk/branches/commun_data_utils/utils/helper/subtitle.dart';
+import 'package:ecobioweb/roots/trunk/branches/localisation/translation/screens/tanslation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -39,9 +42,7 @@ _HomeScreenState createState()=> _HomeScreenState();
 }
 
 
-
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-
 
   Map<String, List<HomeItems>> mapGroupListHomeItems={};
 
@@ -54,7 +55,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   List<String> groupsHome=[];
 
   int indexGroup=0;
-
+  // late Translation _translation;
+  // final String _text =
+  //     'Toda persona tiene derecho a la educación. La educación debe ser gratuita, al menos en lo concerniente a la instrucción elemental y fundamental. La instrucción elemental será obligatoria. La instrucción técnica y profesional habrá de ser generalizada; el acceso a los estudios superiores será igual para todos, en función de los méritos respectivos.';
+  // TranslationModel _translated = TranslationModel(translatedText: '', detectedSourceLanguage: '');
+  // TranslationModel _detected = TranslationModel(translatedText: '', detectedSourceLanguage: '');
 
   // @override
   // void initState() {
@@ -88,12 +93,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     return MultiProvider(providers:  [
       ChangeNotifierProvider<HomeProvider>(create: (_)=>HomeProvider()),
       ChangeNotifierProvider<AgricultureBiologicalProvider>(create: (_) => AgricultureBiologicalProvider()),
+      ChangeNotifierProvider<HoneyBiologicalProvider>(create: (_)=>HoneyBiologicalProvider()),
       ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
     ],
       child: Navigator(onGenerateRoute: (RouteSettings settings){
 
         return MaterialPageRoute(builder: (context){
-          return AgricultureBiodynamicaScreen();
+          return const HomeScreen();
+          // return AgricultureBiodynamicaScreen();
         });
       },),
 
@@ -101,6 +108,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         int tabIndex = 0;
         final adminProvider = Provider.of<HomeProvider>(context);
         var listItemsAdmin = context.read<HomeProvider>().getData();
+
+        final productProvider = Provider.of<AgricultureBiologicalProvider>(context);
         var listProducts= context.read<AgricultureBiologicalProvider>().getData(tabIndex);
 
 
@@ -544,6 +553,21 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         AppLocalizations.translate('infoProducts').toString()) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const InfoProducers(),
+      ));
+    }
+
+    // var data = Text(homeItems.pageScreenPath!).data;
+    //
+    //     Navigator.of(context).push(MaterialPageRoute(
+    //       builder: (context) {
+    //         return Text(data.toString());
+    //       },
+    //     ));
+
+    if (AppLocalizations.translate(homeItems.name) ==
+        AppLocalizations.translate('honey').toString()) {
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) =>  HoneyBiologicalScreen(),
       ));
     }
   }

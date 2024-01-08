@@ -466,6 +466,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen>
                     /// child: cartItems.isNotEmpty?
                     child: ListView.builder(
                       shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
                       itemCount: cartItems.length,
                       itemBuilder: (context, index) {
 

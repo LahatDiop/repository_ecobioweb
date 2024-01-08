@@ -37,7 +37,7 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
     // add list products into the cartProvider
     CartProvider().setProducts(products);
 
-    notifyListeners();
+   notifyListeners();
     return products;
 
   }
@@ -158,7 +158,7 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
                 false,
           ));
     }
-    notifyListeners();
+   /// notifyListeners();
   }
 
 
@@ -303,7 +303,7 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
         /// 1- ADD PRODUCT INTO THE CART
         ///  CartItem().addItemCart(i, tabIndex);
       }
-      notifyListeners();
+     /// notifyListeners();
       //  AgricultureBiologique(item: products[tabIndex],).createState().products=products;
       //flagItemEnabled = false;
     } else

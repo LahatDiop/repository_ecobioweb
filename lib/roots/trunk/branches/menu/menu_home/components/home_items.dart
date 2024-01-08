@@ -4,7 +4,7 @@ class HomeItems {
 
   List<HomeItems>? homeItems;
   final String id;
-  late final String? subTitle;
+  final String? subTitle;
   final String name;
   final String description;
   final String? category;

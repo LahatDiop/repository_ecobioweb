@@ -170,6 +170,7 @@ class _HomeViewScreenState extends State<HomeViewScreen> {
 
       scrollDirection: Axis.horizontal,
       shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
       itemCount: itemsaBioAgriculture.length,
 
       itemBuilder: (context, index) {

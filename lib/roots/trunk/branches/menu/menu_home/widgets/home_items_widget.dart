@@ -62,7 +62,7 @@ import '../components/home_items.dart';
             Expanded(
               child: Center(
                 child: Hero(
-                  tag: "AllItem:" + item!.name + "-" + (heroSuffix ?? ""),
+                  tag: "AllItem:${item!.name}-${heroSuffix ?? ""}",
                   child: imageWidget(),
                 ),
               ),
@@ -71,7 +71,7 @@ import '../components/home_items.dart';
               height: 20,
             ),
             AppText(
-              text: item!.subTitle!,
+              text:item!.subTitle,
               fontSize: 13,
               fontWeight: FontWeight.bold,
             ),

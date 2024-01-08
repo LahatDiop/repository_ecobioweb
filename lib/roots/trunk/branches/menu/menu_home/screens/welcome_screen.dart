@@ -61,7 +61,7 @@ class WelcomeScreen extends StatelessWidget {
     return const Column(
       children: [
         AppText(
-          text: "Welcome",
+          text: "welcome",
           fontSize: 48,
           fontWeight: FontWeight.w600,
           color: Colors.white,
@@ -97,7 +97,8 @@ class WelcomeScreen extends StatelessWidget {
   }
 
   void onGetStartedClicked(BuildContext context) {
-    Navigator.of(context).pushReplacement(new MaterialPageRoute(
+    Navigator.of(context).pushReplacement(
+         MaterialPageRoute(
       builder: (BuildContext context) {
         // return DashboardScreen();
         return const MenuNavigationComponents();

@@ -19,11 +19,14 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: 3.3.0-91.0.dev
+  sdk: 3.3.0-174.3.beta
+ # sdk: 3.3.0-261.0.dev
+  #sdk: 3.3.0-174.3.beta
+  #sdk: 3.3.0-91.0.dev
   #sdk: 3.2.0-210.4.beta
   #sdk: 3.16.0-0.4.pre
   #sdk: 3.3.0-80.0.dev
-  #sdk: '3.1.4'
+  #sdk: '3.1.4'R
   #sdk: '3.1.0-262.2.beta'
   #sdk: '3.1.0-63.1.beta'
   #sdk: '2.17.0-266.8.beta'
@@ -50,6 +53,8 @@ dependencies:
   dio: ^5.0.0
   hash: ^1.0.4
   shared_preferences: ^2.1.0
+  #flutter_login: ^5.0.0
+  #flutter_login: ^4.1.1
   flutter_login: ^4.1.1
   flutter_fadein: ^2.0.0
   intl: any
@@ -170,6 +175,7 @@ flutter:
     - assets/images/admin/four.jpg
     - assets/images/admin/five.jpg
     - assets/icons/app_icon_color.svg
+    - assets/icons/splash_screen_icon.svg
     - assets/icons/app_icon.svg
     - assets/images/agriculture/agriculture_0.png
     - assets/images/agriculture/agriculture_1.png

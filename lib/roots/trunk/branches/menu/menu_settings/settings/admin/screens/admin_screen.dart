@@ -14,13 +14,13 @@ import '../../../../../business/agricultures/agriculture_biodynamica/screens/agr
 import '../../../../../business/agricultures/agriculture_biological/screens/agriculture_biologique_screen.dart';
 import '../../../../../cart/provider/cart_provider.dart';
 import '../../../../../commun_data_utils/utils/theme/app_theme.dart';
+import '../../../../../localisation/translation/components/appLocalizations.dart';
 import '../../../../../search/widgets/search_bar_widget.dart';
 import '../../../../menu_home/widgets/grocery_featured_Item_widget.dart';
 import '../../../../menu_home/widgets/home_banner_widget.dart';
 import '../components/admin_items.dart';
 import '../widgets/admin_item_card_widget.dart';
 import 'setting_screen.dart';
-import '../../localisation/translation/components/appLocalizations.dart';
 
 class AdminScreen extends StatefulWidget {
   const AdminScreen({Key? key}) : super(key: key);
