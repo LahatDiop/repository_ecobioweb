@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:string_validator/string_validator.dart';
-import '../../../../../managements/users/models/user_settings.dart';
+import '../../../../../managements/users/components/user_settings.dart';
 import '../widget/appbar_widget.dart';
 
 

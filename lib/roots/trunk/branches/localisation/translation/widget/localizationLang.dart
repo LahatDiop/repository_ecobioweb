@@ -16,7 +16,7 @@ class _LocalizationLangScreenState extends State<LocalizationLang> {
         backgroundColor: Colors.transparent,
         elevation: 0,
         title: Text(
-          AppLocalizations.translate('localization').toString(),
+          AppLocalizations.translate('localization'),
           style: const TextStyle(color: Colors.black),
         ),
         leading: const BackButton(
@@ -30,19 +30,19 @@ class _LocalizationLangScreenState extends State<LocalizationLang> {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Text(
-                AppLocalizations.translate('countryLocation').toString(),
+                AppLocalizations.translate('countryLocation'),
                 style: const TextStyle(fontSize: 25),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 10),
               Text(
-                AppLocalizations.translate('agricolturaBio').toString(),
+                AppLocalizations.translate('agricolturaBio'),
                 style: const TextStyle(fontSize: 25),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 10),
               Text(
-                AppLocalizations.translate('slogan').toString(),
+                AppLocalizations.translate('slogan'),
                 style: const TextStyle(fontSize: 25),
                 textAlign: TextAlign.center,
               ),

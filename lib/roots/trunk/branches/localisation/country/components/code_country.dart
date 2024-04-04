@@ -6,6 +6,10 @@ class CElement = CountryCode with ToAlias;
 
 /// Country element. This is the element that contains all the information
 class CountryCode {
+
+  int? id;
+
+  int? parentId;
   /// the name of the country
   String? name;
 
@@ -20,7 +24,7 @@ class CountryCode {
 
   String? isEnabled;
 
-  CountryCode({this.name, this.flagUri, this.code, this.dialCode,this.isEnabled});
+  CountryCode({this.id,this.name, this.flagUri, this.code, this.dialCode,this.isEnabled});
 
   @override
   String toString() => "$dialCode";

@@ -1,0 +1,29 @@
+import 'package:flutter/material.dart';
+
+// bool _disposed = false;
+//
+// @override
+// void dispose() {
+//   _disposed = true;
+//   dispose();
+// }
+//
+// @override
+// void notifyListeners() {
+//   if (!_disposed) {
+//     notifyListeners();
+//   }
+// }
+
+
+class MenuAppController extends ChangeNotifier {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
+
+  void controlMenu() {
+    if (!_scaffoldKey.currentState!.isDrawerOpen) {
+      _scaffoldKey.currentState!.openDrawer();
+    }
+  }
+}

@@ -87,6 +87,7 @@ class DataLoaderAppSetting extends State<DataLoader>  with TickerProviderStateMi
                       Product(
                       id :product.id,
                       codeProd:product.codeProd ,
+                      type: product.type,
                       name:product.name ,
                       description:product.description ,
                       price:product.price ,
@@ -146,6 +147,7 @@ class DataLoaderAppSetting extends State<DataLoader>  with TickerProviderStateMi
         Product product=Product(
           id :newProduct.id,
           codeProd:newProduct.codeProd ,
+          type: newProduct.type,
           name:newProduct.name ,
           description:newProduct.description ,
           price:newProduct.price ,
@@ -186,6 +188,7 @@ class DataLoaderAppSetting extends State<DataLoader>  with TickerProviderStateMi
     Product product=Product(
       id :editProduct.id,
       codeProd:editProduct.codeProd ,
+      type:editProduct.type ,
       name:editProduct.name ,
       description:editProduct.description ,
       price:editProduct.price ,
@@ -252,6 +255,7 @@ Future<void> deleteItemProduc(String id) async{
               () => Product(
                   id :product.id,
                   codeProd:product.codeProd ,
+                  type:product.type ,
                   name:product.name ,
                   description:product.description ,
                   price:product.price ,

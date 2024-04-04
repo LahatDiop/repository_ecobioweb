@@ -1,6 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import '../../../../../managements/users/models/user_settings.dart';
+import '../../../../../managements/users/components/user_settings.dart';
 import '../widget/appbar_widget.dart';
 
 

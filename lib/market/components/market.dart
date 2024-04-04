@@ -1,3 +1,9 @@
+import 'package:ecobioweb/producers/components/producers.dart';
+
+import '../../roots/trunk/branches/managements/customers/models/customers.dart';
+import '../../roots/trunk/branches/managements/users/components/users.dart';
+import '../../roots/trunk/branches/products/components/product.dart';
+
 class Market {
   final String? id;
   final String name;
@@ -8,22 +14,38 @@ class Market {
   final String? description;
   final String? dialCode;
   final String? flagUri;
-  final String? user;
+  final int? quantity;
+  final String? percentage;
+  final String? percentageDiscount;
+  final String? quantityProducers;
+  final String? quantityCustomers;
+  final String? quantityUser;
   final String? companyCode;
   final String? companyName;
   final String? companyEmail;
   final String? companyTelephone;
-  final bool?   companyEnabled;
+  final bool?   isEnabledCompany;
   final String? companyAddress;
   final String? dateCreation;
   final String? dateModified;
+  final bool? isSelectedMarket;
   final bool? isShowMarket;
   final bool? isShowCategory;
   final bool? isVisibility;
-  final bool isEnabled;
+  final bool? isEnabled;
   final bool? isIva;
   final bool? isExchange;
   final bool? isFavorite;
+
+  List<Product> products=[];
+  List<Producers> producers=[];
+  List<Customers> customers=[];
+  List<Users> users=[];        /// Operators
+
+  // Map<String, String>? marketsMap;
+  // Map<String, Producers>? producersMap;
+  // Map<String, Customers>? customersMap;
+  // Map<String, Users>? usersMap;
 
 
   Market( {
@@ -36,22 +58,29 @@ class Market {
     this.description,
     this.dialCode,
     this.flagUri,
-    this.user,
+    this.quantity,
+    this.percentage,
+    this.percentageDiscount,
+    this.quantityProducers,
+    this.quantityCustomers,
+    this.quantityUser,
     this.companyCode,
     this.companyName,
     this.companyEmail,
     this.companyTelephone,
-    this.companyEnabled,
+    this.isEnabledCompany,
     this.companyAddress,
     this.dateCreation,
     this.dateModified,
+    this.isSelectedMarket,
     this.isShowMarket,
     this.isShowCategory,
     this.isVisibility,
-    required this.isEnabled,
+    this.isEnabled,
     this.isIva,
     this.isExchange,
-    this.isFavorite});
+    this.isFavorite
+  });
 
   factory Market.fromJson(Map<String, dynamic> json) {
     return Market(
@@ -64,15 +93,21 @@ class Market {
       description: json["description"] as String,
       dialCode: json["dialCode"] as String,
       flagUri: json["flagUri"] as String,
-      user: json["user"] as String,
+      quantity: json["flagUri"] as int,
+      percentage:json["percentage"] as String,
+      percentageDiscount:json["percentageDiscount"] as String,
+      quantityProducers:json["quantityProducers"] as String,
+      quantityCustomers:json["quantityCustomers"] as String,
+      quantityUser:json["quantityUser"] as String,
       companyCode: json["companyCode"] as String,
       companyName : json["companyName"] as String,
       companyEmail: json["companyEmail"] as String,
       companyTelephone: json["companyTelephone"] as String,
-      companyEnabled: json["companyEnabled"] as bool,
+      isEnabledCompany: json["isEnabledCompany"] as bool,
       companyAddress: json["companyAddress"] as String,
       dateCreation: json["dateCreation"] as String,
       dateModified: json["dateModified"] as String,
+      isSelectedMarket: json["isSelectedMarket"] as bool,
       isShowMarket: json["isShowMarket"] as bool,
       isShowCategory: json["isShowCategory"] as bool,
       isVisibility: json["isVisibility"] as bool,
@@ -82,6 +117,8 @@ class Market {
       isFavorite: json["isFavorite"] as bool,
     );
   }
+
+
 
   Map<String, dynamic> toJson() {
     return <String, dynamic>{
@@ -94,15 +131,20 @@ class Market {
       'description': description,
       'dialCode': dialCode,
       'flagUri': flagUri,
-      'user': user,
+      'percentage': percentage,
+      'percentageDiscount':percentageDiscount ,
+      'quantityProducers':quantityProducers ,
+      'quantityCustomers':quantityCustomers ,
+      'quantityUser':quantityUser ,
       'companyCode': companyCode,
       'companyName': companyName,
       'companyEmail': companyEmail,
       'companyTelephone': companyTelephone,
-      'companyEnabled': companyEnabled,
+      'isEnabledCompany': isEnabledCompany,
       'companyAddress': companyAddress,
       'dateCreation': dateCreation,
       'dateModified': dateModified,
+      'isSelectedMarket': isSelectedMarket,
       'isShowMarket': isShowMarket,
       'isShowCategory': isShowCategory,
       'isVisibility': isVisibility,
@@ -111,6 +153,11 @@ class Market {
       'isExchange': isExchange,
       'isFavorite': isFavorite
     };
+  }
+
+  @override
+  String toString() {
+    return 'Market{id: $id, name: $name, code: $code, salesOrg: $salesOrg, currency: $currency, currencySymbol: $currencySymbol, description: $description, dialCode: $dialCode, flagUri: $flagUri, quantity: $quantity, percentage: $percentage, percentageDiscount: $percentageDiscount, quantityProducers: $quantityProducers, quantityCustomers: $quantityCustomers, quantityUser: $quantityUser, companyCode: $companyCode, companyName: $companyName, companyEmail: $companyEmail, companyTelephone: $companyTelephone, isEnabledCompany: $isEnabledCompany, companyAddress: $companyAddress, dateCreation: $dateCreation, dateModified: $dateModified, isSelectedMarket: $isSelectedMarket, isShowMarket: $isShowMarket, isShowCategory: $isShowCategory, isVisibility: $isVisibility, isEnabled: $isEnabled, isIva: $isIva, isExchange: $isExchange, isFavorite: $isFavorite, products: $products, producers: $producers, customers: $customers, users: $users}';
   }
 }
 

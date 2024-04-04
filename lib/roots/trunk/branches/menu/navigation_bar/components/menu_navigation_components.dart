@@ -1,9 +1,14 @@
 import 'package:ecobioweb/roots/trunk/branches/cart/screens/cart_screen.dart';
+import 'package:ecobioweb/roots/trunk/branches/favorites/screens/favourite_screen.dart';
+import 'package:ecobioweb/roots/trunk/branches/managements/users/screens/users_screen.dart';
 import 'package:ecobioweb/roots/trunk/branches/menu/menu_home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
+import 'package:provider/provider.dart';
 
+import '../../../managements/users/screens/users_data_screen.dart';
 import '../../../search/screen/searchScreen.dart';
+import '../../menu_home/controllers/MenuAppController.dart';
 import '../../menu_home/screens/home_view_screen.dart';
 import '../../menu_home/screens/wish_list_screen.dart';
 import '../../menu_search/screens/search_screen.dart';
@@ -25,7 +30,7 @@ class MenuNavigationComponents extends StatefulWidget {
 
 const _kPages = <String, IconData>{
   'Home': Icons.home,
-  'Search': Icons.search,
+  'Favorites': Icons.favorite,
   'Categorty': Icons.category,
   'Buy': Icons.shopping_cart,
   'Setting': Icons.settings_applications,
@@ -47,15 +52,16 @@ class _HomePageAppSetting extends State<MenuNavigationComponents> {
     //const HomeScreen(),
 
     // SEARCHE 2
+    UsersDataScreen(),
     //SearchWidget(),
-     SearchScreen(),
+     ///SearchScreen(),
+   /// FavouriteScreen(),
 
     /// CATEGORI 3 HomeViewScreen
      const HomeViewScreen(),
     // LOCALIZATION
     //const GestionLocalization(),
    // const WishListScreen(),
-
     // CATEGORY 3
 
     // list agri
@@ -82,7 +88,217 @@ class _HomePageAppSetting extends State<MenuNavigationComponents> {
   TabStyle _tabStyle = TabStyle.fixed;
 
   @override
+
   Widget build(BuildContext context) {
+
+
+    return MultiProvider(providers:  [
+      ///ChangeNotifierProvider<WelcomeScreen>(create: (_)=>WelcomeScreen()),
+      ChangeNotifierProvider(
+        create: (context) => MenuAppController(),
+      ),
+    ],
+      child: Navigator(onGenerateRoute: (RouteSettings settings){
+
+        return MaterialPageRoute(builder: (context){
+          return const MenuNavigationComponents();
+        });
+      },),
+
+      builder: (context,child){
+        /// int tabIndex=0;
+
+        return DefaultTabController(
+          //length: 6,
+          length: _kPages.length,
+
+          // initialIndex: 0, // home page initial = 0
+          //  length: tabs.length,
+          // The Builder widget is used to have a different BuildContext to access
+          // closest DefaultTabController.
+          child: Builder(builder: (BuildContext context) {
+            TabController tabController = DefaultTabController.of(context);
+            tabController.addListener(() {
+              if (!tabController.indexIsChanging) {
+
+                // productFilter =productListFilter(tabController.index, products);
+                // products.clear();
+                // products= productFilter;
+
+                print('The Tab has changed Menu_navigation_component :)');
+
+                //  AgricultureBiologicalProvider().recalculateTabElement(tabController.index);
+                // Your code goes here.
+                // To get index of current tab use tabController.index
+              }
+            });
+            return
+              Scaffold(
+                // appBar: AppBar(
+                //   //     backgroundColor: Colors.green,
+                //   // elevation: 0,
+                //   // //leading: const Icon(Icons.close),
+                //   // title: const Text('Setting Profile',
+                //   //     style: TextStyle(color: Color.fromARGB(255, 101, 243, 101))),
+                //   // leading: const BackButton(
+                //   //   color: Colors.black,
+                //   // ),
+                // ),
+
+                body: Column(
+                  children: [
+                    // TODO back _buildStyleSelector(),
+                    const Divider(),
+                    Expanded(
+                      child: TabBarView(
+                        /* children: [
+                  // for (final icon in _kPages.values) Icon(icon, size: 64),
+                  for (final icon in _kPages.values) Icon(icon, size: 64),
+
+                ],*/
+
+                        children: pagesContainer,
+                      ),
+                    ),
+                  ],
+                  //  children: pagesContainer,
+                ),
+
+
+                // BUTTON MENU BAR
+                bottomNavigationBar: ConvexAppBar.badge(
+                  // Optional badge argument: keys are tab indices, values can be
+                  // String, IconData, Color or Widget.
+                  /*badge=*/
+                  const <int, dynamic>{5: '99+'},
+                  style: _tabStyle,
+                  items: <TabItem>[
+                    for (final entry in _kPages.entries)
+                      TabItem(icon: entry.value, title: entry.key),
+                  ],
+                  // ignore: avoid_print
+                  onTap: (int i) => print('click index=$i'),
+                ),
+              );
+
+          }),
+        );
+      },
+    );
+
+  }
+
+
+  @override
+  Widget build2(BuildContext context) {
+    return DefaultTabController(
+      //length: 6,
+      length: _kPages.length,
+
+      // initialIndex: 0, // home page initial = 0
+      //  length: tabs.length,
+      // The Builder widget is used to have a different BuildContext to access
+      // closest DefaultTabController.
+      child: Builder(builder: (BuildContext context) {
+        TabController tabController = DefaultTabController.of(context);
+        tabController.addListener(() {
+          if (!tabController.indexIsChanging) {
+
+            // productFilter =productListFilter(tabController.index, products);
+            // products.clear();
+            // products= productFilter;
+
+            print('The Tab has changed Menu_navigation_component :)');
+
+            //  AgricultureBiologicalProvider().recalculateTabElement(tabController.index);
+            // Your code goes here.
+            // To get index of current tab use tabController.index
+          }
+        });
+        return
+          Scaffold(
+        //     appBar: AppBar(
+        //   //     backgroundColor: Colors.green,
+        //   // elevation: 0,
+        //   // //leading: const Icon(Icons.close),
+        //   // title: const Text('Setting Profile',
+        //   //     style: TextStyle(color: Color.fromARGB(255, 101, 243, 101))),
+        //   // leading: const BackButton(
+        //   //   color: Colors.black,
+        //   // ),
+        // ),
+
+            body: Column(
+              children: [
+                // TODO back _buildStyleSelector(),
+                const Divider(),
+                Expanded(
+                  child: TabBarView(
+                    /* children: [
+                  // for (final icon in _kPages.values) Icon(icon, size: 64),
+                  for (final icon in _kPages.values) Icon(icon, size: 64),
+
+                ],*/
+
+                    children: pagesContainer,
+                  ),
+                ),
+              ],
+              //  children: pagesContainer,
+            ),
+
+            /*  body: Container(
+          margin: const EdgeInsets.symmetric(vertical: 20.0),
+          height: 200.0,
+          child: ListView(
+            // This next line does the trick.
+            scrollDirection: Axis.horizontal,
+            children: <Widget>[
+              Container(
+                width: 160.0,
+                color: Colors.red,
+              ),
+              Container(
+                width: 160.0,
+                color: Colors.blue,
+              ),
+              Container(
+                width: 160.0,
+                color: Colors.green,
+              ),
+              Container(
+                width: 160.0,
+                color: Colors.yellow,
+              ),
+              Container(
+                width: 160.0,
+                color: Colors.orange,
+              ),
+            ],
+          ),
+        ),*/
+            // BUTTON MENU BAR
+            bottomNavigationBar: ConvexAppBar.badge(
+              // Optional badge argument: keys are tab indices, values can be
+              // String, IconData, Color or Widget.
+              /*badge=*/
+              const <int, dynamic>{5: '99+'},
+              style: _tabStyle,
+              items: <TabItem>[
+                for (final entry in _kPages.entries)
+                  TabItem(icon: entry.value, title: entry.key),
+              ],
+              // ignore: avoid_print
+              onTap: (int i) => print('click index=$i'),
+            ),
+          );
+
+      }),
+    );
+  }
+
+
+  Widget build1(BuildContext context) {
 
 
    // var newListJson =dataLoader.createState().cartItems;
@@ -136,8 +352,7 @@ class _HomePageAppSetting extends State<MenuNavigationComponents> {
              */
 
               child: TabBarView(
-                children:
-                 pagesContainer ,
+                children: pagesContainer ,
 
                 // children: pagesContainer,
               ),

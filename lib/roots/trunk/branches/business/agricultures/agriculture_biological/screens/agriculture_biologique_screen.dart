@@ -42,9 +42,9 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> wit
   ///class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> with SingleTickerProviderStateMixin   {
 
   List<Tab> tabs = <Tab>[
-    Tab(text: AppLocalizations.translate('fruitsVegetable').toString()),
-    Tab(text: AppLocalizations.translate('fruits').toString()),
-    Tab(text: AppLocalizations.translate('vegetables').toString()),
+    Tab(text: AppLocalizations.translate('fruitsVegetable')),
+    Tab(text: AppLocalizations.translate('fruits')),
+    Tab(text: AppLocalizations.translate('vegetables')),
   ];
 
 
@@ -101,7 +101,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> wit
     // Tab(icon: Icon(Icons.add_shopping_cart)),
     Tab(
       child: Text(
-        AppLocalizations.translate('fruitsVegetable').toString(),
+        AppLocalizations.translate('fruitsVegetable'),
         style: const TextStyle(
             fontSize: 15.0,
             fontFamily: 'Quicksand',
@@ -110,7 +110,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> wit
     ),
     Tab(
       child: Text(
-        AppLocalizations.translate('fruits').toString(),
+        AppLocalizations.translate('fruits'),
         style: const TextStyle(
             fontSize: 15.0,
             fontFamily: 'Quicksand',
@@ -119,7 +119,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> wit
     ),
     Tab(
       child: Text(
-        AppLocalizations.translate('vegetables').toString(),
+        AppLocalizations.translate('vegetables'),
         style: const TextStyle(
             fontSize: 15.0,
             fontFamily: 'Quicksand',
@@ -412,6 +412,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> wit
     CartItem cartItem = CartItem(
         id: newCartItem.id,
         codeProd: newCartItem.codeProd,
+        type: newCartItem.type,
         name: newCartItem.name,
         description: newCartItem.description,
         price: newCartItem.price,
@@ -668,7 +669,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> wit
       /// products.clear();
       for (var i in products) {
         if (i.category.toString().toLowerCase() ==
-            AppLocalizations.translate('fruits').toString().toLowerCase()) {
+            AppLocalizations.translate('fruits')) {
           listFilter.add(i);
           // category = i.category.toString().toLowerCase();
         }
@@ -680,9 +681,7 @@ class _AgricultureBiologiqueState extends State<AgricultureBiologiqueScreen> wit
         AgricultureBiologicalProvider().products.clear();
         for (var i in products) {
           if (i.category.toString().toLowerCase() ==
-              AppLocalizations.translate('vegetables')
-                  .toString()
-                  .toLowerCase()) {
+              AppLocalizations.translate('vegetables')) {
             listFilter.add(i);
             AgricultureBiologicalProvider().products.add(i);
 

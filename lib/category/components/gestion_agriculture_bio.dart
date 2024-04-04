@@ -109,6 +109,7 @@ class GestionAgricultureBio  with ChangeNotifier {
           Product(
             id: product.id,
             codeProd: product.codeProd,
+            type: product.type,
             name: product.name,
             description: product.description,
             price: product.price,
@@ -160,6 +161,7 @@ class GestionAgricultureBio  with ChangeNotifier {
               Product(
                   id: existingCartItem.id,
                   codeProd: existingCartItem.codeProd,
+                  type: existingCartItem.type,
                   name: existingCartItem.name,
                   description: existingCartItem.description,
                   price: existingCartItem.price,
@@ -193,6 +195,7 @@ class GestionAgricultureBio  with ChangeNotifier {
               Product(
                   id: existingCartItem.id,
                   codeProd: existingCartItem.codeProd,
+                  type: existingCartItem.type,
                   name: existingCartItem.name,
                   description: existingCartItem.description,
                   price: existingCartItem.price,
@@ -231,6 +234,7 @@ class GestionAgricultureBio  with ChangeNotifier {
       Product product = Product(
         id: editProduct.id,
         codeProd: editProduct.codeProd,
+        type: editProduct.type,
         name: editProduct.name,
         description: editProduct.description,
         price: editProduct.price,

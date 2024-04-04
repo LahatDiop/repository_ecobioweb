@@ -58,3 +58,17 @@ class ModelsUsers {
     return sellerDataFuture;
   }
 }
+
+class AppDatabase {
+  fetchSellerData(String emailValue) {}
+
+  registerSeller(String email, String password, String mobile) {}
+
+  registerBuyer(String buyerEmail, String password, String fName, String lName) {}
+
+  loginUser(String email, String password) {}
+
+  updateBuyerData(int ssnFieldValue, String mobileFieldValue) {}
+
+  updateSellerData(String companyFieldValue, String fNameFieldValue, String logoValue) {}
+}

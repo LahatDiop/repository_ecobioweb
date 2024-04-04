@@ -1,5 +1,6 @@
 name: ecobioweb
 description: Biologica
+
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -19,8 +20,12 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: 3.3.0-174.3.beta
- # sdk: 3.3.0-261.0.dev
+  sdk: 3.5.0-18.0.dev
+  #sdk: 3.4.0-268.0.dev
+  #sdk: 3.4.0-172.0.dev
+  #sdk: 3.4.0-132.0.dev
+  #sdk: 3.4.0-24.0.dev
+  #sdk: 3.3.0-174.3.beta
   #sdk: 3.3.0-174.3.beta
   #sdk: 3.3.0-91.0.dev
   #sdk: 3.2.0-210.4.beta
@@ -46,10 +51,10 @@ dependencies:
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
-  postgres: ^2.6.0
+  cupertino_icons: ^1.0.6
+  #postgres: ^3.1.0
   postgresql2: ^1.0.4
-  postgres_pool: ^2.1.6
+  #postgres_pool: ^2.5.0
   dio: ^5.0.0
   hash: ^1.0.4
   shared_preferences: ^2.1.0
@@ -57,18 +62,19 @@ dependencies:
   #flutter_login: ^4.1.1
   flutter_login: ^4.1.1
   flutter_fadein: ^2.0.0
+  #intl: ^0.19.0
   intl: any
   flutter_session_manager: ^1.0.3
-  path_provider: ^2.0.14
-  path: ^1.8.1
-  sqlite3_flutter_libs: ^0.5.13
-  drift_sqflite: ^2.0.1
-  drift: ^2.13.0
-  drift_dev: ^2.13.1
+  #path_provider: ^2.1.2
+  #path: ^1.9.0
+  #sqlite3_flutter_libs: ^0.5.13
+  #drift_sqflite: ^2.0.1
+  #drift: ^2.13.0
+  #drift_dev: ^2.13.1
   logger: ^2.0.2+1
   #logging_manager: ^2.3.1 discontinued
   flutter_secure_storage: ^9.0.0
-  sqflite: ^2.2.8
+  #sqflite: ^2.2.8
   clay_containers: ^0.3.2
   dotted_border: ^2.0.0+3
   localstorage: ^4.0.1+2
@@ -78,7 +84,7 @@ dependencies:
   email_validator: ^2.1.17
   image_picker: ^1.0.4
   string_validator: ^1.0.0
-  ffi: ^2.0.1
+  ffi: ^2.1.2
   reflectable: ^4.0.5
   source_gen: ^1.2.6
   quiver: ^3.2.1
@@ -89,12 +95,12 @@ dependencies:
   #moor: ^4.6.1+1 discontinued
   #moor_flutter: ^4.1.0 discontinued
   #moor_generator: ^4.6.0+1 moor_generator
-  provider: ^6.0.5
+  #provider: ^6.0.5
   flutter_localizations:
     sdk: flutter
   pubspec_parse: ^1.2.3
   cached_network_image: ^3.2.3
-  lottie: ^2.4.0
+  lottie: ^3.0.0
   theme_provider: ^0.6.0
   bot_toast: ^4.0.4
   flutter_svg: ^2.0.7
@@ -105,9 +111,30 @@ dependencies:
   smooth_page_indicator: ^1.1.0
   carousel_slider: ^4.2.1
   logging_manager_flutter: ^2.2.1
-  dart_style: ^2.3.2
-  analyzer_plugin: ^0.11.2
-  analyzer: ^5.13.0
+  #dart_style: ^2.3.4
+  #analyzer_plugin: ^0.11.3
+  #analyzer: ^6.4.1
+  analyzer: ^6.4.1
+  fl_chart: ^0.66.0
+  google_fonts: ^6.1.0
+  #ffi: ^2.1.2
+  postgres: ^3.1.0
+  thread: ^0.2.2
+  #discountinued isolate: ^2.1.1
+  snippet_coder_utils: ^1.0.15
+  dropdown_search: ^5.0.6
+  flutter_html: ^3.0.0-beta.2
+  syncfusion_flutter_datepicker: ^24.2.8
+  html_editor_enhanced: ^2.5.1
+  provider: ^6.1.2
+  path: ^1.9.0
+  #drift_sqflite: ^2.0.1
+  #sqlite3_flutter_libs: ^0.5.20
+  sqflite: ^2.3.2
+  sqflite_common_ffi: ^2.3.2+1
+  sqflite_common_ffi_web: ^0.4.2+3
+  sqlite3: ^2.4.0
+
 
 
 
@@ -144,6 +171,9 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/icons/
+    - assets/images/
+    - assets/images/dashboard/
     - assets/images/inspiration/ecorp.png
     - assets/images/inspiration/ic_add_cart.png
     - assets/images/inspiration/ic_discount.png
@@ -246,6 +276,7 @@ flutter:
     - assets/json/home.json
     - assets/json/admin.json
     - assets/json/products.json
+    - assets/json/users.json
     - assets/json/honey.json
     - assets/json/market.json
     - assets/json/groups.json
@@ -358,6 +389,8 @@ flutter:
     - assets/images/flags/sn.png
     - assets/images/flags/de.png
     - assets/images/flags/ng.png
+    - assets/database/ecobio.db
+    - assets/database/ecobio.sqlite
 
 
   # To add assets to your application, add an assets section, like this:

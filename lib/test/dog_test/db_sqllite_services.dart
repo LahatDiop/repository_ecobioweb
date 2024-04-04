@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/widgets.dart';
+import 'package:postgres/legacy.dart';
 import 'package:postgres/postgres.dart';
 import 'dog.dart';
 
@@ -21,24 +22,25 @@ int version=1;
 
 
 
-var databaseConnection = PostgreSQLConnection("localhost", 5432, "ecobio",
-    username: "postgres",
-    password: "root",
-    queryTimeoutInSeconds: 3600,
-    timeoutInSeconds: 3600,
-    timeZone: 'UTC',
-    useSSL: false,
-    isUnixSocket: false
-);
+// var databaseConnection = PostgreSQLConnection("localhost", 5432, "ecobio",
+//     username: "postgres",
+//     password: "root",
+//     queryTimeoutInSeconds: 3600,
+//     timeoutInSeconds: 3600,
+//     timeZone: 'UTC',
+//     useSSL: false,
+//     isUnixSocket: false
+// );
 // Define a function that inserts dogs into the database
 Future<void> insertDog() async {
 
-    final connection = PostgreSQLConnection("localhost", 5432, "ecobio",
-        username: "postgres",
-        password: "root",
-        queryTimeoutInSeconds: 3600,
-        timeoutInSeconds: 3600,
-    );
+    // final connection = PostgreSQLConnection("localhost", 5432, "ecobio",
+    //     username: "postgres",
+    //     password: "root",
+    //     queryTimeoutInSeconds: 3600,
+    //     timeoutInSeconds: 3600,
+    // );
+    var connection;
     await connection.open();
     debugPrint("Database Connected Yes!");
 

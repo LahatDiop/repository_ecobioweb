@@ -5,7 +5,8 @@ import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:logging_manager/logging_manager.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../roots/trunk/branches/managements/users/models/users_data.dart';
+import '../roots/trunk/branches/managements/users/components/users_data.dart';
+
 
 class SessionUser extends SessionManager{
 //  protected static Logger logger = LoggerFactory.getLogger(SessionUser.class);

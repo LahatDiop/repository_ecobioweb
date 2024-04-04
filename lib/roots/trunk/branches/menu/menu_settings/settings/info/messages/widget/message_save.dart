@@ -2,6 +2,20 @@ import 'dart:collection';
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:provider/provider.dart';
+
+import '../../../../../../business/agricultures/agriculture_biological/provider/agriculture_biological_provider.dart';
+import '../../../../../../cart/provider/cart_provider.dart';
+import '../../../../../../cart/screens/cart_screen.dart';
+import '../../../../../../commun_data_utils/utils/helper/padded.dart';
+import '../../../../../../commun_data_utils/utils/theme/app_theme.dart';
+import '../../../../../../favorites/provider/favorites_provider.dart';
+import '../../../../../../favorites/screens/favourite_screen.dart';
+import '../../../../../../favorites/screens/filter_screen.dart';
+import '../../../../../../favorites/widgets/grocery_item_card_widget.dart';
+import '../../../../../../products/components/product.dart';
+import '../../../../../../search/widgets/search_bar_widget.dart';
 // import 'package:firebase_database/firebase_database.dart';
 
 
@@ -17,9 +31,148 @@ class _MessageSaveState extends State<MessageSave> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    TextEditingController textInputSearch =  TextEditingController();
+
+    return MultiProvider(providers:  [
+      ChangeNotifierProvider<FavoriteProvider>(create: (_)=>FavoriteProvider()),
+      ChangeNotifierProvider<CartProvider>(create: (_)=>CartProvider()),
+      ChangeNotifierProvider<AgricultureBiologicalProvider>(create: (_) => AgricultureBiologicalProvider()),
+    ],
+      child: Navigator(onGenerateRoute: (RouteSettings settings){
+
+        return MaterialPageRoute(builder: (context){
+          return const MessageSave();
+        });
+      },),
+
+      builder: (context,child){
+
+        final favoriteProvider=Provider.of<FavoriteProvider>(context);
+        final cartProvider=Provider.of<CartProvider>(context);
+        ///final agriBio=Provider.of<AgricultureBiologicalProvider>(context);
+        /// var listProducts= context.read<AgricultureBiologicalProvider>().getData(tabIndex);
+
+
+        List<Product>?  productsFavorite=FavoriteProvider().favoriteItems;
+
+        // cartItems=context.read<CartProvider>().cartItems;
+        // //  products =context.read<CartProvider>().products;
+        // products =context.read<CartProvider>().getProducts();
+
+
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.green,
+            elevation: 0,
+            centerTitle: true,
+            automaticallyImplyLeading: false,
+            leading: const BackButton(
+              color: Colors.black,
+            ),
+
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FilterScreen()),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(right: 25),
+                  child: const Icon(
+                    Icons.sort,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: ( ) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FavouriteScreen()),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(right: 25),
+                  child: const Icon(
+                    Icons.favorite,
+                    color: Colors.black,
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => CartScreen()),
+                  );
+                },
+                child: Container(
+                  padding: const EdgeInsets.only(right: 25),
+                  child: const Icon(
+                    Icons.shopping_cart_checkout,
+                    color: AppColors.greenColor,
+                  ),
+                ),
+              ),
+            ],
+            ///Search
+            ///Search
+            title: Padded.padded(SearchBarWidget(textInputSearch)),
+
+          ),
+
+          // resizeToAvoidBottomInset: false,
+          // backgroundColor: Colors.grey.shade100,
+          body:Builder(builder: (context){
+            return   Column(
+                children:<Widget> [
+
+                  /// Title Agriculture Biodynamic
+                  /// createSubTitle(),
+                  Expanded(
+                    // padding: const EdgeInsets.symmetric(horizontal: 20),
+                    // height: MediaQuery.of(context).size.height * 100,
+                    child: SingleChildScrollView(
+                      child: StaggeredGrid.count(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 3.0,
+                        crossAxisSpacing: 0.0,
+                        // I only need two card horizontally
+                        children: productsFavorite.asMap().entries.map<Widget>((e) {
+                          // GroceryItem groceryItem = e.value;
+                          Product product = e.value;
+                          return GestureDetector(
+                            onTap: () {
+                              onItemClicked(context, product);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.all(10),
+                              child: GroceryItemCardWidget(
+                                item: product,
+                                heroSuffix: "favorite_screen",
+                              ),
+                            ),
+                          );
+                        }).toList(), // add some space
+                      ),
+                    ),
+
+                  ),
+                ]
+            );
+          }
+          ),
+        );
+      },
+    );
+
+
   }
+
+  void onItemClicked(BuildContext context, product) {}
+
   // ignore: deprecated_member_use
   // final databaseRef = FirebaseDatabase.instance.reference();
   // //final Future<FirebaseApp> _future = Firebase.initializeApp();

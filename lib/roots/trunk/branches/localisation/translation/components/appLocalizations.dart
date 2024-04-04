@@ -42,7 +42,7 @@ class AppLocalizations {
       // final jsonString =  await rootBundle.loadString('./assets/language/${locale.languageCode}.json');
       ///  final jsonString =  await rootBundle.loadString('./assets/language/${locale.languageCode.toString().toLowerCase()}.json');
       final jsonString = await rootBundle.loadString(
-          './assets/language/${languageCode.toString().toLowerCase()}.json');
+          'assets/language/${languageCode.toString().toLowerCase()}.json');
       final Map<String, dynamic> jsonMap = json.decode(jsonString);
 
       _localizedStrings = jsonMap.map((key, value) {
@@ -71,8 +71,11 @@ class AppLocalizations {
     }
   }
 
-  static Future<void> reloadLanguageAppToLocalUser(String currentCode,
-      bool isInitialized) async {
+  static Future<void> reloadLanguageAppToLocalUser(String currentCode, bool isInitialized) async {
+
+    /// Save the new lang in preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
     if (currentCode.isNotEmpty) {
       currentCodeLang = currentCode.toLowerCase();
       isInitializedLang = isInitialized;
@@ -86,8 +89,7 @@ class AppLocalizations {
 
     CountryListPick(currentCodeLang: currentCodeLang,isInitialLang: isInitializedLang);
 
-    /// Save the new lang in preferences
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+
 
     /// save lang in sharedPref currentCodeLang="it"
     prefs.setString('currentCodeLang', currentCodeLang!);
@@ -95,7 +97,7 @@ class AppLocalizations {
 
     ///  Fist load App set the linguage default of lang device
   static Future<void> setLangAppToLocalDevice() async {
-
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     ///"en_US"
     String localeDefault = Intl.getCurrentLocale();
 
@@ -105,14 +107,13 @@ class AppLocalizations {
     ///"it"
     String? languageCodeDevice = deviceLocale.languageCode;
 
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
     /// save lang in sharedPref currentCodeLang="it"
     /// Controllo se non è stato salvato un code lingue "it" prendo la lingue del dispositivi o del local
 
     /// code lingua actualle
     currentCodeLang = prefs.getString("currentCodeLang");
 
+    /// SECONDE LOAD LAND
     if (currentCodeLang != null) {
       ///deviceLocale
       if (languageCodeDevice.isNotEmpty) {
@@ -131,8 +132,15 @@ class AppLocalizations {
       isInitializedLang = true;
 
 
+   // }
+  }else{
+      /// FIST LOAD LAND
+      isInitializedLang = true;
+      loadLanguageApp(languageCodeDevice, isInitializedLang!);
+      /// save lang in sharedPref currentCodeLang="it"
+      prefs.setString('currentCodeLang', languageCodeDevice);
     }
-  }
+    }
 
 }
 // // LocalizationsDelegate is a factory for a set of localized resources

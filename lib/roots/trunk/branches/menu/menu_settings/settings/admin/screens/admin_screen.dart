@@ -197,7 +197,7 @@ class _ProfileAdminState extends State<AdminScreen>  with TickerProviderStateMix
                           addToLastChild: false,
                           ///  widgets: cartItems.map((e) {
                           //  widgets: cartList.map((e) {
-                          //  widgets: _cartItemsMap.values.toString().map((e) {
+                          //  widgets: _cartItemsMap.values.map((e) {
                           // widgets: adminItems.entries.map((e){
                           widgets: mapGroupListItems.entries.map((e){
                         //   var index =e.value.indexWhere((element) => e.key).
@@ -564,7 +564,7 @@ class _ProfileAdminState extends State<AdminScreen>  with TickerProviderStateMix
     // ));
 
 
-    if (AppLocalizations.translate(adminItems.name) == AppLocalizations.translate('addProduct').toString()) {
+    if (AppLocalizations.translate(adminItems.name) == AppLocalizations.translate('addProduct')) {
       Navigator.of(context).push(MaterialPageRoute(
         /// builder: (context) => AgricultureBiologique(item: GestionAgricultureBio().product, itemCart: GestionAgricultureBio().itemCart)
         builder: (context) => AgricultureBiologiqueScreen(item: GestionAgricultureBio().product),
@@ -572,7 +572,7 @@ class _ProfileAdminState extends State<AdminScreen>  with TickerProviderStateMix
     }
     if (AppLocalizations.translate(adminItems.name) ==
         AppLocalizations.translate('agricultureBiodynamic')
-            .toString()) {
+            ) {
       Navigator.of(context).push(MaterialPageRoute(
         // builder: (context) => const AgricultureBiodymamique(),
         builder: (context) => AgricultureBiodynamicaScreen(),
@@ -586,19 +586,19 @@ class _ProfileAdminState extends State<AdminScreen>  with TickerProviderStateMix
       ));
     }
     if (AppLocalizations.translate(adminItems.name) ==
-        AppLocalizations.translate('agricultureKmZero').toString()) {
+        AppLocalizations.translate('agricultureKmZero')) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const AgricultureKmZero(),
       ));
     }
     if (AppLocalizations.translate(adminItems.name) ==
-        AppLocalizations.translate('productsBiologiques').toString()) {
+        AppLocalizations.translate('productsBiologiques')) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const ProductsBiologique(),
       ));
     } //list des producteurs agriculture biologique
     if (AppLocalizations.translate(adminItems.name) ==
-        AppLocalizations.translate('infoProducts').toString()) {
+        AppLocalizations.translate('infoProducts')) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const InfoProducers(),
       ));
@@ -612,7 +612,7 @@ class _ProfileAdminState extends State<AdminScreen>  with TickerProviderStateMix
 
         return Scaffold(
           appBar: AppBar(
-            title: Text(AppLocalizations.translate("back").toString()),
+            title: Text(AppLocalizations.translate("back")),
             backgroundColor: const Color.fromARGB(255, 50, 172, 34),
 
             leading: BackButton(

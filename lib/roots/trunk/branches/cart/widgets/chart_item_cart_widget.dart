@@ -118,12 +118,12 @@ class _ChartItemCartWidgetState extends State<ChartItemCartWidget> {
                     //   padding: EdgeInsets.only(right: 20.0),
                     // ),
                     ///PRICE CART
-                    AppText(
+                    Text(
                       //  text: "${getPrice().toStringAsFixed(2)}€",
-                      text: "${CartProvider.getPrice(widget.itemCart!).toStringAsFixed(2)}€",
+                      "${CartProvider.getPrice(widget.itemCart!).toStringAsFixed(2)}€",
                       ///   text: "${CartProvider().subTotalPrice.toStringAsFixed(2)}€",
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
+                      // fontSize: 16,
+                      // fontWeight: FontWeight.bold,
                       textAlign: TextAlign.right,
                     ),
                     const Padding(

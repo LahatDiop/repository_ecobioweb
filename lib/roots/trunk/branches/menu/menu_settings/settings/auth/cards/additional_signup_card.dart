@@ -3,7 +3,8 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import '../../../../../commun_data_utils/utils/constants/app_constants.dart';
-import '../../../../../managements/users/models/users_data.dart';
+
+import '../../../../../managements/users/components/users_data.dart';
 import '../models/user_form_field.dart';
 import '../providers/auth.dart';
 import '../providers/login_messages.dart';

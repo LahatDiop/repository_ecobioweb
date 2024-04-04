@@ -1,7 +1,7 @@
 //import 'package:ecobioweb/auth/providers/flutter_login.dart';
 import 'package:ecobioweb/roots/trunk/branches/menu/menu_settings/settings/auth/providers/flutter_login.dart';
 import 'package:flutter/material.dart';
-import '../../../../../managements/users/models/users_data.dart';
+import '../../../../../managements/users/components/users_data.dart';
 import '../models/term_of_service.dart';
 import '../singin/models/login_data.dart';
 

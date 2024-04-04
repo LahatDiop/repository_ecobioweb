@@ -1,7 +1,8 @@
 
 import 'dart:math';
 import 'package:flutter/material.dart';
-import '../../../../../managements/users/models/users_data.dart';
+
+import '../../../../../managements/users/components/users_data.dart';
 import '../providers/auth.dart';
 import '../providers/login_messages.dart';
 import 'package:provider/provider.dart';

@@ -51,7 +51,7 @@ Esegui applicazioni complesse, gestisci attività amministrative e crea interi a
 PostgreSQL può costituire il database principale per quasi ogni tipo di servizio, applicazione o sistema. Esistono centinaia di plug-in, wrapper di dati ed estensioni open source che puoi utilizzare per estendere le sue capacità principali.
 
 Nessun blocco
-Quando vuoi, sei libero di spostare i tuoi dati su un provider cloud diverso o anche su un sistema di database diverso.
+Quando vuodi, sei libero di spostare i tuoi dati su un provider cloud diverso o anche su un sistema di database diverso.
 
 // https://landing.aiven.io/en/aiven-for-postgresql/?gclid=Cj0KCQjwspKUBhCvARIsAB2IYuvstKf294SeBd0WCoBtz5dYvIEVimUKDfIe3iD7CJ_HbNO0LJJCGj0aAhVSEALw_wcB
 

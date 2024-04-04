@@ -74,7 +74,7 @@ class _AgricultureKmZeroState extends State<AgricultureKmZero> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       const Text(
-                        "Lifestyle Sale",
+                        "Lifestyle Sale KMZero",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,

@@ -11,6 +11,22 @@ import '../components/cart_item.dart';
 
 class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
 
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
+
+
   CartItem? itemCart ;
 
   List<CartItem> carts=[];
@@ -27,6 +43,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
 
     return products;
   }
+  static  List<CartItem>? _cartsList;
 
   static List<CartItem> get cartsList => _cartsList!;
 
@@ -34,10 +51,14 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
     _cartsList = value;
   }
 
+
   static Map<String, Product> _productItems = {};
 
-   static Map<String, Product> get productItems {
-    return {..._productItems};
+
+  static Map<String, Product> get productItems => _productItems;
+
+  static set productItems(Map<String, Product> value) {
+    _productItems = value;
   }
 
   List<Product> get favoriteItemsProduct {
@@ -69,7 +90,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
   static final CartRepository _cartRepository = GetIt.instance<CartRepository>();
 
   @observable
-  static  List<CartItem>? _cartsList;
+
 
   @observable
   static ObservableList<CartItem> _cart= ObservableList();
@@ -114,7 +135,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
     var total = 0.0;
     _cartItems.forEach((key, value) {
       if(value.codeProd == cart.codeProd) {
-        total = cart.price * value.quantity;
+        total = cart.price * value.quantity.toDouble();
        // cart.quantity=value.quantity;
       }
     });
@@ -203,6 +224,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
             () => CartItem(
             id: cartItem.id,
             codeProd: cartItem.codeProd,
+            type: cartItem.type,
             name: cartItem.name,
             description: cartItem.description,
             price: cartItem.price,
@@ -314,6 +336,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
               (existingCartItem) => CartItem(
               id: existingCartItem.id,
               codeProd: existingCartItem.codeProd,
+              type: existingCartItem.type,
               name: existingCartItem.name,
               description: existingCartItem.description,
               price: existingCartItem.price,
@@ -360,6 +383,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
               (existingCartItem) => CartItem(
               id: existingCartItem.id,
               codeProd: existingCartItem.codeProd,
+              type: existingCartItem.type,
               name: existingCartItem.name,
               description: existingCartItem.description,
               price: existingCartItem.price,
@@ -466,6 +490,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
               (existingCartItem) => CartItem(
               id: existingCartItem.id,
               codeProd: existingCartItem.codeProd,
+              type: existingCartItem.type,
               name: existingCartItem.name,
               description: existingCartItem.description,
               price: existingCartItem.price,
@@ -499,6 +524,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
     CartItem cartItem = CartItem(
         id: product.id,
         codeProd: product.codeProd,
+        type: product.type,
         name: product.name,
         description: product.description,
         price: product.price,
@@ -518,6 +544,7 @@ class CartProvider with ChangeNotifier , DiagnosticableTreeMixin {
     Product product = Product(
         id: cartItem.id,
         codeProd: cartItem.codeProd,
+        type: cartItem.type,
         name: cartItem.name,
         description: cartItem.description,
         price: cartItem.price,

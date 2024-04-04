@@ -10,6 +10,22 @@ import 'dart:convert';
 
 class HomeProvider  with ChangeNotifier {
 
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
+
+
   ///-----------------------------------------------------------------------------
   /// MAP HomeItems
   Map<String, HomeItems> _homeItem = {};
@@ -127,50 +143,50 @@ class HomeProvider  with ChangeNotifier {
   static List<HomeItems> agricultureBiologiqueItems = [
     HomeItems(
       id: "1",
-      name: AppLocalizations.translate('agricultureBiological').toString(),
+      name: AppLocalizations.translate('agricultureBiological'),
       description: "Bio per tutti",
-      subTitle:AppLocalizations.translate('agricultureBiological').toString() ,
-      category: AppLocalizations.translate('fruitsVegetable').toString(),
+      subTitle:AppLocalizations.translate('agricultureBiological') ,
+      category: AppLocalizations.translate('fruitsVegetable'),
       groups: "homeSceen",
       imagePath: "assets/images/agriculture/agriculture_6.png",
     ),
     // imagePath: "assets/images/grocery_images/banana.png"),
     HomeItems(
       id:"2" ,
-      name: AppLocalizations.translate('agricultureBiodynamic').toString(),
+      name: AppLocalizations.translate('agricultureBiodynamic'),
       description: "Bio per tutti",
-      subTitle:AppLocalizations.translate('agricultureBiodynamic').toString() ,
-      category: AppLocalizations.translate('fruitsVegetable').toString(),
+      subTitle:AppLocalizations.translate('agricultureBiodynamic') ,
+      category: AppLocalizations.translate('fruitsVegetable'),
       groups: "homeSceen",
       imagePath: "assets/images/agriculture/agriculture_1.png",
       // imagePath: "assets/images/grocery_images/apple.png"
     ),
     HomeItems(
       id: "3",
-      name: AppLocalizations.translate('agricultureIntegration').toString(),
+      name: AppLocalizations.translate('agricultureIntegration'),
       description: "Bio per tutti",
-      subTitle:AppLocalizations.translate('agricultureIntegration').toString() ,
-      category: AppLocalizations.translate('fruitsVegetable').toString(),
+      subTitle:AppLocalizations.translate('agricultureIntegration') ,
+      category: AppLocalizations.translate('fruitsVegetable'),
       groups: "homeSceen" ,
       imagePath: "assets/images/agriculture/agriculture_2.png",
       //  imagePath: "assets/images/grocery_images/pepper.png"
     ),
     HomeItems(
       id: "4",
-      name: AppLocalizations.translate('agricultureKmZero').toString(),
+      name: AppLocalizations.translate('agricultureKmZero'),
       description: "Bio per tutti",
-      subTitle:AppLocalizations.translate('agricultureKmZero').toString() ,
-      category: AppLocalizations.translate('fruitsVegetable').toString(),
+      subTitle:AppLocalizations.translate('agricultureKmZero') ,
+      category: AppLocalizations.translate('fruitsVegetable'),
       groups: "homeSceen",
       imagePath: "assets/images/agriculture/agriculture_3.png",
       //  imagePath: "assets/images/grocery_images/ginger.png"
     ),
     HomeItems(
       id: "5",
-      name: AppLocalizations.translate('productsBiologiques').toString(),
+      name: AppLocalizations.translate('productsBiologiques'),
       description: "Bio per tutti",
-      subTitle:AppLocalizations.translate('productsBiologiques').toString() ,
-      category: AppLocalizations.translate('productsBiologiques').toString(),
+      subTitle:AppLocalizations.translate('productsBiologiques') ,
+      category: AppLocalizations.translate('productsBiologiques'),
       groups: "homeSceen",
       imagePath: "assets/images/agriculture/agriculture_4.png",
       //  imagePath: "assets/images/grocery_images/beef.png"

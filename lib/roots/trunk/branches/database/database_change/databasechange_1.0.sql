@@ -43,3 +43,18 @@ create table users_singup
     "termsOfService"       varchar,
     "additionalSignupData" varchar
 );
+
+
+--### Databse sqlite
+--E:\Lahat\Projet App\AppBio\workspace_ecobio\ecobioweb\.dart_tool\sqflite_common_ffi\databases\ecobio.db
+
+---create table users( id integer constraint users_data_pk primary key autoincrement,users_data_json JSON,creation_date TEXT,modified_date TEXT))
+-- create table users_data_dg_tmp
+-- (
+-- id              integer
+-- constraint users_data_pk
+--    primary key autoincrement,
+-- users_data_json JSON,
+-- creation_date   TEXT,
+-- modifiel_date   TEXT
+-- );

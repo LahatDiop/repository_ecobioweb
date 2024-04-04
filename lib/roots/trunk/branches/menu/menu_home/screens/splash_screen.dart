@@ -2,6 +2,11 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:ecobioweb/main.dart';
+import 'package:ecobioweb/market/providers/market_provider.dart';
+import 'package:ecobioweb/roots/trunk/branches/languages/provider/language_provider.dart';
+import 'package:ecobioweb/roots/trunk/branches/localisation/country/widget/countries.dart';
+import 'package:ecobioweb/roots/trunk/branches/managements/roles/provider/roles_provider.dart';
+import 'package:ecobioweb/roots/trunk/branches/managements/users/provider/users_provider.dart';
 import 'package:ecobioweb/roots/trunk/branches/menu/menu_home/screens/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,10 +26,35 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
+
+  String? languageCodeDevice;
+
+
   @override
   void initState()  {
     super.initState();
     loadSplashScreenAsync();
+    /// 1. Load  Markets
+      MarketProvider marketProvider=MarketProvider();
+      marketProvider.getDataMarket(context, languageCodeDevice);
+
+      /// 2. Load Countries Enabled
+      Countries countries =Countries();
+        countries.loaderData();
+
+        ///Load Roles
+       RolesProvider rolesProvider =RolesProvider();
+         rolesProvider.initilizeLoadListRoles();
+
+    ///3. load Languages
+    LanguageProvider languageProvider =LanguageProvider();
+    // languageProvider.languages;
+
+  ///Load User
+  //   UsersProvider usersProvider =UsersProvider();
+  //   usersProvider.initializeDb()
+
+
   }
 
   void loadSplashScreenAsync()  {
@@ -39,9 +69,9 @@ class _SplashScreenState extends State<SplashScreen> {
     Locale deviceLocale = window.locale;// or html.window.locale
 
     ///"it"
-    String? languageCodeDevice = deviceLocale.languageCode;
+       languageCodeDevice = deviceLocale.languageCode;
 
-    AppLocalizations.saveLanguageApp(languageCodeDevice,isInitializedLang);
+    AppLocalizations.saveLanguageApp(languageCodeDevice!,isInitializedLang);
 
     const delay = Duration(seconds: 3);
     Future.delayed(delay, () => onTimerFinished());

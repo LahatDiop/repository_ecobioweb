@@ -1,5 +1,3 @@
-
-
 import 'dart:convert';
 import 'package:ecobioweb/roots/trunk/branches/business/agricultures/agriculture_biodynamica/provider/agriculture_biodynamica_provider.dart';
 import 'package:ecobioweb/roots/trunk/branches/business/agricultures/agriculture_biological/screens/agriculture_biologique_screenOK.dart';
@@ -12,11 +10,28 @@ import '../../../../cart/components/cart_item.dart';
 import '../../../../cart/provider/cart_provider.dart';
 import '../../../../localisation/translation/components/appLocalizations.dart';
 import '../../../../products/components/product.dart';
+
 ///import 'E:\Lahat\Projet App\AppBio\workspace_ecobio\ecobioweb\lib\roots\trunk\branches\cart\components\products';
 
 
 class HoneyBiologicalProvider  with ChangeNotifier {
 
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
+
+// AppLocalizations? translated;
   ///-----------------------------------------------------------------------------
   /// MAP PRODUCT
   Map<String, Product> _productItem = {};
@@ -29,27 +44,27 @@ class HoneyBiologicalProvider  with ChangeNotifier {
   List<Product> products = [];
   List<Product> productsHoney = [];
 
-
   //int index=0;
 
   late TabController _tabController;
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   Future<List<Product>> getData(int tabIndex) async {
-  //  products=  await getProductsList(tabIndex);
-    products=  await AgricultureBiodynamicaProvider().getProductsList(tabIndex);
+    //  products=  await getProductsList(tabIndex);
+    products = await AgricultureBiodynamicaProvider().getProductsList(tabIndex);
     filterHoneyProduct(products);
     notifyListeners();
     //return products;
     return productsHoney;
-
   }
 
+// "beekeeping": "Apicoltura",
   List<Product> filterHoneyProduct(List<Product> products) {
-        productsHoney.clear();
-    for(var product in products ){
-      if( product.category.toLowerCase().toString()== AppLocalizations.translate("beekeeping").toLowerCase()){
-         productsHoney.add(product);
+    productsHoney.clear();
+    for (var product in products) {
+      if (AppLocalizations.translate(product.type) ==
+          AppLocalizations.translate("honey")) {
+        productsHoney.add(product);
       }
     }
 
@@ -57,7 +72,7 @@ class HoneyBiologicalProvider  with ChangeNotifier {
   }
 
   Map<String, Product> getDataMap() {
-    var  productMap=  getproductItems();
+    var productMap = getproductItems();
     notifyListeners();
     return productMap;
   }
@@ -67,11 +82,9 @@ class HoneyBiologicalProvider  with ChangeNotifier {
     return productItems;
   }
 
-
   Future<List<Product>> getProductsList(int tabIndex) async {
-
     final String response =
-    await rootBundle.loadString('assets/json/honey.json');
+        await rootBundle.loadString('assets/json/honey.json');
     final data = await json.decode(response);
 
     dataLoader = data['honey'].map((data) => Product.fromJson(data)).toList();
@@ -79,8 +92,8 @@ class HoneyBiologicalProvider  with ChangeNotifier {
     // final extratedData= jsonDecode(data) as Map<String,dynamic>;
     ///  Map<String, Product> extratedData = Product.fromJsonMap(json);
 
-
     List<Product> loadedProducts = [];
+
     ///final List<Map<String,Object?>> queryResult= data['products'].map((data) => Product.fromJson(data)).toList();
 
     /// HoneyBiologicalProvider().createState().setProductItemsList(productItemsList);
@@ -103,10 +116,7 @@ class HoneyBiologicalProvider  with ChangeNotifier {
     // notifyListerner();
     return loadedProducts;
     // return queryResult.map((result) => Product.fromJsonMap(result)).toList();
-
   }
-
-
 
   Product? product;
   CartItem? itemCart;
@@ -119,9 +129,7 @@ class HoneyBiologicalProvider  with ChangeNotifier {
 
   bool isFlagLoaderEnabled = true;
 
-
   List<dynamic> dataLoader = [];
-
 
   // List<Product> get productItemsList{
   //   return products.where((element) => element.id.toList());
@@ -135,47 +143,48 @@ class HoneyBiologicalProvider  with ChangeNotifier {
     return products.firstWhere((element) => element.id.toString() == id);
   }
 
-
   void addItemProduct(Product product) {
     if (_productItem.containsKey(product.codeProd)) {
-
     } else {
-      _productItem.putIfAbsent(product.codeProd, () =>
-          Product(
-            id: product.id,
-            codeProd: product.codeProd,
-            name: product.name,
-            description: product.description,
-            price: product.price,
-            quantityStock: product.quantityStock,
-            quantity: product.quantity,
-            category: product.category,
-            brand: product.brand,
-            brandModel: product.brandModel,
-            codeEan: product.codeEan,
-            codeQr: product.codeQr,
-            country: product.country,
-            city: product.city,
-            currency: product.currency,
-            kilometer: product.kilometer,
-            imageURL: product.imageURL,
-            image: product.image,
-            datePublication: DateTime.now().toString(),
-            dateUpdate: DateTime.now().toString(),
-            isFavorite: product.isFavorite == null ? false : product
-                .isFavorite ?? false,
-            isEnabled: product.isEnabled == null ? false : product.isEnabled ??
-                false,
-          ));
+      _productItem.putIfAbsent(
+          product.codeProd,
+          () => Product(
+                id: product.id,
+                codeProd: product.codeProd,
+                type: product.type,
+                name: product.name,
+                description: product.description,
+                price: product.price,
+                quantityStock: product.quantityStock,
+                quantity: product.quantity,
+                category: product.category,
+                brand: product.brand,
+                brandModel: product.brandModel,
+                codeEan: product.codeEan,
+                codeQr: product.codeQr,
+                country: product.country,
+                city: product.city,
+                currency: product.currency,
+                kilometer: product.kilometer,
+                imageURL: product.imageURL,
+                image: product.image,
+                datePublication: DateTime.now().toString(),
+                dateUpdate: DateTime.now().toString(),
+                isFavorite: product.isFavorite == null
+                    ? false
+                    : product.isFavorite ?? false,
+                isEnabled: product.isEnabled == null
+                    ? false
+                    : product.isEnabled ?? false,
+              ));
     }
     notifyListeners();
   }
 
-
   void removeProductItem(String productId) {
     try {
-      _productItem.removeWhere((key, product) =>
-      product.id.toString() == productId);
+      _productItem
+          .removeWhere((key, product) => product.id.toString() == productId);
       notifyListeners();
     } catch (error) {
       throw "Could not delete product";
@@ -184,70 +193,66 @@ class HoneyBiologicalProvider  with ChangeNotifier {
     ///notifyListeners();
   }
 
-
   void incrementItemProduct(Product product, int index) {
     if (_productItem.containsKey(product.codeProd)) {
       _productItem.update(
           product.codeProd,
-              (existingCartItem) =>
-              Product(
-                  id: existingCartItem.id,
-                  codeProd: existingCartItem.codeProd,
-                  name: existingCartItem.name,
-                  description: existingCartItem.description,
-                  price: existingCartItem.price,
-                  quantityStock: existingCartItem.quantityStock,
-                  quantity: existingCartItem.quantity + 1,
-                  category: existingCartItem.category,
-                  brand: existingCartItem.brand,
-                  brandModel: existingCartItem.brandModel,
-                  codeEan: existingCartItem.codeEan,
-                  codeQr: existingCartItem.codeQr,
-                  country: existingCartItem.country,
-                  city: existingCartItem.city,
-                  currency: existingCartItem.currency,
-                  kilometer: existingCartItem.kilometer,
-                  imageURL: existingCartItem.imageURL.toString(),
-                  image: existingCartItem.image.toString(),
-                  datePublication: DateTime.now().toString(),
-                  dateUpdate: existingCartItem.dateUpdate,
-                  isFavorite: existingCartItem.isFavorite,
-                  isEnabled: existingCartItem.isEnabled
-              ));
+          (existingCartItem) => Product(
+              id: existingCartItem.id,
+              codeProd: existingCartItem.codeProd,
+              type: existingCartItem.type,
+              name: existingCartItem.name,
+              description: existingCartItem.description,
+              price: existingCartItem.price,
+              quantityStock: existingCartItem.quantityStock,
+              quantity: existingCartItem.quantity + 1,
+              category: existingCartItem.category,
+              brand: existingCartItem.brand,
+              brandModel: existingCartItem.brandModel,
+              codeEan: existingCartItem.codeEan,
+              codeQr: existingCartItem.codeQr,
+              country: existingCartItem.country,
+              city: existingCartItem.city,
+              currency: existingCartItem.currency,
+              kilometer: existingCartItem.kilometer,
+              imageURL: existingCartItem.imageURL.toString(),
+              image: existingCartItem.image.toString(),
+              datePublication: DateTime.now().toString(),
+              dateUpdate: existingCartItem.dateUpdate,
+              isFavorite: existingCartItem.isFavorite,
+              isEnabled: existingCartItem.isEnabled));
     }
     notifyListeners();
   }
-
 
   void decrementItemProduct(Product product, int index) {
     if (_productItem.containsKey(product.codeProd)) {
       _productItem.update(
           product.codeProd,
-              (existingCartItem) =>
-              Product(
-                  id: existingCartItem.id,
-                  codeProd: existingCartItem.codeProd,
-                  name: existingCartItem.name,
-                  description: existingCartItem.description,
-                  price: existingCartItem.price,
-                  quantityStock: existingCartItem.quantityStock,
-                  quantity: existingCartItem.quantity - 1,
-                  category: existingCartItem.category,
-                  brand: existingCartItem.brand,
-                  brandModel: existingCartItem.brandModel,
-                  codeEan: existingCartItem.codeEan,
-                  codeQr: existingCartItem.codeQr,
-                  country: existingCartItem.country,
-                  city: existingCartItem.city,
-                  currency: existingCartItem.currency,
-                  kilometer: existingCartItem.kilometer,
-                  imageURL: existingCartItem.imageURL.toString(),
-                  image: existingCartItem.image.toString(),
-                  datePublication: DateTime.now().toString(),
-                  dateUpdate: existingCartItem.dateUpdate,
-                  isFavorite: existingCartItem.isFavorite,
-                  isEnabled: existingCartItem.isEnabled
-              ));
+          (existingCartItem) => Product(
+              id: existingCartItem.id,
+              codeProd: existingCartItem.codeProd,
+              type: existingCartItem.type,
+              name: existingCartItem.name,
+              description: existingCartItem.description,
+              price: existingCartItem.price,
+              quantityStock: existingCartItem.quantityStock,
+              quantity: existingCartItem.quantity - 1,
+              category: existingCartItem.category,
+              brand: existingCartItem.brand,
+              brandModel: existingCartItem.brandModel,
+              codeEan: existingCartItem.codeEan,
+              codeQr: existingCartItem.codeQr,
+              country: existingCartItem.country,
+              city: existingCartItem.city,
+              currency: existingCartItem.currency,
+              kilometer: existingCartItem.kilometer,
+              imageURL: existingCartItem.imageURL.toString(),
+              image: existingCartItem.image.toString(),
+              datePublication: DateTime.now().toString(),
+              dateUpdate: existingCartItem.dateUpdate,
+              isFavorite: existingCartItem.isFavorite,
+              isEnabled: existingCartItem.isEnabled));
     }
     notifyListeners();
   }
@@ -257,15 +262,15 @@ class HoneyBiologicalProvider  with ChangeNotifier {
     _productItem = {};
   }
 
-
   Future<void> editItemProduct(String id, Product editProduct) async {
-    final productIndex = products.indexWhere((element) =>
-    element.id.toString() == id);
+    final productIndex =
+        products.indexWhere((element) => element.id.toString() == id);
 
     try {
       Product product = Product(
         id: editProduct.id,
         codeProd: editProduct.codeProd,
+        type: editProduct.type,
         name: editProduct.name,
         description: editProduct.description,
         price: editProduct.price,
@@ -284,21 +289,20 @@ class HoneyBiologicalProvider  with ChangeNotifier {
         image: editProduct.image,
         datePublication: DateTime.now().toString(),
         dateUpdate: editProduct.dateUpdate,
-        isFavorite: editProduct.isFavorite == null ? false : editProduct
-            .isFavorite ?? false,
-        isEnabled: editProduct.isEnabled == null ? false : editProduct
-            .isEnabled ?? false,
+        isFavorite: editProduct.isFavorite == null
+            ? false
+            : editProduct.isFavorite ?? false,
+        isEnabled: editProduct.isEnabled == null
+            ? false
+            : editProduct.isEnabled ?? false,
       );
 
       products[productIndex] = editProduct;
       notifyListeners();
-
-
     } catch (error) {
       rethrow;
     }
   }
-
 
   ///void notifyListerner() {}
 
@@ -317,12 +321,12 @@ class HoneyBiologicalProvider  with ChangeNotifier {
       //  AgricultureBiologique(item: products[tabIndex],).createState().products=products;
       //flagItemEnabled = false;
     } else
-      // TAB_1 --> FRUITS
+    // TAB_1 --> FRUITS
     if (tabIndex == 1) {
       products.clear();
       for (var i in dataLoader) {
         if (i.category.toString().toLowerCase() ==
-            AppLocalizations.translate('fruits').toString().toLowerCase()) {
+            AppLocalizations.translate('fruits')) {
           products.add(i);
           // category = i.category.toString().toLowerCase();
         }
@@ -344,28 +348,20 @@ class HoneyBiologicalProvider  with ChangeNotifier {
     }
   }
 
-
-
   sumTotal() {
     double totalPrice = 0;
     //productItemsList.forEach((item) {totalPrice = item.price + totalPrice;
-    for (var item in const DataLoader()
-        .createState()
-        .productItemsList) {
-      for (var item in const DataLoader()
-          .createState()
-          .productItemsList) {
+    for (var item in const DataLoader().createState().productItemsList) {
+      for (var item in const DataLoader().createState().productItemsList) {
         totalPrice = item.price + totalPrice;
       }
     }
-
 
     // void _onItemTapped(int index) {
     //   setState(() {
     //     _selectedIndex = index;
     //   });
     // }
-
 
     // void _handleTap(int index, List listTab) {
     //   //assert(index >= 0 && index < widget.tabs.length);
@@ -386,8 +382,6 @@ class HoneyBiologicalProvider  with ChangeNotifier {
 //     },
 //   ));
 // }
-
-
 
     // void onCleanItemCartClicked(BuildContext context,
     //     List<Product> listProductItemsCart,) {
@@ -425,17 +419,13 @@ class HoneyBiologicalProvider  with ChangeNotifier {
       /// itemCounterWidget.createState().updateParent(newAmount, product);
       ///---------------------------------------------------------------------------------------
 
-
       // cart.addItemCart(product,index, cartItemCount);
       // cart.cartItemIncrement(product,index, cartItemCount,quantityXArticlesAdd,cartItemsProvider);
 
       // save data item to local storage
       /// cart.cartAddItemsToLocalStorage(product.codeProd.toString(),cartItems);
 
-
       /// updateParent(index);
-
-
     }
 
     void decrementAmount(int index, CartItem cartItem, newAmount) {
@@ -463,7 +453,6 @@ class HoneyBiologicalProvider  with ChangeNotifier {
 
       ///---------------------------------------------------------------------------------------
 
-
       // cart.addItemCart(product,index, cartItemCount);
       // cart.cartItemIncrement(product,index, cartItemCount,quantityXArticlesAdd,cartItemsProvider);
 
@@ -471,7 +460,6 @@ class HoneyBiologicalProvider  with ChangeNotifier {
       /// cart.cartAddItemsToLocalStorage(product.codeProd.toString(),cartItems);
 
       /// updateParent(index);
-
     }
 
     Future<int> getQuantityFromPrefs() async {
@@ -479,13 +467,11 @@ class HoneyBiologicalProvider  with ChangeNotifier {
 
       List<String>? elementProd = prefs.getStringList("pro");
 
-
       // int? counter=prefs.getInt('counter');
 
       ///Ok int?  counter  =(prefs.getInt('counter') ?? 0)+ 1;
       int? counter = prefs.getInt('counter')! + 1;
       prefs.setInt('counter', counter);
-
 
       List<String>? getListFromShared = prefs.getStringList('cartItemsList');
       List<dynamic>? getListFromShared2 = prefs.getStringList('cartItemsList');
@@ -498,21 +484,16 @@ class HoneyBiologicalProvider  with ChangeNotifier {
       //  List<dynamic>? listCartItemsListsDyn = prefs.getStringList('listCartItemsLists');
       //  List<String>? listCartItemsListsString = prefs.getStringList('listCartItemsLists');
 
-
       /// List<String>? myList = (prefs.getStringList('mylist') ?? List<String>()) ;
 
       return counter;
     }
-
-
-
 
     // void _onItemTapped(int index) {
     //   setState(() {
     //     _selectedIndex = index;
     //   });
     // }
-
 
     void _handleTap(int index, List listTab) {
       //assert(index >= 0 && index < widget.tabs.length);
@@ -532,10 +513,9 @@ class HoneyBiologicalProvider  with ChangeNotifier {
     //   });
     // }
 
-    Future <void> saveIcrementCounter(List<dynamic> cartItemsList,
+    Future<void> saveIcrementCounter(List<dynamic> cartItemsList,
         Map<String, Product> productItemsList) async {
       final SharedPreferences prefs = await _prefs;
-
 
       ///***************************************************************************************
       /// OK Convert List<dynamic> product to list<String> and save the list into the shredPreference
@@ -551,15 +531,13 @@ class HoneyBiologicalProvider  with ChangeNotifier {
       /// List<dynamic> ====> List<String>
       List<Map<String, dynamic>> mapsProd = <Map<String, dynamic>>[];
 
-      List<String> cartItemsListDynamic = cartItemsList.map((i) => i.toString())
-          .toList();
-
+      List<String> cartItemsListDynamic =
+          cartItemsList.map((i) => i.toString()).toList();
 
       prefs.setStringList('cartItemsListDynamic', cartItemsListDynamic);
 
-      List<String>? cartItemsDynamic = prefs.getStringList(
-          "cartItemsListDynamic");
-
+      List<String>? cartItemsDynamic =
+          prefs.getStringList("cartItemsListDynamic");
 
       // List<String> ggg = productItems.;
 
@@ -569,7 +547,6 @@ class HoneyBiologicalProvider  with ChangeNotifier {
       //  Map prodMap =jsonDecode(Product.fromJson(elementProd as Map<String, dynamic>).toJson() as String);
 
       //--------------------------------------------------------------------------
-
 
       // prefs.setStringList('dataProductItems', dataProductItems.values.toList().toString() as List<String>);
 
@@ -588,7 +565,6 @@ class HoneyBiologicalProvider  with ChangeNotifier {
       // save Map
       // prefs.setStringList('cartItemsList', productItems);
 
-
       /// final int  counter  =(prefs.getInt('counter') ?? 0)+ 1;
       int counter = 0;
       prefs.setInt('counter', counter);
@@ -600,15 +576,6 @@ class HoneyBiologicalProvider  with ChangeNotifier {
       //     return _counterQuantity;
       //   });
       // });
-
     }
-
   }
-
-
-
-
-
-
 }
-

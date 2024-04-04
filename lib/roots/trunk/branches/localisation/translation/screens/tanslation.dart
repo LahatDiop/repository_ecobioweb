@@ -13,15 +13,15 @@ class Translation extends StatefulWidget {
   _TranslationState createState() => _TranslationState();
 
   static String? search(BuildContext context) {
-    return AppLocalizations.translate('search').toString();
+    return AppLocalizations.translate('search');
   }
 
   static String? last_pick(BuildContext context) {
-    return AppLocalizations.translate('last_pick').toString();
+    return AppLocalizations.translate('last_pick');
   }
 
   static String? search_point(BuildContext context) {
-    return AppLocalizations.translate('search_point').toString();
+    return AppLocalizations.translate('search_point');
   }
 }
 
@@ -41,7 +41,7 @@ class _TranslationState extends State<Translation> {
   }
 
   getName(BuildContext context) {
-    search = AppLocalizations.translate('search').toString();
+    search = AppLocalizations.translate('search');
     return search;
   }
 }

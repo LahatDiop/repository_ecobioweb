@@ -43,7 +43,7 @@ class UserDataSettings {
 
   static Users myUsers = Users(
     ///image:"https://upload.wikimedia.org/wikipedia/en/0/0b/Darth_Vader_in_The_Empire_Strikes_Back.jpg",
-
+    id: '',
     name: 'Lahat Diop',
     email: 'bio@gmail.com',
     password: '123',

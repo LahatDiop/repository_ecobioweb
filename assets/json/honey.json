@@ -4,6 +4,7 @@
         {  
             "id": 1, 
             "codeProd": "2001",
+            "type": "honey",
             "name": "Miele",
             "description": "Miele Bio d'acacia italiano 500 g",
             "volume": "",
@@ -44,6 +45,7 @@
         {
             "id": 2,
             "codeProd": "2002",
+            "type": "honey",
             "name": "Miele",
             "description": "Miele Bio",
             "volume": "",
@@ -84,6 +86,7 @@
         {
             "id": 3, 
             "codeProd": "2003",
+            "type": "honey",
             "name": "Miele",
             "description": " Bio",
             "volume": "0.75",
@@ -125,6 +128,7 @@
 
             "id": 4, 
             "codeProd": "2004",
+            "type": "honey",
             "name": "Miele",
             "description": "Miele Original Bio",
             "volume": "0.75",
@@ -166,6 +170,7 @@
 
             "id": 5,
             "codeProd": "2005",
+            "type": "honey",
             "name": "Miele",
             "description": "Bio Miele 100",
             "volume": "0.75",
@@ -207,6 +212,7 @@
 
             "id": 6,
             "codeProd": "2006",
+            "type": "honey",
             "name": "Miele",
             "description": "Miele ",
             "volume": "0.75",
@@ -248,6 +254,7 @@
 
             "id": 7,
             "codeProd": "2007",
+            "type": "honey",
             "name": "Miele",
             "description": "Miele",
             "volume": "0.75",
@@ -288,6 +295,7 @@
             {
             "id": 8,
             "codeProd": "2008",
+            "type": "honey",
             "name": "Miele",
             "description": "Miele Pura",
             "volume": "0.75",

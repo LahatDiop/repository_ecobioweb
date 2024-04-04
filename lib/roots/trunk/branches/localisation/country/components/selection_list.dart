@@ -6,11 +6,8 @@ import 'package:analyzer/file_system/file_system.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../../market/components/market.dart';
-import '../../../menu/menu_settings/settings/admin/screens/setting_screen.dart';
 import '../../translation/components/appLocalizations.dart';
 import '../widget/country_list_pick.dart';
 import 'code_country.dart';
@@ -18,14 +15,16 @@ import '../../../commun_data_utils/utils/helper/globals.dart' as globals;
 import 'country_selection_theme.dart';
 
 class SelectionList extends StatefulWidget {
-  const SelectionList(this.elements, this.initialSelection,
+  const SelectionList(
+      this.elements,
+      this.initialSelection,
       {Key? key,
       this.appBar,
       this.theme,
       this.countryBuilder,
       this.useUiOverlay = true,
       this.useSafeArea = false})
-      : super(key: key);
+      :super(key: key);
 
   final PreferredSizeWidget? appBar;
   final List elements;
@@ -77,7 +76,7 @@ class _SelectionListState extends State<SelectionList> {
   void initState() {
     countries = widget.elements;
     countries.sort((a, b) {
-      return a.name.toString().compareTo(b.name.toString());
+      return a.name.compareTo(b.name.toString());
     });
 
     elements=countries;
@@ -110,28 +109,28 @@ class _SelectionListState extends State<SelectionList> {
       ));
     }
     height = MediaQuery.of(context).size.height;
-    search = AppLocalizations.translate('search').toString();
+    search = AppLocalizations.translate('search');
     search_point =
-        // AppLocalizations.of(context)!.translate('search_point').toString();
-        AppLocalizations.translate('search_point').toString();
-    last_pick = AppLocalizations.translate('last_picks').toString();
+        // AppLocalizations.of(context)!.translate('search_point');
+        AppLocalizations.translate('search_point');
+    last_pick = AppLocalizations.translate('last_picks');
     //search_point = Translation.search(context)!;
 
     Widget scaffold = Scaffold(
      appBar: widget.appBar,
-     //  appBar: AppBar(
-     //    title: Text(AppLocalizations.translate("back").toString()),
-     //    backgroundColor: const Color.fromARGB(255, 50, 172, 34),
-     //    leading: BackButton(
-     //      color: Colors.black,
-     //      onPressed: () {
-     //        //   Navigator.pop(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
-     //        // Navigator.pop(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
-     //        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
-     //        );
-     //      },
-     //    ),
-     //  ),
+  //     appBar: AppBar(
+  //       title: Text(AppLocalizations.translate("back").toString()),
+  //       backgroundColor: const Color.fromARGB(255, 50, 172, 34),
+  //       leading: BackButton(
+  //         color: Colors.black,
+  //         onPressed: () {
+  //           //   Navigator.pop(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
+  //           // Navigator.pop(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
+  //           Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) =>  SettingScreen()),
+  //           );
+  //         },
+  //       ),
+  //     ),
       body: Container(
         color: const Color(0xfff4f4f4),
         child: LayoutBuilder(builder: (context, contrainsts) {
@@ -256,7 +255,7 @@ class _SelectionListState extends State<SelectionList> {
               //it_IT
           //  String defaultSystemLocale=Platform.localeName; //=> default it_IT
             //default en_US
-     //       String? defaultLocal = Localizations.localeOf(context).toString(); // => default en_US
+     //       String? defaultLocal = Localizations.localeOf(context); // => default en_US
          //   AppLocalizations appLocalizations = AppLocalizations(const Locale('it_IT'));
 
           //  String defaultSystemLocale=Platform.localeName;
@@ -295,7 +294,7 @@ class _SelectionListState extends State<SelectionList> {
             _text = _alphabet[posSelected];
             if (_text != _oldtext) {
               for (var i = 0; i < countries.length; i++) {
-                if (_text.toString().compareTo( countries[i].name.toString().toUpperCase()[0]) == 0) {
+                if (_text.compareTo(countries[i].name.toUpperCase()[0]) == 0) {
                   _controllerScroll!.jumpTo((i * _itemsizeheight) + 10);
                   break;
                 }
@@ -357,8 +356,8 @@ class _SelectionListState extends State<SelectionList> {
         if (_text != _oldtext) {
           for (var i = 0; i < countries.length; i++) {
             if (_text
-                    .toString()
-                    .compareTo(countries[i].name.toString().toUpperCase()[0]) ==
+                    
+                    .compareTo(countries[i].name.toUpperCase()[0]) ==
                 0) {
               _controllerScroll!.jumpTo((i * _itemsizeheight) + 15);
               break;

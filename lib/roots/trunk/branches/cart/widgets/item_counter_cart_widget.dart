@@ -195,6 +195,7 @@ Widget build(BuildContext context) {
     Product product = Product(
         id: cartItem.id,
         codeProd: cartItem.codeProd,
+        type: cartItem.type,
         name: cartItem.name,
         description: cartItem.description,
         price: cartItem.price,

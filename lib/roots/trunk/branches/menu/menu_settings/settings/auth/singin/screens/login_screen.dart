@@ -3,13 +3,14 @@ import 'package:ecobioweb/shopping/screens/shopping_cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart' show timeDilation;
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:postgres/legacy.dart';
 import 'package:postgres/postgres.dart';
 import '../../../../../../commun_data_utils/utils/constants/app_constants.dart';
 import '../../../../../../commun_data_utils/utils/theme/green/app_colors_green.dart';
 import '../../../../../../localisation/translation/components/appLocalizations.dart';
-import '../../../../../../managements/users/models/user_settings.dart';
-import '../../../../../../managements/users/models/users_data.dart';
+import '../../../../../../managements/users/components/user_settings.dart';
 // import '../../../localisation/translation/components/appLocalizations.dart';
+import '../../../../../../managements/users/components/users_data.dart';
 import '../../models/login_user_type.dart';
 import '../../models/term_of_service.dart';
 import '../../models/user_form_field.dart';
@@ -30,18 +31,20 @@ class LoginScreen extends StatelessWidget {
   String? emailList ;
   bool userIsregister=false;
 
+  var connection;
+
   LoginScreen({Key? key}) : super(key: key);
 
   Duration get loginTime => Duration(milliseconds: timeDilation.ceil() * 2250);
 
    UserDataSettings userDataSettings = UserDataSettings();
 
-  PostgreSQLConnection connection = PostgreSQLConnection("localhost", 5432, "ecobio",
-     username: "postgres",
-     password: "root",
-     queryTimeoutInSeconds: 3600,
-     timeoutInSeconds: 3600,
-   );
+  // PostgreSQLConnection connection = PostgreSQLConnection("localhost", 5432, "ecobio",
+  //    username: "postgres",
+  //    password: "root",
+  //    queryTimeoutInSeconds: 3600,
+  //    timeoutInSeconds: 3600,
+  //  );
 
 
  // await connection.open();
@@ -109,7 +112,7 @@ class LoginScreen extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-        title: Text(AppLocalizations.translate("back").toString()),
+        title: Text(AppLocalizations.translate("back")),
     // leading: const BackButton(color: Colors.black),
        //backgroundColor: const Color.fromARGB(255, 50, 172, 34),
         backgroundColor: const AppColorsGreen().backgrounGreendApp,
@@ -208,7 +211,7 @@ class LoginScreen extends StatelessWidget {
               return "Email must contain '@' and end with '.com'";
             }else if (value.contains('@')){          // Check email DB
 
-              checkEmail(connection,value,userIsregister);
+              checkEmail(value,userIsregister);
             }
             return null;
           },
@@ -243,7 +246,8 @@ class LoginScreen extends StatelessWidget {
             }
 
             // SAVED DATA USER
-            saveDataUserSingup(userData, connection);
+            // saveDataUserSingup(userData, connection);
+            saveDataUserSingup(userData);
           
             return _signupUser(userData);
           },
@@ -269,8 +273,8 @@ class LoginScreen extends StatelessWidget {
   }
 
 
-  Future<void> saveDataUserSingup(UserData userData,PostgreSQLConnection connection ) async {
-
+  // Future<void> saveDataUserSingup(UserData userData,PostgreSQLConnection connection ) async {
+  Future<void> saveDataUserSingup(UserData userData) async {
    // PostgreSQLConnection connection = PostgreSQLConnection("localhost", 5432, "ecobio",
    //    username: "postgres",
    //    password: "root",
@@ -297,12 +301,12 @@ class LoginScreen extends StatelessWidget {
     //String $table="ecobio.public.data_user";
     var $table="ecobio.public.register";
 
-    await connection.transaction((ctx) async {
-      var result = await ctx.query("SELECT id,email FROM public.register");
-      id =result.last[0] + 1;
-      emailList = result.toList().toString();
-
-    });
+    // await connection.transaction((ctx) async {
+    //   var result = await ctx.query("SELECT id,email FROM public.register");
+    //   id =result.last[0] + 1;
+    //   emailList = result.toList().toString();
+    //
+    // });
 
 
     for (var element in userData.termsOfService) {
@@ -355,7 +359,7 @@ class LoginScreen extends StatelessWidget {
 
 
     // UserData copyUserData = userData.copy()
-    await setDataUser(connection,userData, $table,termsOfService, dataToMap);
+   /// await setDataUser(connection,userData, $table,termsOfService, dataToMap);
     // await updateData(connection, table, dataToMap);
     // await removedData(connection, $table, dataToMap);
     // await getDataList(connection, $table, dataToMap);
@@ -365,7 +369,8 @@ class LoginScreen extends StatelessWidget {
 
 
   }
-  Future<void> setDataUser(PostgreSQLConnection connection, UserData userData,String table,String termsOfService, Map<String, dynamic> data) async {
+  //Future<void> setDataUser(PostgreSQLConnection connection, UserData userData,String table,String termsOfService, Map<String, dynamic> data) async {
+ Future<void> setDataUser( UserData userData,String table,String termsOfService, Map<String, dynamic> data) async {
 
     //connection.open();
     debugPrint('data.keys${data.keys}');
@@ -542,24 +547,24 @@ class LoginScreen extends StatelessWidget {
     return newBuyerFuture;
   }
 
-  void checkEmail(PostgreSQLConnection connection, var value,bool userIsRegister) {
-
-    connection.open();
-
-   connection.transaction((ctx) async {
-      var result = await ctx.query("SELECT id,email FROM public.register");
-      if(result.isNotEmpty){
-        id =result.last[0] + 1;
-        emailList = result.toList().toString();
-      }
-
-      if(emailList!.contains(value)){
-        return "Email : '$value' già registrato";
-      }else {
-        return null;
-      }
-
-    });
+ // void checkEmail(PostgreSQLConnection connection, var value,bool userIsRegister) {
+    void checkEmail( var value,bool userIsRegister) {
+    // connection.open();
+   //
+   // connection.transaction((ctx) async {
+   //    var result = await ctx.query("SELECT id,email FROM public.register");
+   //    if(result.isNotEmpty){
+   //      id =result.last[0] + 1;
+   //      emailList = result.toList().toString();
+   //    }
+   //
+   //    if(emailList!.contains(value)){
+   //      return "Email : '$value' già registrato";
+   //    }else {
+   //      return null;
+   //    }
+   //
+   //  });
 
   }
 

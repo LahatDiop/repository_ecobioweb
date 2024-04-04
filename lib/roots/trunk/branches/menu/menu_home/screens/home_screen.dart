@@ -516,7 +516,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     // ));
 
 
-    if (AppLocalizations.translate(homeItems.name) == AppLocalizations.translate('agricultureBiological').toString()) {
+    if (AppLocalizations.translate(homeItems.name) == AppLocalizations.translate('agricultureBiological')) {
       Navigator.of(context).push(MaterialPageRoute(
         /// builder: (context) => AgricultureBiologique(item: GestionAgricultureBio().product, itemCart: GestionAgricultureBio().itemCart)
         builder: (context) => AgricultureBiologiqueScreen(item: GestionAgricultureBio().product),
@@ -538,19 +538,19 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       ));
     }
     if (AppLocalizations.translate(homeItems.name) ==
-        AppLocalizations.translate('agricultureKmZero').toString()) {
+        AppLocalizations.translate('agricultureKmZero')) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const AgricultureKmZero(),
       ));
     }
     if (AppLocalizations.translate(homeItems.name) ==
-        AppLocalizations.translate('productsBiologiques').toString()) {
+        AppLocalizations.translate('productsBiologiques')) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const ProductsBiologique(),
       ));
     } //list des producteurs agriculture biologique
     if (AppLocalizations.translate(homeItems.name) ==
-        AppLocalizations.translate('infoProducts').toString()) {
+        AppLocalizations.translate('infoProducts')) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => const InfoProducers(),
       ));
@@ -563,9 +563,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     //         return Text(data.toString());
     //       },
     //     ));
-
-    if (AppLocalizations.translate(homeItems.name) ==
-        AppLocalizations.translate('honey').toString()) {
+String value = homeItems.name;
+    if (AppLocalizations.translate(value) == AppLocalizations.translate('honey')) {
       Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>  HoneyBiologicalScreen(),
       ));

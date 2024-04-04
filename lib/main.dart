@@ -5,14 +5,16 @@ import 'dart:ui';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:ecobioweb/loader/data_loader.dart';
-import 'package:ecobioweb/roots/trunk/branches/localisation/country/widget/country_list_pick.dart';
-import 'package:ecobioweb/roots/trunk/branches/localisation/translation/components/appLocalizations.dart';
+import 'package:ecobioweb/roots/trunk/branches/database/sqlLite/connection_db_sqlite_services.dart';
+import 'package:ecobioweb/roots/trunk/branches/database/sqlLite/database_helper.dart';
+import 'package:ecobioweb/roots/trunk/branches/database/sqlLite/db_helper_sqlite.dart';
+import 'package:ecobioweb/roots/trunk/branches/menu/menu_home/controllers/MenuAppController.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:intl/intl.dart';
-import 'package:path/path.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite_common_ffi/sqflite_ffi.dart';
 import 'package:theme_provider/theme_provider.dart';
 
 
@@ -56,9 +58,35 @@ Future<void> main() async {
 Future<void> main() async {
 
   // await DBHelper().initDatabase();
-  // DatabaseHelper();
+ ///DatabaseHelper();
 
-  WidgetsFlutterBinding.ensureInitialized();
+  // WidgetsFlutterBinding.ensureInitialized();
+
+
+  //-----------------------------INITE SQLLITE------------------------------------
+
+  // ConnectionDbSqlLiteServices conn = ConnectionDbSqlLiteServices();
+  //   conn.db;
+ WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isWindows || Platform.isLinux) {
+    // Initialize FFI
+        sqfliteFfiInit();
+
+
+      // Change the default factory. On iOS-/Android, if not using `sqlite_flutter_lib` you can forget
+      // this step, it will use the sqlite version available on the system.
+      databaseFactory = databaseFactoryFfi;
+  }
+
+
+     ///Initialize db main
+  DatabaseHelper databaseHelper = DatabaseHelper();
+     var initDB= databaseHelper.database;
+
+
+//-----------------------------END SQLLITEL------------------------------------
+
 
   // Implementation param save small data
   SharedPreferences.getInstance().then((instance) async{
@@ -67,7 +95,7 @@ Future<void> main() async {
 
     // Get the initial locale values
     ///   final String defaultSystemLocale = Platform.localeName;
-    final List<Locale> systemLocales = WidgetsBinding.instance.window.locales;
+   /// final List<Locale> systemLocales = WidgetsBinding.instance.window.locales;
 
     // save language Locale into SharedPreference
 
@@ -79,7 +107,7 @@ Future<void> main() async {
     //  saveLanguageLocale.setLocale(pref, context, locale,defaultSystemLocale);
 
 
-    WidgetsFlutterBinding.ensureInitialized();
+
 
     /// LOAD PRODUCT AGRICULTURE BIOLOGIQUE
     // loadProductAgricultureBio();
@@ -202,6 +230,106 @@ class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
   @override
+  Widget build2222(BuildContext context) {
+    final currentWidth=MediaQuery.of(context).size.width;
+    final botToastBuilder = BotToastInit();
+
+    return MaterialApp(
+   ///   debugShowCheckedModeBanner: false,
+     // title: 'Flutter Admin Panel',
+      // theme: ThemeData.dark().copyWith(
+      //   scaffoldBackgroundColor: bgColor,
+      //   textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
+      //       .apply(bodyColor: Colors.white),
+      //   canvasColor: secondaryColor,
+      // ),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider(
+            create: (context) => MenuAppController(),
+          ),
+        ],
+        child: MaterialApp(
+        title: 'ecobioWEB',
+        builder: (context, child) {
+          child = botToastBuilder(context, child);
+          return child;
+        },
+
+        ///Localization implement language App
+        // List all of the app's supported locales here
+        supportedLocales: const [
+          // Locale('it'), // Italien
+          // Locale('en'), // English
+          // Locale('fr'), // Franch
+          // Locale('es'), // Spanish
+          // Locale('de'), // Germany
+
+          Locale('it', 'IT'),
+          Locale('fr', 'FR'),
+          Locale('en', 'US'),
+          Locale('es', 'ES'),
+          Locale('de', 'DE'),
+
+        ],
+
+        // These delegates make sure that the localization data for the proper language is loaded
+        localizationsDelegates: const [
+          // THIS CLASS WILL BE ADDED LATER
+          // A class which loads the translations from JSON files
+          //AppLocalizations.delegate,
+          // Built-in localization of basic text for Material widgets
+          GlobalMaterialLocalizations.delegate,
+
+          GlobalCupertinoLocalizations.delegate,
+          // Built-in localization for text direction LTR/RTL
+          GlobalWidgetsLocalizations.delegate,
+        ],
+
+        // supportedLocales: AppLocalizations.supportedLocales,
+        // Returns a locale which will be used by the app
+        localeResolutionCallback: (locale, supportedLocales) {
+          // Check if the current device locale is supported
+          for (var supportedLocale in supportedLocales) {
+            if (supportedLocale.languageCode == locale!.languageCode &&
+                supportedLocale.countryCode == locale.countryCode) {
+              return supportedLocale;
+            }
+          }
+
+          // AppLocalizations.saveLanguageApp(context, supportedLocales.first.toString(),true);
+          // If the locale of the device is not supported, use the first one
+          // from the list (English, in this case).
+          return supportedLocales.first;
+        },
+
+
+        /// INITIALIZED LANGUAGE APP SETTING SCREEN
+
+        //var  countryListPickd=  CountryListPick.createStateInizialize();
+
+
+        // theme: lightTheme,
+        /// navigatorObservers: [BotToastNavigatorObserver()],
+        debugShowCheckedModeBanner: false,
+        /// Route pagina inizial app
+        routes: router.Router.getRoutes(context),
+        initialRoute: "/",
+
+
+        // DataLoader,
+
+        //  DataLoader(),
+        // dataLoader.createState().initState();
+
+        // home: const MenuNavigationComponents(),
+        //home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      ),
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     //  DataLoader(),
     //ok dataLoader.createState().initState();
@@ -230,7 +358,7 @@ class MyApp extends StatelessWidget {
             if (platformBrightness == Brightness.dark) {
               controller.setTheme('default_light_theme');
             } else {
-              controller.setTheme('default_light_theme');
+              controller.setTheme('default_light_theme'); 
             }
             controller.forgetSavedTheme();
           }
@@ -305,7 +433,7 @@ class MyApp extends StatelessWidget {
          /// navigatorObservers: [BotToastNavigatorObserver()],
           debugShowCheckedModeBanner: false,
           /// Route pagina inizial app
-          routes: router.Router.getRoutes(context),
+          routes: router.Router.getRoutes(context), 
           initialRoute: "/",
 
 

@@ -109,7 +109,7 @@ class _InfoProducersState extends State<InfoProducers> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
                       const Text(
-                        "Lifestyle Sale",
+                        "Lifestyle Sale Lahat",
                         style: TextStyle(
                             color: Colors.white,
                             fontSize: 35,

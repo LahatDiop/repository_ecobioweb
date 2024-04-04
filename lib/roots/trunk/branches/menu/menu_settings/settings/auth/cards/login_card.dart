@@ -2,7 +2,7 @@
 
 import 'dart:math';
 import '../../../../../dashboard/fade_in.dartfade_in.dart';
-import '../../../../../managements/users/models/users_data.dart';
+import '../../../../../managements/users/components/users_data.dart';
 import '../models/login_user_type.dart';
 import '../models/term_of_service_checkbox.dart';
 import '../providers/auth.dart';

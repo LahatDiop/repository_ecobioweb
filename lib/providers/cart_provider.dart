@@ -72,6 +72,7 @@ class Cart with ChangeNotifier {
           product.codeProd,
               () => CartItem(
                   id: product.id,
+                  type: product.type,
                   name: product.name,
                   description: product.description,
                   codeProd: product.codeProd,
@@ -105,6 +106,7 @@ class Cart with ChangeNotifier {
           product.codeProd,
               (existingCartItem) => CartItem(
               id: existingCartItem.id,
+              type: existingCartItem.type,
               name: existingCartItem.name,
               description: existingCartItem.description,
               codeProd: existingCartItem.codeProd,
@@ -141,6 +143,7 @@ class Cart with ChangeNotifier {
           product.codeProd,
               (existingCartItem) => CartItem(
                   id: existingCartItem.id,
+                  type: existingCartItem.type,
                   name: existingCartItem.name,
                   description: existingCartItem.description,
                   codeProd: existingCartItem.codeProd,
@@ -222,6 +225,7 @@ class Cart with ChangeNotifier {
           codeProd,
               (existingCartItem) => CartItem(
               id: existingCartItem.id,
+             type: existingCartItem.type,
               name: existingCartItem.name,
               description: existingCartItem.description,
               codeProd: existingCartItem.codeProd,

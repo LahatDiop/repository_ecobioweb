@@ -5,6 +5,7 @@
 class CartItem {
   int id;
   String codeProd;
+  String type;
   String name;
   String description;
   double price;
@@ -36,6 +37,7 @@ class CartItem {
   CartItem({
     required this.id,
     required this.codeProd,
+    required this.type,
     required this.name,
     required this.description,
     required this.price,
@@ -71,6 +73,7 @@ class CartItem {
 
       id: json["id"],
       codeProd : json["codeProd"],
+      type: json["type"],
       name : json["name"],
       description : json["description"],
       price : json["price"],
@@ -105,6 +108,7 @@ class CartItem {
 List<dynamic> demoItems =[
     CartItem(
       id: 1,
+      type: "fruit",
       name: "Organic Bananas",
       description: "7pcs, Priceg",
       price: 4.99,
@@ -118,6 +122,7 @@ List<dynamic> demoItems =[
     ),
     CartItem(
       id: 2,
+      type: "fruit",
       name: "Red Apple",
       description: "1kg, Priceg",
       price: 5,
@@ -131,6 +136,7 @@ List<dynamic> demoItems =[
     ),
     CartItem(
       id: 3,
+      type: "fruit",
       name: "Bell Pepper Red",
       description: "1kg, Priceg",
       price: 10,
@@ -144,6 +150,7 @@ List<dynamic> demoItems =[
     ),
     CartItem(
       id: 4,
+      type: "vegetables",
       name: "Ginger",
       description: "250gm, Priceg",
       price: 4.99,
@@ -157,6 +164,7 @@ List<dynamic> demoItems =[
     ),
     CartItem(
       id: 5,
+      type: "mests",
       name: "Meat",
       description: "250gm, Priceg",
       price: 4.99,
@@ -170,6 +178,7 @@ List<dynamic> demoItems =[
     ),
     CartItem(
       id: 6,
+      type: "chikken",
       name: "Chikken",
       description: "250gm, Priceg",
       price: 4.99,

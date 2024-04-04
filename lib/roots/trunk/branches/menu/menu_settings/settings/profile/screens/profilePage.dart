@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import '../../../../../managements/users/models/user_settings.dart';
-import '../../../../../managements/users/models/users.dart';
+import '../../../../../managements/users/components/user_settings.dart';
+import '../../../../../managements/users/components/users.dart';
 import '../models/editDescription.dart';
 import '../models/editEmail.dart';
 import '../models/editImage.dart';
@@ -204,7 +204,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 child: Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      users.aboutMeDescription,
+                                      users.aboutMeDescription.toString(),
                                       style: const TextStyle(
                                         fontSize: 16,
                                         height: 1.4,

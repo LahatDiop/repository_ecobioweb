@@ -6,6 +6,7 @@ import 'dart:convert';
 class Product {
   int id;
   String codeProd;
+  String type;
   String name;
   String description;
   String? volume;
@@ -50,6 +51,7 @@ class Product {
   Product({
     required this.id,
     required this.codeProd,
+    required this.type,
     required this.name,
     required this.description,
     this.volume,
@@ -91,6 +93,7 @@ class Product {
       Product(
         id: json["id"],
         codeProd: json["codeProd"],
+        type: json["type"],
         name: json["name"],
         description: json["description"],
         volume: json["volume"],
@@ -131,6 +134,7 @@ class Product {
     return Product(
       id: json["id"],
       codeProd: json["codeProd"],
+      type: json["type"],
       name: json["name"],
       description: json["description"],
       volume: json["volume"],
@@ -174,6 +178,7 @@ class Product {
 
     product["id"] = id;
     product["codeProd"] = codeProd;
+    product["type"] = type;
     product["name"] = name;
     product["description"] = description;
     product["volume"] = volume;
@@ -212,7 +217,7 @@ class Product {
 
   @override
   String toString() {
-    return 'Product{id: $id, codeProd: $codeProd, name: $name, description: $description, volume: $volume, unit: $unit, height: $height, weight: $weight, dimensions: $dimensions, ingredients: $ingredients, indication: $indication, allergenInformation: $allergenInformation, warnings: $warnings, producer: $producer, price: $price, quantityStock: $quantityStock, quantity: $quantity, category: $category, brand: $brand, brandModel: $brandModel, codeEan: $codeEan, codeQr: $codeQr, country: $country, city: $city, currency: $currency, kilometer: $kilometer, imageURL: $imageURL, image: $image, images: $images, datePublication: $datePublication, dateUpdate: $dateUpdate, isFavorite: $isFavorite, isEnabled: $isEnabled, amountProducts: $amountProducts}';
+    return 'Product{id: $id, codeProd: $codeProd,  type: $type,name: $name, description: $description, volume: $volume, unit: $unit, height: $height, weight: $weight, dimensions: $dimensions, ingredients: $ingredients, indication: $indication, allergenInformation: $allergenInformation, warnings: $warnings, producer: $producer, price: $price, quantityStock: $quantityStock, quantity: $quantity, category: $category, brand: $brand, brandModel: $brandModel, codeEan: $codeEan, codeQr: $codeQr, country: $country, city: $city, currency: $currency, kilometer: $kilometer, imageURL: $imageURL, image: $image, images: $images, datePublication: $datePublication, dateUpdate: $dateUpdate, isFavorite: $isFavorite, isEnabled: $isEnabled, amountProducts: $amountProducts}';
   }
 
   @override
@@ -222,6 +227,7 @@ class Product {
           runtimeType == other.runtimeType &&
           id == other.id &&
           codeProd == other.codeProd &&
+          type == other.type &&
           name == other.name &&
           description == other.description &&
           volume == other.volume &&
@@ -259,6 +265,7 @@ class Product {
   int get hashCode =>
       id.hashCode ^
       codeProd.hashCode ^
+      type.hashCode ^
       name.hashCode ^
       description.hashCode ^
       volume.hashCode ^

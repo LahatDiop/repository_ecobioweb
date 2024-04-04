@@ -357,7 +357,7 @@ class _ProductViewPageState extends State<ProductViewPage> {
                     color: const Color.fromARGB(255, 104, 214, 94),
                     child: Center(
                       child: Text(
-                        AppLocalizations.translate("cart").toString(),
+                        AppLocalizations.translate("cart"),
                         style:
                             const TextStyle(color: Colors.white, fontSize: 18),
                       ),

@@ -16,6 +16,7 @@ class AppConstants {
 
   static const kMinLogoHeight = 50.0; // hide logo if less than this
   static const kMaxLogoHeight = 125.0;
+  static const defaultPadding = 16.0;
 
 
   static String get pikachuLottie => "assets/lotties/pikachu.json";

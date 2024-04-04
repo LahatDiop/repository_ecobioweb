@@ -63,7 +63,7 @@ class GroceryItemCardWidget extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        border: Border.all( color: borderColor, width: 3),
+        border: Border.all( color: borderColor, width: 2),
         borderRadius: BorderRadius.circular( borderRadius),
       ),
 

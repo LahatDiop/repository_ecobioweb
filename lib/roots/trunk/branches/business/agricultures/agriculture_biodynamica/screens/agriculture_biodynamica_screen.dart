@@ -70,7 +70,7 @@ class AgricultureBiodynamicaScreen extends StatelessWidget {
             backgroundColor: Colors.transparent,
             elevation: 0,
             centerTitle: true,
-            automaticallyImplyLeading: false,
+            automaticallyImplyLeading: true,
             leading: GestureDetector(
               onTap: () {
                 Navigator.pop(context);

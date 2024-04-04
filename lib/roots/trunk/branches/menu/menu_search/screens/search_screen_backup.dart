@@ -400,6 +400,7 @@ class _SearchScreenState extends State<SearchScreenB> with TickerProviderStateMi
     CartItem cartItem = CartItem(
         id: newCartItem.id,
         codeProd: newCartItem.codeProd,
+        type: newCartItem.type,
         name: newCartItem.name,
         description: newCartItem.description,
         price: newCartItem.price,
@@ -415,6 +416,7 @@ class _SearchScreenState extends State<SearchScreenB> with TickerProviderStateMi
     CartItem cartItem = CartItem(
         id: product.id,
         codeProd: product.codeProd,
+        type: product.type,
         name: product.name,
         description: product.description,
         price: product.price,

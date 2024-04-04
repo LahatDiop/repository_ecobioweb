@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
-import '../../../../../managements/users/models/user_settings.dart';
+import '../../../../../managements/users/components/user_settings.dart';
 import '../widget/appbar_widget.dart';
 
 

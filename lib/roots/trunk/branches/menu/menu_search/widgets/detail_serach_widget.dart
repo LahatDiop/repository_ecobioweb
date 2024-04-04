@@ -230,7 +230,7 @@ import '../../../products/components/product.dart';
                         color: const Color.fromARGB(255, 104, 214, 94),
                         child: Center(
                           child: Text(
-                            AppLocalizations.translate("addToCard").toString(),
+                            AppLocalizations.translate("addToCard"),
                             style:
                             const TextStyle(color: Colors.white, fontSize: 18),
                           ),

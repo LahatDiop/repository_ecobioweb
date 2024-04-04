@@ -5,10 +5,12 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:postgres/legacy.dart';
 import 'package:postgres/postgres.dart';
+import '../../../../../../../../../test/dog_test/db_sqllite_services.dart';
 import '../../../../../../commun_data_utils/utils/constants/app_constants.dart';
-import '../../../../../../managements/users/models/user_settings.dart';
-import '../../../../../../managements/users/models/users_data.dart';
+import '../../../../../../managements/users/components/user_settings.dart';
+import '../../../../../../managements/users/components/users_data.dart';
 import '../../models/login_user_type.dart';
 import '../../models/term_of_service.dart';
 import '../../models/user_form_field.dart';
@@ -37,6 +39,8 @@ class _AppSignInState extends State<AppSignIn> {
 
   get tableUser => "users";
 
+  get databaseConnection => null;
+
 /*final _auth = FirebaseAuth.instance;
   final databaseRef = FirebaseDatabase.instance.reference();
   final Future<FirebaseApp> _future = Firebase.initializeApp();
@@ -44,11 +48,11 @@ class _AppSignInState extends State<AppSignIn> {
 
 //https://www.oneclickitsolution.com/blog/integrate-postgres-database-connection-in-flutter/
 // CONNECTION POSTGRESQL
-  var databaseConnection = PostgreSQLConnection("localhost", 5432, "ecobio",
-      username: "postgres",
-      password: "root",
-      queryTimeoutInSeconds: 3600,
-      timeoutInSeconds: 3600);
+//   var databaseConnection = PostgreSQLConnection("localhost", 5432, "ecobio",
+//       username: "postgres",
+//       password: "root",
+//       queryTimeoutInSeconds: 3600,
+//       timeoutInSeconds: 3600);
 
   initDatabaseConnection() async {
     databaseConnection.open().then((value) {

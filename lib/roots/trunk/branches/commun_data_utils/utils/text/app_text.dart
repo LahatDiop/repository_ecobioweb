@@ -40,7 +40,7 @@ class AppText extends StatelessWidget {
   /// Translate element of app if not value translated key return of text initale data
   String getTranlated(String text) {
 
-    String dataTranslated =AppLocalizations.translate(text).toString();
+    String dataTranslated =AppLocalizations.translate(text);
     String data="";
     if(dataTranslated =="null"){
        data=text;
@@ -52,15 +52,13 @@ class AppText extends StatelessWidget {
 
   /// Translate element of app if not value return of text initale
   String getTranlatedNotKey(String text) {
+    String dataTranslated =AppLocalizations.translate(text);
+    return dataTranslated;
 
-    String dataTranslated =AppLocalizations.translate(text).toString().toLowerCase();
-    // String data="";
-    // if(dataTranslated =="null"){
-    //    data=text;
-    // }else{
-    //   data= dataTranslated;
-    // }
-    // return data;
+  }
+
+  static getText(String text) {
+    String dataTranslated =AppLocalizations.translate(text);
     return dataTranslated;
 
   }

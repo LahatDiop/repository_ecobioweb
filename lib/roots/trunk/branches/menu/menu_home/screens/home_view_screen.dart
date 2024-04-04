@@ -354,7 +354,7 @@ class _HomeViewScreenState extends State<HomeViewScreen> {
                 ));
               }
               if (kDebugMode) {
-                print('HoeViewScreen Honey');
+                print('HoneyViewScreen Honey');
               }
             },
             child: Container(

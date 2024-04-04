@@ -15,6 +15,20 @@ import '../../../../products/components/product.dart';
 
 
 class AgricultureBiologicalProvider  with ChangeNotifier {
+  bool _disposed = false;
+
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  @override
+  void notifyListeners() {
+    if (!_disposed) {
+      super.notifyListeners();
+    }
+  }
 
   ///-----------------------------------------------------------------------------
   /// MAP PRODUCT
@@ -37,8 +51,9 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
     // add list products into the cartProvider
     CartProvider().setProducts(products);
 
-   notifyListeners();
+    notifyListeners();
     return products;
+
 
   }
 
@@ -134,6 +149,7 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
           Product(
             id: product.id,
             codeProd: product.codeProd,
+            type: product.type,
             name: product.name,
             description: product.description,
             price: product.price,
@@ -183,6 +199,7 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
               Product(
                   id: existingCartItem.id,
                   codeProd: existingCartItem.codeProd,
+                  type: existingCartItem.type,
                   name: existingCartItem.name,
                   description: existingCartItem.description,
                   price: existingCartItem.price,
@@ -217,6 +234,7 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
               Product(
                   id: existingCartItem.id,
                   codeProd: existingCartItem.codeProd,
+                  type: existingCartItem.type,
                   name: existingCartItem.name,
                   description: existingCartItem.description,
                   price: existingCartItem.price,
@@ -256,6 +274,7 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
       Product product = Product(
         id: editProduct.id,
         codeProd: editProduct.codeProd,
+        type: editProduct.type,
         name: editProduct.name,
         description: editProduct.description,
         price: editProduct.price,
@@ -312,7 +331,7 @@ class AgricultureBiologicalProvider  with ChangeNotifier {
       products.clear();
       for (var i in dataLoader) {
         if (i.category.toString().toLowerCase() ==
-            AppLocalizations.translate('fruits').toString().toLowerCase()) {
+            AppLocalizations.translate('fruits')) {
           products.add(i);
           // category = i.category.toString().toLowerCase();
         }

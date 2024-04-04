@@ -12,6 +12,7 @@ import '../../commun_data_utils/utils/theme/app_theme.dart';
 import '../../favorites/screens/favourite_screen.dart';
 import '../../favorites/screens/filter_screen.dart';
 import '../../localisation/translation/components/appLocalizations.dart';
+import '../../menu/menu_home/screens/home_screen.dart';
 import '../../menu/menu_settings/settings/payment/screens/payment.dart';
 import '../../products/components/product.dart';
 import '../../search/widgets/search_bar_widget.dart';
@@ -87,22 +88,39 @@ class _CartScreenState extends State<CartScreen>{
 
         return Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.transparent,
+            backgroundColor: Colors.green,
             elevation: 0,
             centerTitle: true,
             automaticallyImplyLeading: false,
-            leading: GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-              },
-              child: Container(
-                padding: const EdgeInsets.only(left: 25),
-                child: const Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.black,
-                ),
+            leading: Navigator.canPop(context) ?
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_back,
+                color: Colors.black,
+               // size: 47,
               ),
-            ),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+                : null,
+
+
+
+            // leading: const BackButton(
+            //   color: Colors.black,
+            // ),
+
+            // leading: GestureDetector(
+            //   onTap: () {
+            //     Navigator.pop(context);
+            //   },
+            //   child: Container(
+            //     padding: const EdgeInsets.only(left: 25),
+            //     child: const Icon(
+            //       Icons.arrow_back_ios,
+            //       color: Colors.black,
+            //     ),
+            //   ),
+            // ),
             actions: [
               GestureDetector(
                 onTap: () {
@@ -197,18 +215,40 @@ class _CartScreenState extends State<CartScreen>{
         elevation: 0,
         centerTitle: true,
         automaticallyImplyLeading: false,
-        leading: GestureDetector(
-          onTap: () {
-            Navigator.pop(context);
-          },
-          child: Container(
-            padding: const EdgeInsets.only(left: 25),
-            child: const Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-            ),
+        leading: Navigator.canPop(context) ? IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.black,
+            size: 47,
           ),
-        ),
+          onPressed: () => Navigator.of(context).pop(),
+        )
+            : null,
+
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Navigator.canPop(context);
+        //   },
+        //   child: Container(
+        //     padding: const EdgeInsets.only(left: 25),
+        //     child: const Icon(
+        //       Icons.arrow_back_ios,
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ),
+        // leading: GestureDetector(
+        //   onTap: () {
+        //     Navigator.pop(context);
+        //   },
+        //   child: Container(
+        //     padding: const EdgeInsets.only(left: 25),
+        //     child: const Icon(
+        //       Icons.arrow_back_ios,
+        //       color: Colors.black,
+        //     ),
+        //   ),
+        // ),
         actions: [
           GestureDetector(
             onTap: () {
@@ -329,32 +369,45 @@ class _CartScreenState extends State<CartScreen>{
     return Container(
       padding: const EdgeInsets.symmetric( horizontal: 20),
       alignment: Alignment.topLeft,
-      child:
-      Text(
-        AppLocalizations.translate('welcome').toString().toUpperCase(),
-        style: const TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontFamily: 'Quicksand',
-            fontWeight: FontWeight.bold),
-      ),
+    child: const AppText(text: "welcome"),
+         //   // Text(
+         //   //   AppLocalizations.translate('welcome'),
+         //   //   style: const TextStyle(
+         //   //       color: Colors.black,
+         //   //       fontSize: 18,
+         //   //       fontFamily: 'Quicksand',
+         //   //       fontWeight: FontWeight.bold),
+         //   // ),
     );
+    //   child:
+    //        Text( AppText("welcome").toString().toUpperCase()),
+    //   // Text(
+    //   //   AppLocalizations.translate('welcome'),
+    //   //   style: const TextStyle(
+    //   //       color: Colors.black,
+    //   //       fontSize: 18,
+    //   //       fontFamily: 'Quicksand',
+    //   //       fontWeight: FontWeight.bold),
+    //   // ),
+    // );
   }
 
-  /// Agriculture Biodynamic
+  /// Cart Header
   createSubTitle() {
+    var textValue=const AppText(text:"cart").toString().toUpperCase();
     return Container(
       padding: const EdgeInsets.symmetric( horizontal: 20),
       alignment: Alignment.topLeft,
-      child:
-      Text(
-        AppLocalizations.translate('cart').toString(),
-        style: const TextStyle(
-            color: Colors.black,
-            fontSize: 18,
-            fontFamily: 'Quicksand',
-            fontWeight: FontWeight.bold),
-      ),
+
+      child:const AppText(text:"cart")
+      // Text(
+      //   textValue,
+      //   style: const TextStyle(
+      //       color: Colors.black,
+      //       fontSize: 18,
+      //       fontFamily: 'Quicksand',
+      //       fontWeight: FontWeight.bold),
+      // ),
     );
   }
 
@@ -393,9 +446,10 @@ class _CartScreenState extends State<CartScreen>{
                          //   "My Cart",
                          //   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                          // ),
-
+                           ///Carello
+                          /// const AppText(text:"cart"),
                          Text(
-                           AppLocalizations.translate('cart').toString().toUpperCase(),
+                          const AppText(text:"cart").toString().toUpperCase(),
                            style: const TextStyle(
                                color: Colors.black,
                                fontSize: 20,
@@ -405,7 +459,7 @@ class _CartScreenState extends State<CartScreen>{
                          const SizedBox(
                            height: 20,
                          ),
-                         /// CART ITEMS IMG COUNTER...
+                         /// CART ITEMS list IMG COUNTER...
                          Column(
                            children: getChildrenWithSeperator(
                              addToLastChild: false,
@@ -489,7 +543,13 @@ class _CartScreenState extends State<CartScreen>{
 
 
   }
-
+  void _finishAccountCreation() {
+    Navigator.pushAndRemoveUntil<void>(
+      context,
+      MaterialPageRoute<void>(builder: (BuildContext context) => const HomeScreen ()),
+      ModalRoute.withName('/'),
+    );
+  }
 
   Widget getCheckoutButton(BuildContext context) {
     return Container(
